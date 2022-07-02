@@ -11,7 +11,7 @@ def welcome(request):
 
 def instancias_teste(request):
 
-    '''    
+    '''     
     Resolve SQLite Locked Error
 
     To fix “SQLite database is locked error code 5” the best solution is to 
