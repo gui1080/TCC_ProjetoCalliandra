@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import Template, Context
+from .forms import novo_instancias_tipoForm
 from owlready2 import *         # https://pypi.org/project/Owlready2/
 
 # Create your views here.
@@ -8,6 +9,57 @@ from owlready2 import *         # https://pypi.org/project/Owlready2/
 def welcome(request):
     
     return render(request, 'welcome.html')
+
+def instancias_tipo_show(request):
+    
+    return render(request, 'instancias_tipo_show.html',)
+
+def instancias_tipo(request):
+    
+    form = novo_instancias_tipoForm()
+
+    context = {'form':form}
+    
+    if request.method == 'POST':
+        
+        if 'input_dado' in request.session:
+            del request.session['input_dado']
+    
+        input_dado = request.POST.get('busca')
+        
+        print(input_dado)
+        
+        myworld = World(filename='backup.db', exclusive=False)
+        
+        onto_path.append(os.path.dirname(__file__))
+        
+        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+        kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kiposcrum.owl').load()
+        
+        myworld.save()
+        
+        # Sincronização
+        #--------------------------------------------------------------------------
+        
+        print("\n------------------------------------\n")
+        print("Sincronização!")
+        
+        try:
+            sync_reasoner()
+        except:
+            print("\n\nErro ao sincronizar.\n\n")
+        finally:
+            print("\n\nSincronização finalizada.\n\n")    
+        
+        print("\n------------------------------------\n")
+        
+        # fazer uma query aqui de SPARQL
+        
+        # faz query e bota resultado na sessão, um redirect vai botar o resultado
+        request.session['input_dado'] = "resultado_query"
+        return redirect('/kipo_playground/instancias_tipo_show/')
+    
+    return render(request, 'instancias_tipo_select.html', context)
 
 def instancias_teste(request):
 
@@ -24,7 +76,7 @@ def instancias_teste(request):
     - $Sqlite3 .x.Sqlite
     - Sqlite> .backup main backup.Sqlite
     - Sqlite> .exit
-'''
+    '''
         
     myworld = World(filename='backup.db', exclusive=False)
         
@@ -34,6 +86,7 @@ def instancias_teste(request):
     kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kiposcrum.owl').load()
         
     myworld.save()
+    
     # Sincronização
     #--------------------------------------------------------------------------
         
