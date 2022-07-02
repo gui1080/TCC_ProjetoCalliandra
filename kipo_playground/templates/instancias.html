@@ -1,0 +1,17 @@
+{% extends 'welcome.html' %}
+
+{% block content %}
+
+<style>
+    p{
+        font-size: 17px;
+    }
+    </style>
+
+<h3>Essa página mostra para o usuário de forma não formatada o resultado de uma query feita com as instâncias que estão no Banco de Dados.</h3>
+<h4>São todas as classes que são subclasse de outra, uma query simples, apenas para demonstrar que é possível ver isso em sistema DJango.</h4>
+
+<h5>{{query_feita}}</h5>
+<p>{{lista_intancias}}</p>
+
+{% endblock %}

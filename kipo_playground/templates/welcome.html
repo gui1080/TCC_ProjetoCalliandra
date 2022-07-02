@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+    font-family: "Lato", sans-serif;
+    background-color: #2C2F33;
+    color: #ffffff; 
+}
+
+.sidenav {
+    height: 100%;
+    width: 160px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #DC143C;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #FFFFFF;
+    display: block;
+}
+
+.sidenav a:hover {
+    color: #000000;
+}
+
+.main {
+    margin-left: 160px; /* Same as the width of the sidenav */
+    font-size: 28px; /* Increased text to enable scrolling */
+    padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+</style>
+</head>
+<body>
+
+<div class="sidenav">
+    <a href="/kipo_playground/welcome/">Início</a>
+    <a href="/kipo_playground/instancias_teste/">Ver Teste de query</a>
+    <a href="/kipo_playground/query">Fazer Query</a>
+</div>
+
+<div class="main">
+
+    <h3>Caso de Estudo: Ontologia do Scrum com conceitos da KIPO!</h3>
+
+    {% block content %} {% endblock %}
+
+</div>
+
+</body>
+</html> 
+
