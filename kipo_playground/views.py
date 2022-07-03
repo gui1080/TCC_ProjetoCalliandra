@@ -4,6 +4,9 @@ from django.template import Template, Context
 from .forms import novo_instancias_tipoForm
 from owlready2 import *         # https://pypi.org/project/Owlready2/
 
+# source venv/bin/activate
+# python3 manage.py runserver
+
 # Create your views here.
 
 def welcome(request):
@@ -29,7 +32,7 @@ def instancias_tipo(request):
         
         print(input_dado)
         
-        myworld = World(filename='backup.db', exclusive=False)
+        myworld = World(filename='kiposcrum_backup.db', exclusive=False)
         
         onto_path.append(os.path.dirname(__file__))
         
@@ -78,7 +81,7 @@ def instancias_teste(request):
     - Sqlite> .exit
     '''
         
-    myworld = World(filename='backup.db', exclusive=False)
+    myworld = World(filename='kiposcrum_backup.db', exclusive=False)
         
     onto_path.append(os.path.dirname(__file__))
         
