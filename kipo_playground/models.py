@@ -5,7 +5,7 @@ from django.db import models
 class novo_instancias_tipo(models.Model):
     
     CLASSES = (
-        ('Roles', 'Roles'),
+        ('scrum:scrumRoles', 'Roles'),
         ('KIPCOAgent', 'KIPCOAgent') 
     )
     
