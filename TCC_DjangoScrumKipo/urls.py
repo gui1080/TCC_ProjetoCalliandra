@@ -16,7 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 
+from kipo_playground import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.welcome, name="welcome"),
     path('kipo_playground/', include('kipo_playground.urls')),
 ]
