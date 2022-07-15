@@ -1,0 +1,19 @@
+{% extends 'welcome.html' %}
+
+{% block content %}
+
+<form action="" method="POST">
+
+    </br>
+    {{ request.session.input_nome }}
+    </br>
+    </br>
+    {{ request.session.input_classe }}
+    </br>
+    </br>
+    {{ request.session.input_status }}
+    </br>
+</form>
+
+
+{% endblock %}
