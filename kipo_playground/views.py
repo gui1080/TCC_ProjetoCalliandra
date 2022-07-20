@@ -48,7 +48,7 @@ def instancias_tipo(request):
             #onto_path.append(os.path.dirname(__file__))
             
             # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
-            kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kiposcrum_pellet.owl').load()
+            kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
             
         except:
         
@@ -85,18 +85,20 @@ def instancias_tipo(request):
                     }
                 """
                     
-                lista_intancias = list(myworld.sparql(busca)) 
+                lista_instancias = list(myworld.sparql(busca)) 
                 
                 '''
             
-                lista_intancias = str(kiposcrum[input_dado].instances())
+                lista_instancias = str(kiposcrum[input_dado].instances())
             
-                print(lista_intancias)
+                print(lista_instancias)
         
                 myworld.close() # só fecha o bd, deixa as instâncias no bd
                 #myworld.save() # persiste na ontologia
         
         except:
+            
+            lista_instancias = "Erro!"
             
             print("Falha de acesso!")
         
@@ -105,7 +107,7 @@ def instancias_tipo(request):
         # fazer uma query aqui de SPARQL
         
         # faz query e bota resultado na sessão, um redirect vai botar o resultado
-        request.session['input_dado'] = lista_intancias
+        request.session['input_dado'] = lista_instancias
         return redirect('/kipo_playground/instancias_tipo_show/')
     
     return render(request, 'instancias_tipo_select.html', context)
@@ -147,7 +149,7 @@ def inserir_instancia(request):
             #onto_path.append(os.path.dirname(__file__))
             
             # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
-            kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kiposcrum_pellet.owl').load()
+            kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
             
         except:
             
@@ -230,7 +232,7 @@ def instancias_teste(request):
         #onto_path.append(os.path.dirname(__file__))
         
         # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
-        kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kiposcrum_pellet.owl').load()
+        kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
         
     except:
         
