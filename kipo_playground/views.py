@@ -14,6 +14,18 @@ def welcome(request):
     return render(request, 'welcome.html')
 # ------------------------------------------------------------
 
+# Ver seleção de Sprints
+# Sprint has_input
+# Sprint has_output
+# Sprint is_executed_by
+# coisas ocorrerm "during" Sprint e Sprint ocorre "during" coisas
+# adicionar -> SprintDaily é "REGARDING" uma Sprint
+# ------------------------------------------------------------
+
+
+
+# ------------------------------------------------------------
+
 
 # DESSA FORMA É POSSÍVEL VER TODAS AS INSTÂNCIAS DE UMA CLASSE
 # instancias_tipo -> instancias_tipo_show
