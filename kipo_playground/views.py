@@ -36,30 +36,33 @@ def instancias_tipo(request):
         if 'input_dado' in request.session:
             del request.session['input_dado']
     
-        input_dado = request.POST.get('busca')
+        input_dado = str(request.POST.get('busca'))
         
         print(input_dado)
         
         # OWLREADY2
-        myworld = World(filename='backup.db', exclusive=False)
-        
-        if os.path.exists(os.path.dirname(__file__) + 'backup.db') == False:
-            ###
-            # se o bd n existir
-            onto_path.append(os.path.dirname(__file__))
+        try:
             
-            # se o bd n existir
+            myworld = World(filename='backup.db', exclusive=False)
+            
+            #onto_path.append(os.path.dirname(__file__))
+            
             # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
-            myworld.get_ontology(os.path.dirname(__file__) + '/kiposcrum_pellet.owl').load()
-            ###
+            kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kiposcrum_pellet.owl').load()
             
-        kiposcrum = myworld.get_ontology('http://www.semanticweb.org/fialho/kipo#').load()
+        except:
+        
+            print("Erro no começo")
+        
+        sync_reasoner()
         
         try:
         
             with kiposcrum:
                 
                 '''
+                
+                
                 kiposcrum["KIPCO__Agent"].instances()
                 
                 kiposcrum["KIPCO__Agent"]("desenvolvedornovo")!!
@@ -67,7 +70,7 @@ def instancias_tipo(request):
                 kiposcrum.KIPCO__Agent("desenvolvedornovo")
                 
                 kiposcrum["desenvolvedor1"].is_a()
-                '''
+                
                 
                 busca = """
                     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -83,24 +86,12 @@ def instancias_tipo(request):
                 """
                     
                 lista_intancias = list(myworld.sparql(busca)) 
+                
+                '''
+            
+                lista_intancias = str(kiposcrum[input_dado].instances())
             
                 print(lista_intancias)
-                
-                # Sincronização
-                #--------------------------------------------------------------------------
-                
-                print("\n------------------------------------\n")
-                print("Sincronização!")
-                
-                try:
-                    sync_reasoner()
-                except:
-                    print("\n\nErro ao sincronizar.\n\n")
-                finally:
-                    print("\n\nSincronização finalizada.\n\n")    
-                
-                print("\n------------------------------------\n")
-                
         
                 myworld.close() # só fecha o bd, deixa as instâncias no bd
                 #myworld.save() # persiste na ontologia
@@ -114,7 +105,7 @@ def instancias_tipo(request):
         # fazer uma query aqui de SPARQL
         
         # faz query e bota resultado na sessão, um redirect vai botar o resultado
-        request.session['input_dado'] = str(lista_intancias)
+        request.session['input_dado'] = lista_intancias
         return redirect('/kipo_playground/instancias_tipo_show/')
     
     return render(request, 'instancias_tipo_select.html', context)
@@ -139,8 +130,8 @@ def inserir_instancia(request):
         if 'input_dado' in request.session:
             del request.session['input_dado']
     
-        input_nome = request.POST.get('nome')
-        input_classe = request.POST.get('classe')
+        input_nome = str(request.POST.get('nome'))
+        input_classe = str(request.POST.get('classe'))
         status = "Indefinido"
         
         print(input_nome)
@@ -149,19 +140,35 @@ def inserir_instancia(request):
         
         
         # OWLREADY2
-        myworld = World(filename='backup.db', exclusive=False)
-        
-        if os.path.exists(os.path.dirname(__file__) + 'backup.db') == False:
-            ###
-            # se o bd n existir
-            onto_path.append(os.path.dirname(__file__))
+        try:
             
-            # se o bd n existir
+            myworld = World(filename='backup.db', exclusive=False)
+            
+            #onto_path.append(os.path.dirname(__file__))
+            
             # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
-            myworld.get_ontology(os.path.dirname(__file__) + '/kiposcrum_pellet.owl').load()
-            ###
+            kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kiposcrum_pellet.owl').load()
             
-        kiposcrum = myworld.get_ontology('http://www.semanticweb.org/fialho/kipo#').load()
+        except:
+            
+            print("Erro no começo")
+            
+        
+        # Sincronização
+        #--------------------------------------------------------------------------
+            
+        print("\n------------------------------------\n")
+        print("Sincronização!")
+            
+        try:
+            sync_reasoner()
+        except:
+            print("\n\nErro ao sincronizar.\n\n")
+        finally:
+            print("\n\nSincronização finalizada.\n\n")                
+
+        print("\n------------------------------------\n")
+        
         
         try:
         
@@ -179,20 +186,16 @@ def inserir_instancia(request):
                 
                 kiposcrum[input_classe](input_nome)
                 
-                # Sincronização
-                #--------------------------------------------------------------------------
+                sync_reasoner()
                 
-                print("\n------------------------------------\n")
-                print("Sincronização!")
+                if str(kiposcrum[input_nome]) == None:
+                    
+                    status = "Erro"
                 
-                try:
-                    sync_reasoner()
-                except:
-                    print("\n\nErro ao sincronizar.\n\n")
-                finally:
-                    print("\n\nSincronização finalizada.\n\n")    
+                else:
+                    
+                    status = "OK!"
                 
-                print("\n------------------------------------\n")
                 
                 myworld.close() # só fecha o bd, deixa as instâncias no bd
                 #myworld.save() # persiste na ontologia
@@ -214,83 +217,52 @@ def inserir_instancia(request):
     
     return render(request, 'instancias_inserir_select.html', context)
 
-
+# TESTE DE ACESSO AO BANCO DE DADOS
+# ------------------------------------------------------------
 
 def instancias_teste(request):
     
     # OWLREADY2
-    myworld = World(filename='backup.db', exclusive=False)
+    try:
         
-    if os.path.exists(os.path.dirname(__file__) + 'backup.db') == False:
-        ###
-        # se o bd n existir
-        onto_path.append(os.path.dirname(__file__))
+        myworld = World(filename='backup.db', exclusive=False)
         
-        # se o bd n existir
+        #onto_path.append(os.path.dirname(__file__))
+        
         # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
-        myworld.get_ontology(os.path.dirname(__file__) + '/kiposcrum_pellet.owl').load()
-        ###
+        kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kiposcrum_pellet.owl').load()
         
-    kiposcrum = myworld.get_ontology('http://www.semanticweb.org/fialho/kipo#').load()
+    except:
+        
+        print("Erro no começo")
+        
+    query_feita = "kiposcrum['KIPCO__Agent'].instances()"
     
-    print("\nsubject rdfs:subClassOf ?object\n")
+    print(query_feita)
     
-    query_feita = "subject rdfs:subClassOf ?object"
+    sync_reasoner()
     
     # se não for nessa estrutura, dá TABLE LOCKED!
     try:
         
         with kiposcrum:
-                
-                
-            busca = """
-                    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                    PREFIX owl: <http://www.w3.org/2002/07/owl#>
-                    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-                    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-                    SELECT ?subject ?object WHERE{ 
-                        ?subject rdfs:subClassOf ?object.
-                        ?object rdf:type owl:Class.
-                    }
-            """
-                
-            lista_intancias = list(myworld.sparql(busca)) 
             
-            busca = """
-                    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                    PREFIX owl: <http://www.w3.org/2002/07/owl#>
-                    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-                    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-                    SELECT (COUNT(*) AS ?no) 
-                    WHERE { ?s ?p ?o  }
-            """
-                
-            quantidade_triplets = list(myworld.sparql(busca))[0][0] 
-                
-            # Sincronização
-            #--------------------------------------------------------------------------
-                
-            print("\n------------------------------------\n")
-            print("Sincronização!")
-                
-            try:
-                sync_reasoner()
-            except:
-                print("\n\nErro ao sincronizar.\n\n")
-            finally:
-                print("\n\nSincronização finalizada.\n\n")    
-                
-            print("\n------------------------------------\n")
+            lista_instancias = str( kiposcrum["KIPCO__Agent"].instances() )
             
-            #myworld.close() # só fecha o bd, deixa as instâncias no bd
+            #print(lista_instancias)
+            
+            myworld.close() # só fecha o bd, deixa as instâncias no bd
             #myworld.save() # persiste na ontologia
         
     except:
-            
+        
+        lista_instancias = ["Erro!"]
         print("Falha de acesso!")
         
-    #del myworld, kiposcrum    
+    #del myworld, kiposcrum   
+    
+    print(lista_instancias) 
         
-    contexto = {"lista_intancias": lista_intancias, "query_feita": query_feita, "quantidade_triplets": quantidade_triplets}
+    contexto = {"lista_instancias": lista_instancias, "query_feita": query_feita}
     
     return render(request, 'instancias.html', contexto)
