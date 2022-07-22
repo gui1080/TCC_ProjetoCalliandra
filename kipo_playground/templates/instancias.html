@@ -12,8 +12,67 @@
 <h4>São todas as classes que são subclasse de outra, uma query simples, apenas para demonstrar que é possível ver isso em sistema DJango.</h4>
 
 <h5>{{query_feita}}</h5>
-<p>{{lista_instancias}}</p>
-</br></br>
-<p><{{quantidade_triplets}}/p>
+
+</br>
+
+<div class="card_view">
+    <div class="card-single">
+
+        <div>
+            <h4>Número de instâncias</h4>
+            <span>{{num_inst}}</span>
+        </div>
+        <div> 
+            <span class="las la-clipboard-lis"></span>
+        </div>
+
+
+    </div>
+
+    <div class="card-single">
+
+        <div>
+            <h4>Status da Ontologia</h4>
+            <span>{{ status }}</span>
+        </div>
+        <div> 
+            <span class="las la-clipboard-lis"></span>
+        </div>
+
+
+    </div>
+
+</div>
+
+<div class="recent-grid">
+    <div class="projects">
+        <div class="card">
+            <div class="card-header">
+                <h2>Instâncias</h2>
+            </div>
+
+            <div class="card-body">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <td>Instâncias de Agentes</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for instancia in lista_instancias %}
+                        <tr>
+                            <td>{{ instancia }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</br>
+
 
 {% endblock %}

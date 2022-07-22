@@ -261,7 +261,10 @@ def instancias_teste(request):
         
         with kiposcrum:
             
-            lista_instancias = str( kiposcrum["KIPCO__Agent"].instances() )
+            lista_instancias = kiposcrum["KIPCO__Agent"].instances() 
+            num_inst = len(lista_instancias)
+            
+            status = "OK!"
             
             #print(lista_instancias)
             
@@ -271,12 +274,13 @@ def instancias_teste(request):
     except:
         
         lista_instancias = ["Erro!"]
+        status = "Erro!"
         print("Falha de acesso!")
         
     #del myworld, kiposcrum   
     
     print(lista_instancias) 
         
-    contexto = {"lista_instancias": lista_instancias, "query_feita": query_feita}
+    contexto = {"lista_instancias": lista_instancias, "query_feita": query_feita, "num_inst": num_inst, "status": status}
     
     return render(request, 'instancias.html', contexto)

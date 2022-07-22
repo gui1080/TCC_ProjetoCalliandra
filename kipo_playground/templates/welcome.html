@@ -16,13 +16,13 @@
     <body>
         <div class="d-flex bg-dark" id="wrapper">
             <!-- Sidebar-->
-            <div class="border-end --bs-gray-900 bg-dark" id="sidebar-wrapper">
-                <div class="sidebar-heading border-bottom bg-dark text-danger">Sistema Calliandra</div>
+            <div class="border-end --bs-gray-900 bg-dark-header" id="sidebar-wrapper">
+                <div class="sidebar-heading border-bottom bg-dark-header text-danger">Sistema Calliandra <img rel="icon" type="image/x-icon" class={% static "assets/icon.ico" %}/></div>
                 <div class="list-group list-group-flush">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark" href="/kipo_playground/welcome/">Início</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark" href="/kipo_playground/instancias_teste/">Ver Teste de Query</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark" href="/kipo_playground/instancias_tipo/">Ver Instâncias por Tipo</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark" href="/kipo_playground/inserir_instancia/">Inserir Instância!</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark text-danger" href="/kipo_playground/welcome/">Início</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark text-danger" href="/kipo_playground/instancias_teste/">Ver Teste de Query</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark text-danger" href="/kipo_playground/instancias_tipo/">Ver Instâncias por Tipo</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark text-danger" href="/kipo_playground/inserir_instancia/">Inserir Instância!</a>
                 </div>
             </div>
             <!-- Page content wrapper-->
@@ -55,14 +55,18 @@
                     <h1 class="mt-4">Caso de Estudo: Ontologia do Scrum com conceitos da KIPO</h1>
 
                 {% block content %} {% endblock %}
-                    
+
+                <!-- Page content
+                </br>
+                </br>
+
                 <h2>Teste de lista</h2>
 
                 <div class="recent-grid">
                     <div class="projects">
                         <div class="card">
                             <div class="card-header">
-                                <h2>Lista header</h2> <button class="btn-secondary">Ver tudo</button>
+                                <h2>Lista header</h2> <button class="btn btn-primary">Ver tudo</button>
                             </div>
 
                             <div class="card-body">
@@ -88,11 +92,12 @@
                         </div>
                     </div>
                 </div>
-
-
+                -->
+                
 
             </div>
         </div>
+        
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
