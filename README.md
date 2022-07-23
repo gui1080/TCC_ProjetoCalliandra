@@ -1,6 +1,6 @@
 # ProjetoCalliandra
 
-Módulo semântico de workflow em Django. Implementação da [KIPO][Knowledge Intensive Ontology] com [SCRUM][Ontologia de Scrum].
+Módulo semântico de workflow em Django. Implementação da [Knowledge Intensive Ontology][KIPO] com [Ontologia de Scrum][SCRUM].
 
 Feito como parte de Projeto de Conclusão de Curso por Guilherme Braga Pinto
 
@@ -8,7 +8,7 @@ Feito como parte de Projeto de Conclusão de Curso por Guilherme Braga Pinto
 
 - Python (v3.9.10)
 - Django
-- [readthedocs][OwlReady2]
+- [OwlReady2][readthedocs]
 
 ## Visualização da Árvore de Arquivos
 
