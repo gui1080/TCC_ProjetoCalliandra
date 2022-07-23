@@ -4532,9 +4532,9 @@ textarea.form-control-lg {
   color: #fff;
 }
 .recent-grid{
-  background-color: #FFFDD0;
+  background-color: #8b0000;
   border-radius: 30%;
-  margin-top: 25px;
+  margin: 20px;
 }
 
 .cards{
@@ -4556,7 +4556,7 @@ textarea.form-control-lg {
   display: flex;
   grid-auto-columns: min-content;
   justify-content: space-between;
-  background: #FFFDD0;
+  background: #8b0000;
   border-radius: 2%;
   max-width: 200px;
   max-height: 200px;
@@ -4578,7 +4578,7 @@ textarea.form-control-lg {
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #FFFDD0;
+  background-color: #8b0000;
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;

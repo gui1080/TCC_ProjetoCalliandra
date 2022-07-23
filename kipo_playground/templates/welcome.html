@@ -14,15 +14,15 @@
         <link href={% static "css/styles.css" %} rel="stylesheet" />
     </head>
     <body>
-        <div class="d-flex bg-dark" id="wrapper">
+        <div class="d-flex bg-dark-header" id="wrapper">
             <!-- Sidebar-->
             <div class="border-end --bs-gray-900 bg-dark-header" id="sidebar-wrapper">
                 <div class="sidebar-heading border-bottom bg-dark-header text-danger">Sistema Calliandra <img rel="icon" type="image/x-icon" class={% static "assets/icon.ico" %}/></div>
                 <div class="list-group list-group-flush">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark text-danger" href="/kipo_playground/welcome/">Início</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark text-danger" href="/kipo_playground/instancias_teste/">Ver Teste de Query</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark text-danger" href="/kipo_playground/instancias_tipo/">Ver Instâncias por Tipo</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark text-danger" href="/kipo_playground/inserir_instancia/">Inserir Instância!</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark text-light" href="/kipo_playground/welcome/">Início</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark text-light" href="/kipo_playground/instancias_teste/">Ver Teste de Query</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark text-light" href="/kipo_playground/instancias_tipo/">Ver Instâncias por Tipo</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark text-light" href="/kipo_playground/inserir_instancia/">Inserir Instância!</a>
                 </div>
             </div>
             <!-- Page content wrapper-->
@@ -34,15 +34,16 @@
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-                                <li class="nav-item active"><a class="nav-link text-danger" href="https://github.com/gui1080">Github</a></li>
-                                <li class="nav-item"><a class="nav-link text-danger" href="https://www.researchgate.net/publication/282939286_KIPO_the_knowledge-intensive_process_ontology">KIPO</a></li>
+                                <li class="nav-item active"><a class="nav-link text-light" href="https://github.com/gui1080">Github</a></li>
+                                <li class="nav-item"><a class="nav-link text-light" href="https://www.researchgate.net/publication/282939286_KIPO_the_knowledge-intensive_process_ontology">KIPO</a></li>
+                                <li class="nav-item"><a class="nav-link text-light" href="https://www.researchgate.net/publication/260480541_Integration_of_classical_and_agile_project_management_methodologies_based_on_ontological_models">Scrum Ontology</a></li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle text-danger" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                                    <a class="nav-link dropdown-toggle text-light" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
                                     <div class="dropdown-menu dropdown-menu-end bg-dark-header" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item text-danger" href="#!">Sobre...</a>
-                                        <a class="dropdown-item text-danger" href="#!">Registrar</a>
+                                        <a class="dropdown-item text-light" href="#!">Sobre...</a>
+                                        <a class="dropdown-item text-light" href="#!">Registrar</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item text-danger" href="#!">Sair</a>
+                                        <a class="dropdown-item text-light" href="#!">Sair</a>
                                     </div>
                                 </li>
                             </ul>
@@ -52,7 +53,7 @@
                 
                 <!-- Page content-->
                 <div class="container-fluid text-danger">
-                    <h1 class="mt-4">Caso de Estudo: Ontologia do Scrum com conceitos da KIPO</h1>
+                    <h1 class="mt-4 text-light">Caso de Estudo: Ontologia do Scrum com conceitos da KIPO</h1>
 
                 {% block content %} {% endblock %}
 

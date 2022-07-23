@@ -8,10 +8,10 @@
     }
     </style>
 
-<h3>Essa página mostra para o usuário de forma não formatada o resultado de uma query feita com as instâncias que estão no Banco de Dados.</h3>
-<h4>São todas as classes que são subclasse de outra, uma query simples, apenas para demonstrar que é possível ver isso em sistema DJango.</h4>
+<h3 class="text-light">Essa página mostra para o usuário de forma não formatada o resultado de uma query feita com as instâncias que estão no Banco de Dados.</h3>
+<h4 class="text-light">São todas as classes que são subclasse de outra, uma query simples, apenas para demonstrar que é possível ver isso em sistema DJango.</h4>
 
-<h5>{{query_feita}}</h5>
+<h5 class="text-light">{{query_feita}}</h5>
 
 </br>
 
@@ -19,8 +19,8 @@
     <div class="card-single">
 
         <div>
-            <h4>Número de instâncias</h4>
-            <span>{{num_inst}}</span>
+            <h4 class="text-light">Número de instâncias</h4>
+            <span class="text-light">{{num_inst}}</span>
         </div>
         <div> 
             <span class="las la-clipboard-lis"></span>
@@ -29,11 +29,19 @@
 
     </div>
 
-    <div class="card-single">
+    <div class="card-single"> 
 
         <div>
-            <h4>Status da Ontologia</h4>
-            <span>{{ status }}</span>
+
+            <h4 class="text-light">Status da Ontologia</h4>
+            {% if status == "OK!" %}
+            <span class="text-success">{{ status }}</span>
+            {% endif %}
+
+            {% if status == "Erro!" %}
+            <span class="text-warning">{{ status }}</span>
+            {% endif %}
+
         </div>
         <div> 
             <span class="las la-clipboard-lis"></span>
@@ -48,7 +56,7 @@
     <div class="projects">
         <div class="card">
             <div class="card-header">
-                <h2>Instâncias</h2>
+                <h2 class="text-light">Instâncias</h2>
             </div>
 
             <div class="card-body">
