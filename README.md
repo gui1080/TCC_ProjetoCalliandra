@@ -1,4 +1,4 @@
-# ProjetoCalliandra
+# Sistema Calliandra
 
 Módulo de workflow com anotação semântica em Django. Implementação da [Knowledge Intensive Ontology][KIPO] com [Ontologia de Scrum][SCRUM] em caso de estudo.
 
@@ -37,6 +37,10 @@ placeholder
 (último update: 24/07/2022)
 
 ![Img](https://github.com/gui1080/TCC_ProjetoCalliandra/blob/master/Midia%20Externa/content_mapping.png)
+
+## Sobre
+
+A Calliandra (*Calliandra dysantha Benth*) é típicamente conhecida como a flor símbolo do Cerrado, de flores vermelhas e delicadas. Ela tem uso medicinal popular, é uma planta amplamente usada para paisagismo. O Cerrado é reconhecido como a savana com maior biodiversidade do mundo, apesar de muitas espécies estarem ameaçadas de extinção.
 
 
 [KIPO]: "https://www.researchgate.net/publication/282939286_KIPO_the_knowledge-intensive_process_ontology"
