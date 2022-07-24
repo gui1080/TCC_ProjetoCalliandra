@@ -31,6 +31,7 @@ Para rodar, execute:
 - Python (v3.9.10)
 - Django
 - [OwlReady2][readthedocs]
+- django-crispy-form
 
 ## Visualização da Árvore de Arquivos
 
