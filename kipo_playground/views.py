@@ -12,20 +12,23 @@ from os.path import exists
 def welcome(request):
     
     return render(request, 'welcome.html')
+
+# MÓDULO DE GESTÃO DE SPRINTS
 # ------------------------------------------------------------
 
-# Ver seleção de Sprints
-# Sprint has_input
-# Sprint has_output
-# Sprint is_executed_by
-# coisas ocorrerm "during" Sprint e Sprint ocorre "during" coisas
-# adicionar -> SprintDaily é "REGARDING" uma Sprint
+'''
+
+def sprint_select(request):
+
+
+def sprint_add(request):
+
+
+def sprint_dashboard(request):
+
+'''
+
 # ------------------------------------------------------------
-
-
-
-# ------------------------------------------------------------
-
 
 # DESSA FORMA É POSSÍVEL VER TODAS AS INSTÂNCIAS DE UMA CLASSE
 # instancias_tipo -> instancias_tipo_show
