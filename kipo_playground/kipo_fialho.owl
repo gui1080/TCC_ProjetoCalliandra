@@ -451,6 +451,51 @@
         <ObjectProperty IRI="#INV_occurs"/>
     </Declaration>
     <Declaration>
+        <ObjectProperty IRI="#INV_ontoscrum__affects"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#INV_ontoscrum__after"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#INV_ontoscrum__before"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#INV_ontoscrum__contains"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#INV_ontoscrum__creator"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#INV_ontoscrum__during"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#INV_ontoscrum__finishes"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#INV_ontoscrum__has_input"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#INV_ontoscrum__has_output"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#INV_ontoscrum__is_executed_by"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#INV_ontoscrum__is_managed_by"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#INV_ontoscrum__originator"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#INV_ontoscrum__overlaps"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#INV_ontoscrum__performs"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#INV_ontoscrum__regarding"/>
+    </Declaration>
+    <Declaration>
         <ObjectProperty IRI="#INV_output"/>
     </Declaration>
     <Declaration>
@@ -658,6 +703,9 @@
         <ObjectProperty IRI="#ontoscrum__performs"/>
     </Declaration>
     <Declaration>
+        <ObjectProperty IRI="#ontoscrum__regarding"/>
+    </Declaration>
+    <Declaration>
         <ObjectProperty IRI="#output"/>
     </Declaration>
     <Declaration>
@@ -717,6 +765,22 @@
     <Declaration>
         <DataProperty IRI="#EstimatedBusinessValue"/>
     </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Nome"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Observacao"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#StatusItemResolvido"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#StatusProblemaAtivo"/>
+    </Declaration>
+    <EquivalentClasses>
+        <Class IRI="#Artifact_Item"/>
+        <Class IRI="#DO__Decision"/>
+    </EquivalentClasses>
     <EquivalentClasses>
         <Class IRI="#BPO__Association"/>
         <ObjectIntersectionOf>
@@ -1521,6 +1585,50 @@
         <Class IRI="#Process_Task"/>
     </SubClassOf>
     <SubClassOf>
+        <Class IRI="#ontoscrum__Artifacts"/>
+        <ObjectUnionOf>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#ontoscrum__creator"/>
+                <Class IRI="#ontoscrum__Roles"/>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#ontoscrum__is_executed_by"/>
+                <Class IRI="#ontoscrum__Roles"/>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#ontoscrum__is_managed_by"/>
+                <Class IRI="#ontoscrum__Roles"/>
+            </ObjectSomeValuesFrom>
+        </ObjectUnionOf>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ontoscrum__Events"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#ontoscrum__during"/>
+            <Class IRI="#ontoscrum__Processes"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ontoscrum__Processes"/>
+        <ObjectUnionOf>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#ontoscrum__has_input"/>
+                <Class IRI="#ontoscrum__Artifacts"/>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#ontoscrum__has_output"/>
+                <Class IRI="#ontoscrum__Artifacts"/>
+            </ObjectSomeValuesFrom>
+        </ObjectUnionOf>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ontoscrum__Processes"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#ontoscrum__is_executed_by"/>
+            <Class IRI="#ontoscrum__Roles"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
         <Class IRI="#scrum_Continuous"/>
         <Class IRI="#ontoscrum__Events"/>
     </SubClassOf>
@@ -1738,6 +1846,66 @@
     </SubObjectPropertyOf>
     <SubObjectPropertyOf>
         <ObjectProperty IRI="#INV_occurs"/>
+        <ObjectProperty IRI="#INV"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#INV_ontoscrum__affects"/>
+        <ObjectProperty IRI="#INV"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#INV_ontoscrum__after"/>
+        <ObjectProperty IRI="#INV"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#INV_ontoscrum__before"/>
+        <ObjectProperty IRI="#INV"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#INV_ontoscrum__contains"/>
+        <ObjectProperty IRI="#INV"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#INV_ontoscrum__creator"/>
+        <ObjectProperty IRI="#INV"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#INV_ontoscrum__during"/>
+        <ObjectProperty IRI="#INV"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#INV_ontoscrum__finishes"/>
+        <ObjectProperty IRI="#INV"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#INV_ontoscrum__has_input"/>
+        <ObjectProperty IRI="#INV"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#INV_ontoscrum__has_output"/>
+        <ObjectProperty IRI="#INV"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#INV_ontoscrum__is_executed_by"/>
+        <ObjectProperty IRI="#INV"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#INV_ontoscrum__is_managed_by"/>
+        <ObjectProperty IRI="#INV"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#INV_ontoscrum__originator"/>
+        <ObjectProperty IRI="#INV"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#INV_ontoscrum__overlaps"/>
+        <ObjectProperty IRI="#INV"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#INV_ontoscrum__performs"/>
+        <ObjectProperty IRI="#INV"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#INV_ontoscrum__regarding"/>
         <ObjectProperty IRI="#INV"/>
     </SubObjectPropertyOf>
     <SubObjectPropertyOf>
@@ -2017,6 +2185,10 @@
         <ObjectProperty IRI="#DIR"/>
     </SubObjectPropertyOf>
     <SubObjectPropertyOf>
+        <ObjectProperty IRI="#ontoscrum__regarding"/>
+        <ObjectProperty IRI="#DIR"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
         <ObjectProperty IRI="#output"/>
         <ObjectProperty IRI="#DIR"/>
     </SubObjectPropertyOf>
@@ -2239,6 +2411,66 @@
     <InverseObjectProperties>
         <ObjectProperty IRI="#INV_occurs"/>
         <ObjectProperty IRI="#occurs"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#INV_ontoscrum__affects"/>
+        <ObjectProperty IRI="#ontoscrum__affects"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#INV_ontoscrum__after"/>
+        <ObjectProperty IRI="#ontoscrum__after"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#INV_ontoscrum__before"/>
+        <ObjectProperty IRI="#ontoscrum__before"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#INV_ontoscrum__contains"/>
+        <ObjectProperty IRI="#ontoscrum__contains"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#INV_ontoscrum__creator"/>
+        <ObjectProperty IRI="#ontoscrum__creator"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#INV_ontoscrum__during"/>
+        <ObjectProperty IRI="#ontoscrum__during"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#INV_ontoscrum__finishes"/>
+        <ObjectProperty IRI="#ontoscrum__finishes"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#INV_ontoscrum__has_input"/>
+        <ObjectProperty IRI="#ontoscrum__has_input"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#INV_ontoscrum__has_output"/>
+        <ObjectProperty IRI="#ontoscrum__has_output"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#INV_ontoscrum__is_executed_by"/>
+        <ObjectProperty IRI="#ontoscrum__is_executed_by"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#INV_ontoscrum__is_managed_by"/>
+        <ObjectProperty IRI="#ontoscrum__is_managed_by"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#INV_ontoscrum__originator"/>
+        <ObjectProperty IRI="#ontoscrum__originator"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#INV_ontoscrum__overlaps"/>
+        <ObjectProperty IRI="#ontoscrum__overlaps"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#INV_ontoscrum__performs"/>
+        <ObjectProperty IRI="#ontoscrum__performs"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#INV_ontoscrum__regarding"/>
+        <ObjectProperty IRI="#ontoscrum__regarding"/>
     </InverseObjectProperties>
     <InverseObjectProperties>
         <ObjectProperty IRI="#INV_output"/>
@@ -2680,9 +2912,41 @@
         <DataProperty IRI="#EstimatedBusinessValue"/>
         <Class IRI="#Product_Backlog_Item"/>
     </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Nome"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Observacao"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#StatusItemResolvido"/>
+        <Class IRI="#Artifact_Item"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#StatusProblemaAtivo"/>
+        <Class IRI="#DO__Decision"/>
+    </DataPropertyDomain>
     <DataPropertyRange>
         <DataProperty IRI="#EstimatedBusinessValue"/>
         <Datatype abbreviatedIRI="xsd:unsignedInt"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#Nome"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#Observacao"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#StatusItemResolvido"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#StatusProblemaAtivo"/>
+        <Datatype abbreviatedIRI="xsd:boolean"/>
     </DataPropertyRange>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
