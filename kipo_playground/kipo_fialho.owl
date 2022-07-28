@@ -496,6 +496,9 @@
         <ObjectProperty IRI="#INV_ontoscrum__regarding"/>
     </Declaration>
     <Declaration>
+        <ObjectProperty IRI="#INV_ontoscrum__simultaneously"/>
+    </Declaration>
+    <Declaration>
         <ObjectProperty IRI="#INV_output"/>
     </Declaration>
     <Declaration>
@@ -706,6 +709,9 @@
         <ObjectProperty IRI="#ontoscrum__regarding"/>
     </Declaration>
     <Declaration>
+        <ObjectProperty IRI="#ontoscrum__simultaneously"/>
+    </Declaration>
+    <Declaration>
         <ObjectProperty IRI="#output"/>
     </Declaration>
     <Declaration>
@@ -775,7 +781,7 @@
         <DataProperty IRI="#StatusItemResolvido"/>
     </Declaration>
     <Declaration>
-        <DataProperty IRI="#StatusProblemaAtivo"/>
+        <DataProperty IRI="#StatusProblemaResolvido"/>
     </Declaration>
     <EquivalentClasses>
         <Class IRI="#Artifact_Item"/>
@@ -1909,6 +1915,10 @@
         <ObjectProperty IRI="#INV"/>
     </SubObjectPropertyOf>
     <SubObjectPropertyOf>
+        <ObjectProperty IRI="#INV_ontoscrum__simultaneously"/>
+        <ObjectProperty IRI="#INV"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
         <ObjectProperty IRI="#INV_output"/>
         <ObjectProperty IRI="#INV"/>
     </SubObjectPropertyOf>
@@ -2186,6 +2196,10 @@
     </SubObjectPropertyOf>
     <SubObjectPropertyOf>
         <ObjectProperty IRI="#ontoscrum__regarding"/>
+        <ObjectProperty IRI="#DIR"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#ontoscrum__simultaneously"/>
         <ObjectProperty IRI="#DIR"/>
     </SubObjectPropertyOf>
     <SubObjectPropertyOf>
@@ -2471,6 +2485,10 @@
     <InverseObjectProperties>
         <ObjectProperty IRI="#INV_ontoscrum__regarding"/>
         <ObjectProperty IRI="#ontoscrum__regarding"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#INV_ontoscrum__simultaneously"/>
+        <ObjectProperty IRI="#ontoscrum__simultaneously"/>
     </InverseObjectProperties>
     <InverseObjectProperties>
         <ObjectProperty IRI="#INV_output"/>
@@ -2925,7 +2943,7 @@
         <Class IRI="#Artifact_Item"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
-        <DataProperty IRI="#StatusProblemaAtivo"/>
+        <DataProperty IRI="#StatusProblemaResolvido"/>
         <Class IRI="#DO__Decision"/>
     </DataPropertyDomain>
     <DataPropertyRange>
@@ -2945,7 +2963,7 @@
         <Datatype abbreviatedIRI="xsd:boolean"/>
     </DataPropertyRange>
     <DataPropertyRange>
-        <DataProperty IRI="#StatusProblemaAtivo"/>
+        <DataProperty IRI="#StatusProblemaResolvido"/>
         <Datatype abbreviatedIRI="xsd:boolean"/>
     </DataPropertyRange>
     <AnnotationAssertion>
