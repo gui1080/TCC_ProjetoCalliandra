@@ -4,9 +4,30 @@ from django.template import Template, Context
 from .forms import novo_instancias_tipoForm, inserir_instancias_tipoForm
 from owlready2 import *         # https://pypi.org/project/Owlready2/
 from os.path import exists
+import numpy 
 
 # source venv/bin/activate
 # python3 manage.py runserver
+
+# ------------------------------------------------------------
+
+def faz_id(input_str):
+    
+    resultado_id = str(abs(hash(input_str)) % (10 ** 4))
+    
+    if len(resultado_id) == 3:
+        
+        resultado_id = "0" + resultado_id
+
+    elif len(resultado_id) == 2:
+
+        resultado_id = "00" + resultado_id
+    
+    elif len(resultado_id) == 1:
+    
+        resultado_id = "000" + resultado_id
+    
+    return resultado_id
 
 # ------------------------------------------------------------
 def welcome(request):
@@ -51,6 +72,13 @@ def instancias_tipo(request):
         if 'input_dado' in request.session:
             del request.session['input_dado']
     
+        if 'num_inst' in request.session:
+            del request.session['num_inst']
+            
+            
+        if 'status' in request.session:
+            del request.session['status']
+            
         input_dado = str(request.POST.get('busca'))
         
         print(input_dado)
@@ -71,49 +99,45 @@ def instancias_tipo(request):
         
         sync_reasoner()
         
+        objetos_final = []
+        
         try:
         
             with kiposcrum:
                 
-                '''
+                lista_instancias = kiposcrum[input_dado].instances()
+        
+                num_inst = len(lista_instancias)
                 
+                status = "OK!"
                 
-                kiposcrum["KIPCO__Agent"].instances()
+                list_nomes = []
+                list_obs = []
                 
-                kiposcrum["KIPCO__Agent"]("desenvolvedornovo")!!
-
-                kiposcrum.KIPCO__Agent("desenvolvedornovo")
-                
-                kiposcrum["desenvolvedor1"].is_a()
-                
-                
-                busca = """
-                    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                    PREFIX owl: <http://www.w3.org/2002/07/owl#>
-                    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-                    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-                    PREFIX scrum: <http://www.semanticweb.org/fialho/kipo#>
-                    SELECT *
-                    WHERE {
-                        ?cls rdfs:subClassOf* """+ str(input_dado) +""".
-                        ?individual a ?cls.
-                    }
-                """
+                for i in range(len(lista_instancias)):
                     
-                lista_instancias = list(myworld.sparql(busca)) 
+                    list_nomes.append(lista_instancias[i].Nome[0])
                 
-                '''
-            
-                lista_instancias = str(kiposcrum[input_dado].instances())
-            
-                print(lista_instancias)
+                    if not lista_instancias[i].Observacao:
+                        list_obs.append("Sem observações")
+                    else:
+                        list_obs.append(lista_instancias[i].Observacao)
+                
+                
+                for i in range(len(lista_instancias)):
+                    objetos_final.append({'instancia':lista_instancias[i],'nome':list_nomes[i], 'obs':list_obs[i]})
+                
+                
+                
+                #print(lista_instancias)
         
                 myworld.close() # só fecha o bd, deixa as instâncias no bd
                 #myworld.save() # persiste na ontologia
         
         except:
             
-            lista_instancias = "Erro!"
+            status = "Erro!" 
+            num_inst = "Desconhecido"
             
             print("Falha de acesso!")
         
@@ -122,8 +146,12 @@ def instancias_tipo(request):
         # fazer uma query aqui de SPARQL
         
         # faz query e bota resultado na sessão, um redirect vai botar o resultado
-        request.session['input_dado'] = lista_instancias
-        return redirect('/kipo_playground/instancias_tipo_show/')
+        #request.session['input_dado'] = lista_instancias
+        request.session['num_inst'] = num_inst
+        request.session['status'] = status
+        
+        context = {"objetos_final": objetos_final}
+        return render(request, 'instancias_tipo_show.html', context)
     
     return render(request, 'instancias_tipo_select.html', context)
 
@@ -144,15 +172,24 @@ def inserir_instancia(request):
     
     if request.method == 'POST':
         
-        if 'input_dado' in request.session:
-            del request.session['input_dado']
+        if 'nome' in request.session:
+            del request.session['nome']
     
+        if 'classe' in request.session:
+            del request.session['classe']
+            
+        if 'observacao' in request.session:
+            del request.session['observacao']
+            
         input_nome = str(request.POST.get('nome'))
         input_classe = str(request.POST.get('classe'))
+        input_observacao = str(request.POST.get('observacao'))
+        
         status = "Indefinido"
         
         print(input_nome)
         print(input_classe)
+        print(input_observacao)
         print(status)
         
         
@@ -186,6 +223,8 @@ def inserir_instancia(request):
 
         print("\n------------------------------------\n")
         
+        seed = str(time.time())
+        id_unico = "000"
         
         try:
         
@@ -201,17 +240,14 @@ def inserir_instancia(request):
                 kiposcrum["desenvolvedor1"].is_a()
                 '''
                 
-                kiposcrum[input_classe](input_nome)
+                kiposcrum[input_classe](input_nome + id_unico)
+                
+                if input_observacao != "":
+                    kiposcrum[input_nome + id_unico].Observacao.append(input_observacao)
                 
                 sync_reasoner()
                 
-                if str(kiposcrum[input_nome]) == None:
-                    
-                    status = "Erro"
-                
-                else:
-                    
-                    status = "OK!"
+                status = "OK!"
                 
                 
                 myworld.close() # só fecha o bd, deixa as instâncias no bd
@@ -220,15 +256,18 @@ def inserir_instancia(request):
         except:
             
             print("Falha de acesso!")
+            status = "Erro!"
+            input_nome = "Não foi recuperado"
+            input_classe = "Não foi recuperado"
         
         #del myworld, kiposcrum    
         
         # fazer uma query aqui de SPARQL
         
         # faz query e bota resultado na sessão, um redirect vai botar o resultado
-        request.session['input_nome'] = input_nome
+        request.session['input_nome'] = input_nome + id_unico
         request.session['input_classe'] = input_classe
-        request.session['input_status'] = status
+        request.session['ontologia_status'] = status
         return redirect('/kipo_playground/inserir_instancia_tela_ok/')
         
     
@@ -265,25 +304,41 @@ def instancias_teste(request):
         with kiposcrum:
             
             lista_instancias = kiposcrum["KIPCO__Agent"].instances() 
+            print("foi")
+            list_nomes = []
+            list_obs = []
+            objetos_final = []
+            
+            for i in range(len(lista_instancias)):
+                
+                list_nomes.append(lista_instancias[i].Nome[0])
+                
+                if not lista_instancias[i].Observacao:
+                    list_obs.append("Sem observações")
+                else:
+                    list_obs.append(lista_instancias[i].Observacao)
+            
+            for i in range(len(lista_instancias)):
+                objetos_final.append({'instancia':lista_instancias[i],'nome':list_nomes[i], 'obs':list_obs[i]})
+                
             num_inst = len(lista_instancias)
             
             status = "OK!"
-            
-            #print(lista_instancias)
             
             myworld.close() # só fecha o bd, deixa as instâncias no bd
             #myworld.save() # persiste na ontologia
         
     except:
         
-        lista_instancias = ["Erro!"]
+        lista_final = ["Erro!"]
         status = "Erro!"
         print("Falha de acesso!")
+        num_inst = 0
         
     #del myworld, kiposcrum   
     
-    print(lista_instancias) 
-        
-    contexto = {"lista_instancias": lista_instancias, "query_feita": query_feita, "num_inst": num_inst, "status": status}
+    #print(lista_final)
+    
+    contexto = {"objetos_final": objetos_final, "query_feita": query_feita, "num_inst": num_inst, "status": status}
     
     return render(request, 'instancias.html', contexto)

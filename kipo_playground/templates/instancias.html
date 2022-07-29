@@ -8,14 +8,16 @@
     }
     </style>
 
+</br>
 <h3 class="text-light">Essa página mostra para o usuário de forma não formatada o resultado de uma query feita com as instâncias que estão no Banco de Dados.</h3>
 <h4 class="text-light">São todas as classes que são subclasse de outra, uma query simples, apenas para demonstrar que é possível ver isso em sistema DJango.</h4>
-
+</br>
 <h5 class="text-light">{{query_feita}}</h5>
 
 </br>
 
 <div class="card_view">
+    
     <div class="card-single">
 
         <div>
@@ -64,12 +66,16 @@
                     <thead>
                         <tr>
                             <td>Instâncias de Agentes</td>
+                            <td>Nomes de Agentes</td>
+                            <td>Observações</td>
                         </tr>
                     </thead>
-                    <tbody>
-                        {% for instancia in lista_instancias %}
+                    <tbody> 
+                        {% for obj in objetos_final %}
                         <tr>
-                            <td>{{ instancia }}</td>
+                            <td>{{ obj.instancia }}</td>
+                            <td>{{ obj.nome }}</td>
+                            <td>{{ obj.obs }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -82,5 +88,11 @@
 
 </br>
 
+<form href="/kipo_playground/instancias_teste/">
+    <button class="btn btn-primary" id="sidebarToggle">Voltar</button>
+</form>
+
+</br>
+</br>
 
 {% endblock %}

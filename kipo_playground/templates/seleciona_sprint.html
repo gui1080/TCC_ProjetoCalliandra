@@ -53,9 +53,10 @@
                 <table width="100%">
                     <thead>
                         <tr>
-                            <td>Instâncias de Agentes</td>
-                            <td>Nomes de Agentes</td>
+                            <td>Instâncias de Sprints</td>
+                            <td>Nomes das Sprints</td>
                             <td>Observações</td>
+                            <td>Ver Dashboard</td>
                         </tr>
                     </thead>
                     <tbody> 
@@ -64,6 +65,7 @@
                             <td>{{ obj.instancia }}</td>
                             <td>{{ obj.nome }}</td>
                             <td>{{ obj.obs }}</td>
+                            <form action="" method="POST"></form>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -75,7 +77,7 @@
 
 </br>
 
-<form href="/kipo_playground/instancias_teste/">
+<form href="/kipo_playground/welcome/">
     <button class="btn btn-primary" id="sidebarToggle">Voltar</button>
 </form>
 

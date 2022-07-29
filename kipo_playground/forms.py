@@ -7,7 +7,7 @@ class inserir_instancias_tipoForm(ModelForm):
     
     class Meta:
         model = inserir_instancias_tipo
-        fields = ['nome', 'classe']
+        fields = ['nome', 'classe', 'observacao']
         
 
 class novo_instancias_tipoForm(ModelForm):
