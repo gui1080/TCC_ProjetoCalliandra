@@ -26,7 +26,7 @@ Para verificar as permissões do script de dependências, execute:
 
 Para rodar, execute:
 
-> ./demo.sh
+> ./dependencias.sh
 
 - Python (v3.9.10)
 - Django

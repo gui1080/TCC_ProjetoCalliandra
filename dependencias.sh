@@ -10,7 +10,7 @@ echo "Para rodar se deve rodar -> 'source venv/bin/activate'"
 source venv/bin/activate
 pip3 install Owlready2
 pip3 install Django
-pip3 install django-crispy-form
+pip install django-crispy-form
 pip3 install --upgrade pip
 pip3 install numpy
 echo "Rodando Django -> 'python3 manage.py runserver'"
