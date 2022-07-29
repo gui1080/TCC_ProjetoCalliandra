@@ -37,10 +37,85 @@ def welcome(request):
 # MÓDULO DE GESTÃO DE SPRINTS
 # ------------------------------------------------------------
 
-'''
 
 def sprint_select(request):
+    
+    # OWLREADY2
+    try:
+            
+        myworld = World(filename='backup.db', exclusive=False)
+            
+        #onto_path.append(os.path.dirname(__file__))
+            
+        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+        kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
+            
+    except:
+            
+        print("Erro no começo")
+        
+    sync_reasoner()
+        
+    objetos_final = []
+        
+    try:
+        
+        with kiposcrum:
+                
+            lista_instancias = kiposcrum["scrum_Sprint"].instances()
+            
+            num_inst = len(lista_instancias)
+                
+            status = "OK!"
+                
+            list_nomes = []
+            list_obs = []
+                
+            for i in range(len(lista_instancias)):
+                    
+                list_nomes.append(lista_instancias[i].Nome[0])
+                
+                if not lista_instancias[i].Observacao:
+                    list_obs.append("Sem observações")
+                else:
+                    list_obs.append(lista_instancias[i].Observacao)
+                    
+            for i in range(len(lista_instancias)):
+                objetos_final.append({'instancia':lista_instancias[i],'nome':list_nomes[i], 'obs':list_obs[i]})
+                
+            myworld.close() # só fecha o bd, deixa as instâncias no bd
+            
+    except:
+            
+        status = "Erro!" 
+        num_inst = "Desconhecido"
+            
+        print("Falha de acesso!")
+    
+    request.session['num_inst'] = num_inst
+    request.session['status'] = status
+        
+    context = {"objetos_final": objetos_final}
+    return render(request, 'seleciona_sprint.html', context)
+                
+            
 
+def sprint_dashboard(request, instancia_sprint):
+    
+    # instancia_sprint é a sprint a ser usada
+    
+    # sai da instância -> ontoscrum__has_input
+    # sai da instância -> ontoscrum__has_output
+    # sai da instância -> ontoscrum__isExecutedBy
+    # sai da instância -> ontoscrum__during
+    # sai da instância -> INV_ontoscrum__simultaneously -> Sai alguns scrum_Daily (daí sai Decisões)
+    
+    # criar link de dashboard do trabalho diário (scrum_Daily)
+    
+    return render(request, 'sprint_dashboard.html', {'instancia_sprint':instancia_sprint})
+    
+    
+'''
 
 def sprint_add(request):
 
