@@ -6,11 +6,12 @@ from owlready2 import *         # https://pypi.org/project/Owlready2/
 from os.path import exists
 import numpy 
 
+# Comandos básicos
 # source venv/bin/activate
 # python3 manage.py runserver
 
+# SCRIPTS AUXILIARES
 # ------------------------------------------------------------
-
 def faz_id(input_str):
     
     resultado_id = str(abs(hash(input_str)) % (10 ** 4))
@@ -33,6 +34,11 @@ def faz_id(input_str):
 def welcome(request):
     
     return render(request, 'welcome.html')
+
+# ------------------------------------------------------------
+def sobre(request):
+    
+    return render(request, 'sobre.html')
 
 # MÓDULO DE GESTÃO DE SPRINTS
 # ------------------------------------------------------------
