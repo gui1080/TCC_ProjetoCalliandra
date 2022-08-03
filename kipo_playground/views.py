@@ -104,8 +104,32 @@ def sprint_select(request):
         
     context = {"objetos_final": objetos_final}
     return render(request, 'seleciona_sprint.html', context)
+          
+          
                 
-            
+def transforma_objeto(lista_instancias):
+    
+    objetos_final = []
+    
+    list_nomes = []
+    list_obs = []
+                
+    for i in range(len(lista_instancias)):
+                    
+        list_nomes.append(lista_instancias[i].Nome[0])
+                
+        if not lista_instancias[i].Observacao:
+            list_obs.append("Sem observações")
+        else:
+            list_obs.append(lista_instancias[i].Observacao)
+                
+                
+    for i in range(len(lista_instancias)):
+        objetos_final.append({'instancia':lista_instancias[i],'nome':list_nomes[i], 'obs':list_obs[i]})
+    
+    return objetos_final                 
+
+
 
 def sprint_dashboard(request, instancia_sprint):
     
@@ -187,7 +211,9 @@ def sprint_dashboard(request, instancia_sprint):
             print("Simultaneo " + str(INV_simultaneo))
             num_inst = num_inst + len(INV_simultaneo)
             
+            objeto_during = transforma_objeto(during)
             
+           
             
             status = "OK!" 
             myworld.close() 
