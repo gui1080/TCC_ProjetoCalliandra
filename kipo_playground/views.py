@@ -121,6 +121,9 @@ def sprint_dashboard(request, instancia_sprint):
     if 'num_prop_correlatas' in request.session:
         del request.session['num_prop_correlatas']
         
+    if 'num_inst' in request.session:
+        del request.session['num_inst']
+        
         
     # OWLREADY2
     try:
@@ -139,18 +142,18 @@ def sprint_dashboard(request, instancia_sprint):
     sync_reasoner()
     
     #-----------------------------------------------------
-            
+    
     try:
         
         with kiposcrum:
             
             print("Criando dashboard de Sprint!")
             
-            num_inst = "Desconhecido"
+            num_inst = 0
             
             # kiposcrum.KIPCO__Agent("desenvolvedornovo")
             
-            # a query sai com prefixo ".kipo"
+            # a query sai com prefixo "kipo."
             instancia = instancia_sprint[5:]
             print(instancia)
             
@@ -161,19 +164,30 @@ def sprint_dashboard(request, instancia_sprint):
             
             # lista de instâncias tudo que ocorre ontoscrum__during
             during = kiposcrum[instancia].ontoscrum__during
+            print("During " + str(during))
+            num_inst = num_inst + len(during)
+            
+            # lista de instâncias tudo que ocorre ontoscrum__has_input
+            has_input = kiposcrum[instancia].ontoscrum__has_input
+            print("Input " + str(has_input))
+            num_inst = num_inst + len(has_input)
 
+            # lista de instâncias tudo que ocorre ontoscrum__has_has_output
+            has_output = kiposcrum[instancia].ontoscrum__has_output
+            print("Output " + str(has_output))
+            num_inst = num_inst + len(has_output)
+    
+            # lista de instâncias tudo que ocorre ontoscrum__isExecutedBy
+            has_isexecutedby = kiposcrum[instancia].ontoscrum__is_executed_by
+            print("Executado por " + str(has_isexecutedby))
+            num_inst = num_inst + len(has_isexecutedby)
+
+            # lista de instâncias tudo que ocorre ontoscrum__simultaneously
+            INV_simultaneo = kiposcrum[instancia].INV_ontoscrum__simultaneously
+            print("Simultaneo " + str(INV_simultaneo))
+            num_inst = num_inst + len(INV_simultaneo)
             
-            #for propriedade in propriedades:
-                
-                #propriedadeValor = getattr(kiposcrum[instancia_sprint], propriedade.name)
             
-            # sai da instância -> ontoscrum__has_input
-            # sai da instância -> ontoscrum__has_output
-            # sai da instância -> ontoscrum__isExecutedBy
-            # sai da instância -> ontoscrum__during
-            # sai da instância -> INV_ontoscrum__simultaneously -> Sai alguns scrum_Daily (daí sai Decisões)
-            
-            # criar link de dashboard do trabalho diário (scrum_Daily)
             
             status = "OK!" 
             myworld.close() 
@@ -183,12 +197,14 @@ def sprint_dashboard(request, instancia_sprint):
         status = "Erro!" 
         num_inst = "Desconhecido"
         num_prop_correlatas = "Desconhecido"
+        num_inst = 0
             
         print("Falha de acesso!")
     
     request.session['num_inst'] = num_inst
     request.session['status'] = status   # "OK!" ou "Erro!"
     request.session['num_prop_correlatas'] = num_prop_correlatas
+    request.session['num_inst'] = str(num_inst)
     
     context = {"instancia_sprint":instancia_sprint }
     
