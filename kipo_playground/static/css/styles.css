@@ -4560,6 +4560,7 @@ textarea.form-control-lg {
   max-width: 200px;
   max-height: 200px;
   margin-right: 25px;
+  box-shadow: 8px 8px 5px black;
 }
 
 .card-single:first-child{
@@ -4581,6 +4582,7 @@ textarea.form-control-lg {
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
+  box-shadow: 8px 8px 5px black;
 }
 .card > hr {
   margin-right: 0;
