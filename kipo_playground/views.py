@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import Template, Context
@@ -110,15 +111,88 @@ def sprint_dashboard(request, instancia_sprint):
     
     # instancia_sprint é a sprint a ser usada
     
-    # sai da instância -> ontoscrum__has_input
-    # sai da instância -> ontoscrum__has_output
-    # sai da instância -> ontoscrum__isExecutedBy
-    # sai da instância -> ontoscrum__during
-    # sai da instância -> INV_ontoscrum__simultaneously -> Sai alguns scrum_Daily (daí sai Decisões)
     
-    # criar link de dashboard do trabalho diário (scrum_Daily)
+    if 'num_inst' in request.session:
+        del request.session['num_inst']
+            
+    if 'status' in request.session:
+        del request.session['status']
+        
+    if 'num_prop_correlatas' in request.session:
+        del request.session['num_prop_correlatas']
+        
+        
+    # OWLREADY2
+    try:
+            
+        myworld = World(filename='backup.db', exclusive=False)
+            
+        #onto_path.append(os.path.dirname(__file__))
+            
+        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+        kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
+            
+    except:
+        
+        print("Erro no começo")
+        
+    sync_reasoner()
     
-    return render(request, 'sprint_dashboard.html', {'instancia_sprint':instancia_sprint})
+    #-----------------------------------------------------
+            
+    try:
+        
+        with kiposcrum:
+            
+            print("Criando dashboard de Sprint!")
+            
+            num_inst = "Desconhecido"
+            
+            # kiposcrum.KIPCO__Agent("desenvolvedornovo")
+            
+            # a query sai com prefixo ".kipo"
+            instancia = instancia_sprint[5:]
+            print(instancia)
+            
+            # propriedades
+            propriedades = kiposcrum[instancia].get_properties()
+            print(propriedades)
+            num_prop_correlatas = len(propriedades)
+            
+            # lista de instâncias tudo que ocorre ontoscrum__during
+            during = kiposcrum[instancia].ontoscrum__during
+
+            
+            #for propriedade in propriedades:
+                
+                #propriedadeValor = getattr(kiposcrum[instancia_sprint], propriedade.name)
+            
+            # sai da instância -> ontoscrum__has_input
+            # sai da instância -> ontoscrum__has_output
+            # sai da instância -> ontoscrum__isExecutedBy
+            # sai da instância -> ontoscrum__during
+            # sai da instância -> INV_ontoscrum__simultaneously -> Sai alguns scrum_Daily (daí sai Decisões)
+            
+            # criar link de dashboard do trabalho diário (scrum_Daily)
+            
+            status = "OK!" 
+            myworld.close() 
+        
+    except:
+            
+        status = "Erro!" 
+        num_inst = "Desconhecido"
+        num_prop_correlatas = "Desconhecido"
+            
+        print("Falha de acesso!")
+    
+    request.session['num_inst'] = num_inst
+    request.session['status'] = status   # "OK!" ou "Erro!"
+    request.session['num_prop_correlatas'] = num_prop_correlatas
+    
+    context = {"instancia_sprint":instancia_sprint }
+    
+    return render(request, 'sprint_dashboard.html', context)
     
     
 '''
