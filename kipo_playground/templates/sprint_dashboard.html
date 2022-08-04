@@ -19,7 +19,7 @@
 
     </div>
 
-    <div class="card-single"> 
+    <div class="card-single">  
 
         <div>
 
@@ -66,6 +66,171 @@
 
 </div>
 
+</br>
 
+<div class="recent-grid">
+    <div class="projects">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-light">O que ocorre durante</h2>
+            </div>
+
+            <div class="card-body">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <td>Instâncias</td>
+                            <td>Nomes</td>
+                            <td>Observações</td>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        {% for obj in objetos_during %}
+                        <tr>
+                            <td>{{ obj.instancia }}</td>
+                            <td>{{ obj.nome }}</td>
+                            <td>{{ obj.obs }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</br>
+
+<div class="recent-grid">
+    <div class="projects">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-light">Inputs</h2>
+            </div>
+
+            <div class="card-body">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <td>Instâncias</td>
+                            <td>Nomes</td>
+                            <td>Observações</td>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        {% for obj in objetos_has_input %}
+                        <tr>
+                            <td>{{ obj.instancia }}</td>
+                            <td>{{ obj.nome }}</td>
+                            <td>{{ obj.obs }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</br>
+
+<div class="recent-grid">
+    <div class="projects">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-light">Outputs</h2>
+            </div>
+
+            <div class="card-body">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <td>Instâncias</td>
+                            <td>Nomes</td>
+                            <td>Observações</td>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        {% for obj in objetos_has_output %}
+                        <tr>
+                            <td>{{ obj.instancia }}</td>
+                            <td>{{ obj.nome }}</td>
+                            <td>{{ obj.obs }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</br>
+
+<div class="recent-grid">
+    <div class="projects">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-light">Quem executa Sprint</h2>
+            </div>
+
+            <div class="card-body">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <td>Instâncias</td>
+                            <td>Nomes</td>
+                            <td>Observações</td>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        {% for obj in objetos_has_isexecutedby %}
+                        <tr>
+                            <td>{{ obj.instancia }}</td>
+                            <td>{{ obj.nome }}</td>
+                            <td>{{ obj.obs }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</br>
+
+<div class="recent-grid">
+    <div class="projects">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-light">Trabalho diário</h2>
+            </div>
+
+            <div class="card-body">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <td>Instâncias</td>
+                            <td>Nomes</td>
+                            <td>Observações</td>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        {% for obj in objetos_INV_simultaneo %}
+                        <tr>
+                            <td>{{ obj.instancia }}</td>
+                            <td>{{ obj.nome }}</td>
+                            <td>{{ obj.obs }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</br>
 
 {% endblock %}

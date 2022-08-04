@@ -113,11 +113,14 @@ def transforma_objeto(lista_instancias):
     
     list_nomes = []
     list_obs = []
+    list_classe = []
                 
     for i in range(len(lista_instancias)):
                     
         list_nomes.append(lista_instancias[i].Nome[0])
-                
+        
+        list_classe.append(lista_instancias[i].is_a.pop(0))
+        
         if not lista_instancias[i].Observacao:
             list_obs.append("Sem observações")
         else:
@@ -125,7 +128,7 @@ def transforma_objeto(lista_instancias):
                 
                 
     for i in range(len(lista_instancias)):
-        objetos_final.append({'instancia':lista_instancias[i],'nome':list_nomes[i], 'obs':list_obs[i]})
+        objetos_final.append({'classe_inst':list_classe[i], 'instancia':lista_instancias[i],'nome':list_nomes[i], 'obs':list_obs[i]})
     
     return objetos_final                 
 
@@ -212,8 +215,10 @@ def sprint_dashboard(request, instancia_sprint):
             num_inst = num_inst + len(INV_simultaneo)
             
             objeto_during = transforma_objeto(during)
-            
-           
+            objeto_has_input = transforma_objeto(has_input)
+            objeto_has_output = transforma_objeto(has_output)
+            objeto_has_isexecutedby = transforma_objeto(has_isexecutedby)
+            objeto_INV_simultaneo = transforma_objeto(INV_simultaneo)
             
             status = "OK!" 
             myworld.close() 
@@ -232,7 +237,8 @@ def sprint_dashboard(request, instancia_sprint):
     request.session['num_prop_correlatas'] = num_prop_correlatas
     request.session['num_inst'] = str(num_inst)
     
-    context = {"instancia_sprint":instancia_sprint }
+    context = {"instancia_sprint":instancia_sprint , "objetos_during":objeto_during, "objetos_has_input":objeto_has_input, "objetos_has_output":objeto_has_output,
+               "objetos_has_isexecutedby":objeto_has_isexecutedby, "objetos_INV_simultaneo":objeto_INV_simultaneo}
     
     return render(request, 'sprint_dashboard.html', context)
     
