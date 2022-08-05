@@ -79,6 +79,7 @@
                 <table width="100%">
                     <thead>
                         <tr>
+                            <td>Classes</td>
                             <td>Instâncias</td>
                             <td>Nomes</td>
                             <td>Observações</td>
@@ -87,6 +88,7 @@
                     <tbody> 
                         {% for obj in objetos_during %}
                         <tr>
+                            <td>{{ obj.classe_inst }}</td>
                             <td>{{ obj.instancia }}</td>
                             <td>{{ obj.nome }}</td>
                             <td>{{ obj.obs }}</td>
