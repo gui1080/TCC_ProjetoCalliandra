@@ -67,9 +67,8 @@
 </div>
 
 </br>
-
 <div class="recent-grid">
-    <div class="projects">
+<div class="projects">
         <div class="card">
             <div class="card-header">
                 <h2 class="text-light">O que ocorre durante</h2>
@@ -101,6 +100,8 @@
     </div>
 </div>
 
+
+
 </br>
 
 <div class="recent-grid">
@@ -114,6 +115,7 @@
                 <table width="100%">
                     <thead>
                         <tr>
+                            <td>Classes</td>
                             <td>Instâncias</td>
                             <td>Nomes</td>
                             <td>Observações</td>
@@ -122,6 +124,7 @@
                     <tbody> 
                         {% for obj in objetos_has_input %}
                         <tr>
+                            <td>{{ obj.classe_inst }}</td>
                             <td>{{ obj.instancia }}</td>
                             <td>{{ obj.nome }}</td>
                             <td>{{ obj.obs }}</td>
@@ -147,6 +150,7 @@
                 <table width="100%">
                     <thead>
                         <tr>
+                            <td>Classes</td>
                             <td>Instâncias</td>
                             <td>Nomes</td>
                             <td>Observações</td>
@@ -155,6 +159,7 @@
                     <tbody> 
                         {% for obj in objetos_has_output %}
                         <tr>
+                            <td>{{ obj.classe_inst }}</td>
                             <td>{{ obj.instancia }}</td>
                             <td>{{ obj.nome }}</td>
                             <td>{{ obj.obs }}</td>
@@ -180,6 +185,7 @@
                 <table width="100%">
                     <thead>
                         <tr>
+                            <td>Classes</td>
                             <td>Instâncias</td>
                             <td>Nomes</td>
                             <td>Observações</td>
@@ -188,6 +194,7 @@
                     <tbody> 
                         {% for obj in objetos_has_isexecutedby %}
                         <tr>
+                            <td>{{ obj.classe_inst }}</td>
                             <td>{{ obj.instancia }}</td>
                             <td>{{ obj.nome }}</td>
                             <td>{{ obj.obs }}</td>
@@ -213,17 +220,21 @@
                 <table width="100%">
                     <thead>
                         <tr>
+                            <td>Classes</td>
                             <td>Instâncias</td>
                             <td>Nomes</td>
                             <td>Observações</td>
+                            <td>Ver Dashboard</td>
                         </tr>
                     </thead>
                     <tbody> 
                         {% for obj in objetos_INV_simultaneo %}
                         <tr>
+                            <td>{{ obj.classe_inst }}</td>
                             <td>{{ obj.instancia }}</td>
                             <td>{{ obj.nome }}</td>
                             <td>{{ obj.obs }}</td>
+                            <td>  <a class="btn-warning" href="/kipo_playground/daily_dashboard/{{obj.instancia}}">Ver Dashboard do Trabalho!</a>  </td>
                         </tr>
                         {% endfor %}
                     </tbody>
