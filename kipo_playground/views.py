@@ -12,8 +12,8 @@ import numpy
 # source venv/bin/activate
 # python3 manage.py runserver
 
-# SCRIPTS AUXILIARES
-# ------------------------------------------------------------
+# !SCRIPTS AUXILIARES
+# !------------------------------------------------------------
 def faz_id(input_str):
     
     resultado_id = str(abs(hash(input_str)) % (10 ** 4))
@@ -42,10 +42,12 @@ def sobre(request):
     
     return render(request, 'sobre.html')
 
-# MÓDULO DE GESTÃO DE SPRINTS
-# ------------------------------------------------------------
+# !MÓDULO DE GESTÃO DE SPRINTS
 
-# SELECIONA SPRINT
+
+# !SELECIONA SPRINT
+# !------------------------------------------------------------
+
 def sprint_select(request):
     
     # OWLREADY2
@@ -144,6 +146,8 @@ def transforma_objeto(lista_instancias):
     
     return objetos_final                 
 
+# !SPRINT
+#!-----------------------------------------------------
 
 # VER DADOS DA SPRINT
 def sprint_dashboard(request, instancia_sprint):
@@ -330,7 +334,8 @@ def sprint_add(request):
 
 # ------------------------------------------------------------
 
-# VISUALIZAÇÃO DE TRABALHO DIÁRIO DENTRO DE UMA SPRINT
+# !VISUALIZAÇÃO DE TRABALHO DIÁRIO DENTRO DE UMA SPRINT
+# !------------------------------------------------------------
 
 def daily_dashboard(request, instancia_daily):
     
@@ -456,7 +461,10 @@ def daily_dashboard(request, instancia_daily):
 
 # ------------------------------------------------------------
 
-# DESSA FORMA É POSSÍVEL VER TODAS AS INSTÂNCIAS DE UMA CLASSE
+# !VISUALIZAÇÃO DE INSTÂNCIAS DE UMA CLASSE
+# !------------------------------------------------------------
+
+
 # instancias_tipo -> instancias_tipo_show
 
 # mostra o input de todas as instâncias de dada classe
@@ -559,9 +567,10 @@ def instancias_tipo(request):
     
     return render(request, 'instancias_tipo_select.html', context)
 
-# INSERINDO INSTÂNCIAS
+# !INSERINDO INSTÂNCIAS
+# !------------------------------------------------------------
+
 # inserir_instancia -> inserir_instancia_tela_ok
-# ------------------------------------------------------------
 
 def inserir_instancia_tela_ok(request):
     # menu de mostrar instancia pra botar + espaço pra definir o nome
@@ -698,10 +707,18 @@ def daily_add(request):
 
 def ver_backlog_produto(request):
     
-    return render(request, 'welcome.html')
+    # ObjectProperty!
+    # ontoscrum__originator
+    # ontoscrum__is_managed_by
+    # ontoscrum__contains -> um item que ontoscrum__contains features e releaseplan
+    
+    # DataProperty!
+    # EstimatedBusinessValue
+    
+    return render(request, 'backlog_produto.html')
 
-# TESTE DE ACESSO AO BANCO DE DADOS
-# ------------------------------------------------------------
+# !TESTE DE ACESSO AO BANCO DE DADOS
+# !------------------------------------------------------------
 
 def instancias_teste(request):
     
