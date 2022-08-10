@@ -1,4 +1,5 @@
 from multiprocessing import context
+from typing import final
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import Template, Context
@@ -52,8 +53,6 @@ def sprint_select(request):
             
         myworld = World(filename='backup.db', exclusive=False)
             
-        #onto_path.append(os.path.dirname(__file__))
-            
         # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
         kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
             
@@ -71,7 +70,15 @@ def sprint_select(request):
                 
             lista_instancias = kiposcrum["scrum_Sprint"].instances()
             
+            print("\n\n\n\n")
+            print(lista_instancias)
+            print("\n\n\n\n")
+            
             num_inst = len(lista_instancias)
+            
+            print("\n\n\n\n")
+            print(num_inst)
+            print("\n\n\n\n")
                 
             status = "OK!"
                 
@@ -266,7 +273,7 @@ def sprint_add(request):
         input_classe = "scrum_Sprint"
         input_observacao = str(request.POST.get('observacao'))
         
-        status = "Indefinido"
+        status = "Erro!"
         
         # OWLREADY2
         try:
@@ -283,7 +290,7 @@ def sprint_add(request):
         sync_reasoner()
         
         seed = str(time.time())
-        id_unico = "000"
+        id_unico = faz_id(seed)
         
         try:
         
@@ -299,26 +306,23 @@ def sprint_add(request):
                 status = "OK!"
                 
                 
-                myworld.close() # só fecha o bd, deixa as instâncias no bd
-                #myworld.save() # persiste na ontologia
+                myworld.save() # persiste na ontologia
+                myworld.close()
         
         except:
             
             print("Falha de acesso!")
-            status = "Erro!"
             input_nome = "Não foi recuperado"
             input_classe = "Não foi recuperado"
         
-        #del myworld, kiposcrum    
-        
-        # fazer uma query aqui de SPARQL
-        
-        # faz query e bota resultado na sessão, um redirect vai botar o resultado
-        request.session['input_nome'] = input_nome + id_unico
-        request.session['input_classe'] = input_classe
-        request.session['ontologia_status'] = status
-        return redirect('/kipo_playground/inserir_instancia_tela_ok/')
-        
+        finally:
+            
+            # faz query e bota resultado na sessão, um redirect vai botar o resultado
+            request.session['input_nome'] = input_nome + id_unico
+            request.session['input_classe'] = input_classe
+            request.session['ontologia_status'] = status
+            return redirect('/kipo_playground/inserir_instancia_tela_ok/')
+            
         
         
     
@@ -344,8 +348,107 @@ def daily_dashboard(request, instancia_daily):
     # ontoscrum__hasInput
     # ontoscrum__is_executed_by
     
+    # instancia_sprint é a sprint a ser usada
     
     
+    if 'num_inst' in request.session:
+        del request.session['num_inst']
+            
+    if 'status' in request.session:
+        del request.session['status']
+        
+    if 'num_prop_correlatas' in request.session:
+        del request.session['num_prop_correlatas']
+        
+    if 'num_inst' in request.session:
+        del request.session['num_inst']
+        
+        
+    # OWLREADY2
+    try:
+            
+        myworld = World(filename='backup.db', exclusive=False)
+            
+        #onto_path.append(os.path.dirname(__file__))
+            
+        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+        kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
+            
+    except:
+        
+        print("Erro no começo")
+        
+    sync_reasoner()
+    
+    #-----------------------------------------------------
+    
+    try:
+        
+        with kiposcrum:
+            
+            print("Criando dashboard de Sprint!")
+            
+            num_inst = 0
+            
+            # kiposcrum.KIPCO__Agent("desenvolvedornovo")
+            
+            # a query sai com prefixo "kipo."
+            instancia = instancia_daily[5:]
+            print(instancia)
+            
+            # propriedades
+            propriedades = kiposcrum[instancia].get_properties()
+            print(propriedades)
+            num_prop_correlatas = len(propriedades)
+            
+            # lista de instâncias tudo que ocorre ontoscrum__during
+            inv_during = kiposcrum[instancia].INV_ontoscrum__during
+            print("INV_During " + str(inv_during))
+            num_inst = num_inst + len(inv_during)
+            
+            # lista de instâncias tudo que ocorre ontoscrum__has_input
+            has_input = kiposcrum[instancia].ontoscrum__has_input
+            print("Input " + str(has_input))
+            num_inst = num_inst + len(has_input)
+
+            # lista de instâncias tudo que ocorre ontoscrum__has_has_output
+            has_output = kiposcrum[instancia].ontoscrum__has_output
+            print("Output " + str(has_output))
+            num_inst = num_inst + len(has_output)
+    
+            # lista de instâncias tudo que ocorre ontoscrum__isExecutedBy
+            has_isexecutedby = kiposcrum[instancia].ontoscrum__is_executed_by
+            print("Executado por " + str(has_isexecutedby))
+            num_inst = num_inst + len(has_isexecutedby)
+
+            # lista de instâncias tudo que ocorre ontoscrum__simultaneously
+            performs = kiposcrum[instancia].ontoscrum__performs
+            print("Performs " + str(performs))
+            num_inst = num_inst + len(performs)
+            
+            objeto_inv_during = transforma_objeto(inv_during)
+            objeto_has_input = transforma_objeto(has_input)
+            objeto_has_output = transforma_objeto(has_output)
+            objeto_has_isexecutedby = transforma_objeto(has_isexecutedby)
+            objeto_performs = transforma_objeto(performs)
+            
+            status = "OK!" 
+            myworld.close() 
+        
+    except:
+            
+        status = "Erro!" 
+        num_prop_correlatas = "Desconhecido"
+        num_inst = "?"
+            
+        print("Falha de acesso!")
+    
+    request.session['status'] = status   # "OK!" ou "Erro!"
+    request.session['num_prop_correlatas'] = num_prop_correlatas
+    request.session['num_inst'] = str(num_inst)
+    
+    context = {"instancia":instancia_daily , "objeto_inv_during":objeto_inv_during, "objetos_has_input":objeto_has_input, "objetos_has_output":objeto_has_output,
+                "objetos_has_isexecutedby":objeto_has_isexecutedby, "objeto_performs":objeto_performs}
     
     
     return render(request, 'daily_dashboard.html', context)
@@ -525,7 +628,7 @@ def inserir_instancia(request):
         print("\n------------------------------------\n")
         
         seed = str(time.time())
-        id_unico = "000"
+        id_unico = faz_id(seed)
         
         try:
         
@@ -552,7 +655,7 @@ def inserir_instancia(request):
                 
                 
                 myworld.close() # só fecha o bd, deixa as instâncias no bd
-                #myworld.save() # persiste na ontologia
+                myworld.save() # persiste na ontologia
         
         except:
             
@@ -561,16 +664,23 @@ def inserir_instancia(request):
             input_nome = "Não foi recuperado"
             input_classe = "Não foi recuperado"
         
-        #del myworld, kiposcrum    
-        
-        # fazer uma query aqui de SPARQL
-        
-        # faz query e bota resultado na sessão, um redirect vai botar o resultado
-        request.session['input_nome'] = input_nome + id_unico
-        request.session['input_classe'] = input_classe
-        request.session['ontologia_status'] = status
-        return redirect('/kipo_playground/inserir_instancia_tela_ok/')
-        
+        finally:
+            
+            #del myworld, kiposcrum    
+            
+            # fazer uma query aqui de SPARQL
+            
+            # faz query e bota resultado na sessão, um redirect vai botar o resultado
+            request.session['input_nome'] = input_nome + id_unico
+            request.session['input_classe'] = input_classe
+            request.session['ontologia_status'] = status
+            
+            print("\n\n\n\n\n")
+            print(status)
+            print("\n\n\n\n\n")
+            
+            return redirect('/kipo_playground/inserir_instancia_tela_ok/')
+            
     
     return render(request, 'instancias_inserir_select.html', context)
 
@@ -615,6 +725,9 @@ def instancias_teste(request):
     
     sync_reasoner()
     
+    list_nomes = []
+    list_obs = []
+    objetos_final = []
     # se não for nessa estrutura, dá TABLE LOCKED!
     try:
         
@@ -622,9 +735,7 @@ def instancias_teste(request):
             
             lista_instancias = kiposcrum["KIPCO__Agent"].instances() 
             print("foi")
-            list_nomes = []
-            list_obs = []
-            objetos_final = []
+            
             
             for i in range(len(lista_instancias)):
                 
@@ -652,10 +763,8 @@ def instancias_teste(request):
         print("Falha de acesso!")
         num_inst = 0
         
-    #del myworld, kiposcrum   
-    
-    #print(lista_final)
-    
-    contexto = {"objetos_final": objetos_final, "query_feita": query_feita, "num_inst": num_inst, "status": status}
+    finally:
+        
+        contexto = {"objetos_final": objetos_final, "query_feita": query_feita, "num_inst": num_inst, "status": status}
     
     return render(request, 'instancias.html', contexto)
