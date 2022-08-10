@@ -23,5 +23,10 @@ urlpatterns = [
     # selecionar sprints
     path('sprints_select/', views.sprint_select),
     path('sprint_dashboard/<str:instancia_sprint>', views.sprint_dashboard),
+    path('sprint_add/', views.sprint_add),
+    
+    path('daily_dashboard/<str:instancia_daily>', views.daily_dashboard),
+    
+    path('ver_backlog_produto/', views.ver_backlog_produto), 
     
 ]

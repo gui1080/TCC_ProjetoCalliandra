@@ -2,7 +2,7 @@ from multiprocessing import context
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import Template, Context
-from .forms import novo_instancias_tipoForm, inserir_instancias_tipoForm
+from .forms import novo_instancias_tipoForm, inserir_instancias_tipoForm, inserir_instancias_sprintForm
 from owlready2 import *         # https://pypi.org/project/Owlready2/
 from os.path import exists
 import numpy 
@@ -44,6 +44,7 @@ def sobre(request):
 # MÓDULO DE GESTÃO DE SPRINTS
 # ------------------------------------------------------------
 
+# SELECIONA SPRINT
 def sprint_select(request):
     
     # OWLREADY2
@@ -137,7 +138,7 @@ def transforma_objeto(lista_instancias):
     return objetos_final                 
 
 
-
+# VER DADOS DA SPRINT
 def sprint_dashboard(request, instancia_sprint):
     
     # instancia_sprint é a sprint a ser usada
@@ -247,20 +248,113 @@ def sprint_dashboard(request, instancia_sprint):
     return render(request, 'sprint_dashboard.html', context)
     
     
-'''
 
 def sprint_add(request):
 
+    form = inserir_instancias_sprintForm()
 
-def sprint_dashboard(request):
+    context = {'form':form}
+    
+    if request.method == 'POST':
+        
+        if 'nome' in request.session:
+            del request.session['nome']
+        if 'observacao' in request.session:
+            del request.session['observacao']
+            
+        input_nome = str(request.POST.get('nome'))
+        input_classe = "scrum_Sprint"
+        input_observacao = str(request.POST.get('observacao'))
+        
+        status = "Indefinido"
+        
+        # OWLREADY2
+        try:
+            
+            myworld = World(filename='backup.db', exclusive=False)
+            
+            # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+            kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
+            
+        except:
+        
+            print("Erro no começo")
+        
+        sync_reasoner()
+        
+        seed = str(time.time())
+        id_unico = "000"
+        
+        try:
+        
+            with kiposcrum:
+                
+                kiposcrum[input_classe](input_nome + id_unico)
+                
+                if input_observacao != "":
+                    kiposcrum[input_nome + id_unico].Observacao.append(input_observacao)
+                
+                sync_reasoner()
+                
+                status = "OK!"
+                
+                
+                myworld.close() # só fecha o bd, deixa as instâncias no bd
+                #myworld.save() # persiste na ontologia
+        
+        except:
+            
+            print("Falha de acesso!")
+            status = "Erro!"
+            input_nome = "Não foi recuperado"
+            input_classe = "Não foi recuperado"
+        
+        #del myworld, kiposcrum    
+        
+        # fazer uma query aqui de SPARQL
+        
+        # faz query e bota resultado na sessão, um redirect vai botar o resultado
+        request.session['input_nome'] = input_nome + id_unico
+        request.session['input_classe'] = input_classe
+        request.session['ontologia_status'] = status
+        return redirect('/kipo_playground/inserir_instancia_tela_ok/')
+        
+        
+        
+    
+    return render(request, 'instancias_tipo_select.html', context)
 
-'''
+# ------------------------------------------------------------
+
+# VISUALIZAÇÃO DE TRABALHO DIÁRIO DENTRO DE UMA SPRINT
+
+def daily_dashboard(request, instancia_daily):
+    
+    
+    # a query sai com prefixo "kipo."
+    instancia = instancia_daily[5:]
+    print(instancia)
+    
+    context = {"instancia_daily":instancia_daily}
+    
+    
+    # ontoscrum__perfoms
+    # INV_ontoscrum__during
+    # ontoscrum__hasOutput
+    # ontoscrum__hasInput
+    # ontoscrum__is_executed_by
+    
+    
+    
+    
+    
+    return render(request, 'daily_dashboard.html', context)
+    
 
 # ------------------------------------------------------------
 
 # DESSA FORMA É POSSÍVEL VER TODAS AS INSTÂNCIAS DE UMA CLASSE
 # instancias_tipo -> instancias_tipo_show
-# ------------------------------------------------------------
 
 # mostra o input de todas as instâncias de dada classe
 def instancias_tipo_show(request):
@@ -479,6 +573,22 @@ def inserir_instancia(request):
         
     
     return render(request, 'instancias_inserir_select.html', context)
+
+# ------------------------------------------------------------
+
+'''
+
+def ver_sprint_backlog(request, instancia_sprint):
+    
+    
+def daily_add(request):
+    
+
+'''
+
+def ver_backlog_produto(request):
+    
+    return render(request, 'welcome.html')
 
 # TESTE DE ACESSO AO BANCO DE DADOS
 # ------------------------------------------------------------
