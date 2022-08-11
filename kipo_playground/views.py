@@ -804,7 +804,47 @@ def ver_backlog_produto(request):
             
             # objeto_originator = transforma_objeto(originator)
             objeto_ismanagedby = transforma_objeto(ismanagedby)
-            objeto_contains = transforma_objeto(contains)    # pegar estimated business values
+            #objeto_contains = transforma_objeto(contains)    # pegar estimated business values
+            
+            
+            # pegar objeto de contains com EstimatedBusinessValue
+            #------------------------------
+            
+            objeto_contains = []
+            
+            list_nomes = []
+            list_obs = []
+            list_classe = []
+            list_estimated_value = []
+            
+            for i in range(len(contains)):
+                
+                list_estimated_value.append(str(kiposcrum[instancia].EstimatedBusinessValue))
+                
+                list_nomes.append(str(contains[i].Nome[0]))
+                        
+                list_classe.append(str(contains[i].is_a.pop(0)))
+                        
+                if not contains[i].Observacao:
+                    list_obs.append("Sem observações")
+                else:
+                    list_obs.append(str(contains[i].Observacao))
+                    
+                print("---------------")
+                print(len(list_nomes))
+                print(len(list_obs))
+                print(len(list_classe))
+                print(len(contains))
+                print(str(contains[0]))
+                print("---------------")
+                
+            for i in range(len(contains)):
+                objeto_contains.append({'classe_inst':list_classe[i], 'instancia':str(contains[i]),'nome':list_nomes[i], 'obs':list_obs[i], 'estimatedbusinessvalue': list_estimated_value[i] })
+                    
+                    
+            #------------------------------
+            
+            
             
             myworld.close() 
         
