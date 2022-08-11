@@ -7,6 +7,7 @@ from .forms import novo_instancias_tipoForm, inserir_instancias_tipoForm, inseri
 from owlready2 import *         # https://pypi.org/project/Owlready2/
 from os.path import exists
 import numpy 
+import sys
 
 # Comandos básicos
 # source venv/bin/activate
@@ -105,8 +106,17 @@ def sprint_select(request):
             
         status = "Erro!" 
         num_inst = "Desconhecido"
-            
+        
+        print("---------------------------")
         print("Falha de acesso!")
+        print(sys.exc_info()[0])
+        print(sys.exc_info()[1])
+        print(sys.exc_info()[2])
+        
+        print("---------------------------")
+
+    
+    
     
     request.session['num_inst'] = num_inst
     request.session['status'] = status
