@@ -724,6 +724,96 @@ def ver_backlog_produto(request):
     
     # DataProperty!
     # EstimatedBusinessValue
+    '''
+    
+    algo nesse código quebra o bd
+    
+    if 'num_inst' in request.session:
+        del request.session['num_inst']
+            
+    if 'status' in request.session:
+        del request.session['status']
+        
+    if 'num_prop_correlatas' in request.session:
+        del request.session['num_prop_correlatas']
+        
+    # OWLREADY2
+    try:
+            
+        myworld = World(filename='backup.db', exclusive=False)
+            
+        #onto_path.append(os.path.dirname(__file__))
+            
+        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+        kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
+            
+    except:
+        
+        print("Erro no começo")
+        
+    sync_reasoner()
+    
+    #-----------------------------------------------------
+    
+    try:
+        
+        with kiposcrum:
+            
+            print("Criando Visualização de Product Backlog!")
+            
+            num_inst = 0
+            
+            # kiposcrum.KIPCO__Agent("desenvolvedornovo")
+            
+            instancia_backlog = str(kiposcrum["Product_Backlog"].instances().pop(0))
+            print(instancia_backlog)
+            instancia = instancia_backlog[5:]
+            print(instancia)
+            
+            # propriedades
+            propriedades = kiposcrum[instancia].get_properties()
+            print(propriedades)
+            num_prop_correlatas = len(propriedades)
+            
+            # lista de instâncias tudo que ocorre ontoscrum__during
+            originator = kiposcrum[instancia].ontoscrum__originator
+            print("Originator " + str(originator))
+            num_inst = num_inst + len(originator)
+            
+            ismanagedby = kiposcrum[instancia].ontoscrum__is_managed_by
+            print("Ismanagedby" + str(ismanagedby))
+            num_inst = num_inst + len(ismanagedby)
+            
+            contains = kiposcrum[instancia].ontoscrum__contains
+            print("Contains" + str(contains))
+            num_inst = num_inst + len(contains)
+            
+            objeto_originator = transforma_objeto(originator)
+            objeto_ismanagedby = transforma_objeto(ismanagedby)
+            objeto_contains = transforma_objeto(contains)
+            
+            status = "OK!" 
+            myworld.close() 
+        
+    except:
+            
+        status = "Erro!" 
+        num_prop_correlatas = "Desconhecido"
+        num_inst = "?"
+        instancia_backlog = "Erro!"
+        instancia = "Erro!" 
+        
+        print("Falha de acesso!")
+    
+    request.session['status'] = status   # "OK!" ou "Erro!"
+    request.session['num_prop_correlatas'] = num_prop_correlatas
+    request.session['num_inst'] = str(num_inst)
+    
+    context = {"instancia_backlog":instancia_backlog}
+    
+
+    
+    '''
     
     return render(request, 'backlog_produto.html')
 

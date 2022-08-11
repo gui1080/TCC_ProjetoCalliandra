@@ -2,7 +2,70 @@
 
 {% block content %}
 
-<h2>{{instancia_backlog}}</h2> 
+<h2>{{instancia_backlog}}</h2>  
+
+
+<div class="card_view">
+    
+    <div class="card-single">
+
+        <div>
+            <h4 class="text-light">Número de instâncias</h4>
+            <span class="text-light">{{request.session.num_inst}}</span>
+        </div>
+        <div> 
+            <span class="las la-clipboard-lis"></span>
+        </div>
+
+
+    </div>
+
+    <div class="card-single">  
+
+        <div>
+
+            <h4 class="text-light">Status da Ontologia</h4>
+            {% if request.session.status == "OK!" %}
+            <span class="text-success">{{ request.session.status }}</span>
+            {% endif %}
+
+            {% if request.session.status == "Erro!" %}
+            <span class="text-warning">{{ request.session.status }}</span>
+            {% endif %}
+
+        </div>
+        <div> 
+            <span class="las la-clipboard-lis"></span>
+        </div>
+
+
+    </div>
+
+    <div class="card-single">
+
+        <div>
+            <h4 class="text-light">Propriedades relacionadas</h4>
+            <span class="text-light">{{request.session.num_prop_correlatas}}</span>
+        </div>
+        <div> 
+            <span class="las la-clipboard-lis"></span>
+        </div>
+
+    </div>
+
+    <div class="card-single">
+
+        <div>
+            <h4 class="text-light">Instâncias correlatas</h4>
+            <span class="text-light">{{request.session.num_inst}}</span>
+        </div>
+        <div> 
+            <span class="las la-clipboard-lis"></span>
+        </div>
+
+    </div>
+
+</div>
 
 
 </br>
