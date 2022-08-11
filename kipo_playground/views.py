@@ -131,29 +131,41 @@ def transforma_objeto(lista_instancias):
     list_nomes = []
     list_obs = []
     list_classe = []
+    
+    if len(lista_instancias) == 0:
+        
+        list_nomes.append("Sem Nome!")
+        list_classe.append("Sem Classe!")
+        list_obs.append("Sem Observações!")
+        lista_instancias.append("Sem instancias!")
+        
+        objetos_final.append({'classe_inst': "Sem Classe!", 'instancia': "Sem instancias!",'nome': "Sem Nome!", 'obs': "Sem Observações!"})
+    
+        
+    else:
                 
-    for i in range(len(lista_instancias)):
-                    
-        list_nomes.append(str(lista_instancias[i].Nome[0]))
+        for i in range(len(lista_instancias)):
+                        
+            list_nomes.append(str(lista_instancias[i].Nome[0]))
+            
+            list_classe.append(str(lista_instancias[i].is_a.pop(0)))
+            
+            if not lista_instancias[i].Observacao:
+                list_obs.append("Sem observações")
+            else:
+                list_obs.append(str(lista_instancias[i].Observacao))
         
-        list_classe.append(str(lista_instancias[i].is_a.pop(0)))
+        print("---------------")
+        print(len(list_nomes))
+        print(len(list_obs))
+        print(len(list_classe))
+        print(len(lista_instancias))
+        print(str(lista_instancias[0]))
+        print("---------------")
+    
+        for i in range(len(lista_instancias)):
+            objetos_final.append({'classe_inst':list_classe[i], 'instancia':str(lista_instancias[i]),'nome':list_nomes[i], 'obs':list_obs[i]})
         
-        if not lista_instancias[i].Observacao:
-            list_obs.append("Sem observações")
-        else:
-            list_obs.append(str(lista_instancias[i].Observacao))
-    
-    print("---------------")
-    print(len(list_nomes))
-    print(len(list_obs))
-    print(len(list_classe))
-    print(len(lista_instancias))
-    print(str(lista_instancias[0]))
-    print("---------------")
-    
-    for i in range(len(lista_instancias)):
-        objetos_final.append({'classe_inst':list_classe[i], 'instancia':str(lista_instancias[i]),'nome':list_nomes[i], 'obs':list_obs[i]})
-    
     return objetos_final                 
 
 # !SPRINT
@@ -724,9 +736,7 @@ def ver_backlog_produto(request):
     
     # DataProperty!
     # EstimatedBusinessValue
-    '''
     
-    algo nesse código quebra o bd
     
     if 'num_inst' in request.session:
         del request.session['num_inst']
@@ -736,7 +746,8 @@ def ver_backlog_produto(request):
         
     if 'num_prop_correlatas' in request.session:
         del request.session['num_prop_correlatas']
-        
+    
+  
     # OWLREADY2
     try:
             
@@ -770,15 +781,17 @@ def ver_backlog_produto(request):
             instancia = instancia_backlog[5:]
             print(instancia)
             
+            status = "OK!" 
+            
             # propriedades
             propriedades = kiposcrum[instancia].get_properties()
             print(propriedades)
             num_prop_correlatas = len(propriedades)
             
             # lista de instâncias tudo que ocorre ontoscrum__during
-            originator = kiposcrum[instancia].ontoscrum__originator
-            print("Originator " + str(originator))
-            num_inst = num_inst + len(originator)
+            #originator = kiposcrum[instancia].ontoscrum__originator
+            #print("Originator " + str(originator))
+            #num_inst = num_inst + len(originator)
             
             ismanagedby = kiposcrum[instancia].ontoscrum__is_managed_by
             print("Ismanagedby" + str(ismanagedby))
@@ -788,11 +801,10 @@ def ver_backlog_produto(request):
             print("Contains" + str(contains))
             num_inst = num_inst + len(contains)
             
-            objeto_originator = transforma_objeto(originator)
+            # objeto_originator = transforma_objeto(originator)
             objeto_ismanagedby = transforma_objeto(ismanagedby)
             objeto_contains = transforma_objeto(contains)
             
-            status = "OK!" 
             myworld.close() 
         
     except:
@@ -809,13 +821,10 @@ def ver_backlog_produto(request):
     request.session['num_prop_correlatas'] = num_prop_correlatas
     request.session['num_inst'] = str(num_inst)
     
-    context = {"instancia_backlog":instancia_backlog}
+    context = {"instancia_backlog": instancia_backlog, "objeto_ismanagedby": objeto_ismanagedby, "objeto_contains": objeto_contains}
     
-
     
-    '''
-    
-    return render(request, 'backlog_produto.html')
+    return render(request, 'backlog_produto.html', context)
 
 # !TESTE DE ACESSO AO BANCO DE DADOS
 # !------------------------------------------------------------
@@ -882,6 +891,6 @@ def instancias_teste(request):
         
     finally:
         
-        contexto = {"objetos_final": objetos_final, "query_feita": query_feita, "num_inst": num_inst, "status": status}
+        context = {"objetos_final": objetos_final, "query_feita": query_feita, "num_inst": num_inst, "status": status}
     
-    return render(request, 'instancias.html', contexto)
+    return render(request, 'instancias.html', context)

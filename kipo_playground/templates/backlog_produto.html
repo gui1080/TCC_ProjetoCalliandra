@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h2>{{instancia_backlog}}</h2>  
+<h2>{{ instancia_backlog }}</h2>  
 
 
 <div class="card_view">
@@ -67,6 +67,75 @@
 
 </div>
 
+</br>
+
+<div class="recent-grid">
+    <div class="projects">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-light">Quem gerencia o Backlog</h2>
+            </div>
+
+            <div class="card-body">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <td>Classes</td>
+                            <td>Instâncias</td>
+                            <td>Nomes</td>
+                            <td>Observações</td>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        {% for obj in objeto_ismanagedby %}
+                        <tr>
+                            <td>{{ obj.classe_inst }}</td>
+                            <td>{{ obj.instancia }}</td>
+                            <td>{{ obj.nome }}</td>
+                            <td>{{ obj.obs }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</br>
+
+<div class="recent-grid">
+    <div class="projects">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-light">Tarefas da Sprint</h2>
+            </div>
+
+            <div class="card-body">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <td>Classes</td>
+                            <td>Instâncias</td>
+                            <td>Nomes</td>
+                            <td>Observações</td>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        {% for obj in objeto_contains %}
+                        <tr>
+                            <td>{{ obj.classe_inst }}</td>
+                            <td>{{ obj.instancia }}</td>
+                            <td>{{ obj.nome }}</td>
+                            <td>{{ obj.obs }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 </br>
 </br>
