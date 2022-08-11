@@ -835,6 +835,7 @@ def ver_backlog_produto(request):
                 print(len(list_obs))
                 print(len(list_classe))
                 print(len(contains))
+                print(str(list_estimated_value.pop(0)))
                 print(str(contains[0]))
                 print("---------------")
                 
