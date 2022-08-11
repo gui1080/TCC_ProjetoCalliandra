@@ -131,6 +131,7 @@ def transforma_objeto(lista_instancias):
     list_nomes = []
     list_obs = []
     list_classe = []
+    list_estimated_value = []
     
     if len(lista_instancias) == 0:
         
@@ -140,21 +141,21 @@ def transforma_objeto(lista_instancias):
         lista_instancias.append("Sem instancias!")
         
         objetos_final.append({'classe_inst': "Sem Classe!", 'instancia': "Sem instancias!",'nome': "Sem Nome!", 'obs': "Sem Observações!"})
-    
+
         
     else:
-                
+    
         for i in range(len(lista_instancias)):
-                        
+                            
             list_nomes.append(str(lista_instancias[i].Nome[0]))
-            
+                
             list_classe.append(str(lista_instancias[i].is_a.pop(0)))
-            
+                
             if not lista_instancias[i].Observacao:
                 list_obs.append("Sem observações")
             else:
                 list_obs.append(str(lista_instancias[i].Observacao))
-        
+            
         print("---------------")
         print(len(list_nomes))
         print(len(list_obs))
@@ -162,10 +163,10 @@ def transforma_objeto(lista_instancias):
         print(len(lista_instancias))
         print(str(lista_instancias[0]))
         print("---------------")
-    
+        
         for i in range(len(lista_instancias)):
             objetos_final.append({'classe_inst':list_classe[i], 'instancia':str(lista_instancias[i]),'nome':list_nomes[i], 'obs':list_obs[i]})
-        
+            
     return objetos_final                 
 
 # !SPRINT
@@ -803,7 +804,7 @@ def ver_backlog_produto(request):
             
             # objeto_originator = transforma_objeto(originator)
             objeto_ismanagedby = transforma_objeto(ismanagedby)
-            objeto_contains = transforma_objeto(contains)
+            objeto_contains = transforma_objeto(contains)    # pegar estimated business values
             
             myworld.close() 
         
