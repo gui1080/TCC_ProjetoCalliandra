@@ -1,0 +1,62 @@
+{% extends 'welcome.html' %} 
+
+{% block content %}
+
+</br>
+</br>
+
+<div class="card_view">
+    <div class="card-single">  
+
+        <div>
+
+            <h4 class="text-light">Status da Ontologia</h4>
+            {% if request.session.status == "OK!" %}
+            <span class="text-success">{{ request.session.status }}</span>
+            {% endif %}
+
+            {% if request.session.status == "Erro!" %}
+            <span class="text-warning">{{ request.session.status }}</span>
+            {% endif %}
+
+        </div>
+        <div> 
+            <span class="las la-clipboard-lis"></span>
+        </div>
+
+
+    </div>
+</div>
+
+</br>
+</br>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable({{ lista_dados_qtd|safe }});
+
+        var options = {
+          chart: {
+            title: 'Dados do Trabalho',
+            subtitle: 'Quantidade de Instâncias',
+          },
+          backgroundColor: '#FFFFFF',
+          bars: 'horizontal' // Required for Material Bar Charts.
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+</script>
+
+<div class="card_view">
+<div id="barchart_material" style="width: 700px; height: 300px;"></div>
+</div>
+
+
+{% endblock %}

@@ -6,7 +6,7 @@ from django.template import Template, Context
 from .forms import novo_instancias_tipoForm, inserir_instancias_tipoForm, inserir_instancias_sprintForm
 from owlready2 import *         # https://pypi.org/project/Owlready2/
 from os.path import exists
-import numpy 
+import json 
 import sys
 
 # Comandos básicos
@@ -36,7 +36,70 @@ def faz_id(input_str):
 # ------------------------------------------------------------
 def welcome(request):
     
-    return render(request, 'welcome.html')
+    if 'status' in request.session:
+        del request.session['status']
+    
+    # pegar quantidade de scrum_Sprint
+    # quantidade de KIPCO__Agent
+    # quantidade de Task_Description
+    # quantidade de scrum_Daily
+    # quantidade de DO__Decision
+    ''' Formato dos dados pro Gráfico de Barras
+    [['Year', 'Sales'],
+    ['2014', 1000],
+    ['2015', 1170],
+    ['2016', 660],
+    ['2017', 1030] ]
+    '''
+    
+    
+    # OWLREADY2
+    try:
+            
+        myworld = World(filename='backup.db', exclusive=False)
+            
+        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+        kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
+            
+    except:
+            
+        print("Erro no começo")
+        
+    sync_reasoner()
+    
+    #-----------------------------------------------------
+    
+    lista_dados_qtd_fim = []
+    
+    try:
+        
+        with kiposcrum:
+            
+            status = "OK!"
+            
+            qtd_agentes = len(kiposcrum["KIPCO__Agent"].instances())
+            qtd_taskdescription = len(kiposcrum["Task_Description"].instances())
+            qtd_daily = len(kiposcrum["scrum_Daily"].instances())
+            qtd_decision = len(kiposcrum["DO__Decision"].instances())
+            
+            lista_dados_qtd = [["Classe", "Quantidade"],
+                                ["KIPCO__Agent", qtd_agentes], 
+                                ["Task_Description", qtd_taskdescription], 
+                                ["scrum_Daily", qtd_daily], 
+                                ["DO__Decision", qtd_decision]]
+            
+            lista_dados_qtd_fim = json.dumps(lista_dados_qtd)
+            
+            myworld.close()
+            
+    except:
+        
+        qtd_agentes = 0
+        status = "Erro!"
+    
+    context = {"lista_dados_qtd": lista_dados_qtd_fim}
+    request.session['status'] = status
+    return render(request, 'welcome_graficos.html', context)
 
 # ------------------------------------------------------------
 def sobre(request):
@@ -804,12 +867,12 @@ def ver_backlog_produto(request):
             
             # objeto_originator = transforma_objeto(originator)
             objeto_ismanagedby = transforma_objeto(ismanagedby)
-            #objeto_contains = transforma_objeto(contains)    # pegar estimated business values
+            objeto_contains = transforma_objeto(contains)    # pegar estimated business values
             
             
             # pegar objeto de contains com EstimatedBusinessValue
             #------------------------------
-            
+            '''
             objeto_contains = []
             
             list_nomes = []
@@ -835,16 +898,18 @@ def ver_backlog_produto(request):
                 print(len(list_obs))
                 print(len(list_classe))
                 print(len(contains))
-                print(str(list_estimated_value.pop(0)))
+                print("current estimated business value " + str(kiposcrum[instancia].EstimatedBusinessValue))
+                print("estimated business values " + str(list_estimated_value.pop(0)))
                 print(str(contains[0]))
                 print("---------------")
-                
+            
+            # 'estimatedbusinessvalue': list_estimated_value[i]    
             for i in range(len(contains)):
-                objeto_contains.append({'classe_inst':list_classe[i], 'instancia':str(contains[i]),'nome':list_nomes[i], 'obs':list_obs[i], 'estimatedbusinessvalue': list_estimated_value[i] })
+                objeto_contains.append({'classe_inst':list_classe[i], 'instancia':str(contains[i]),'nome':list_nomes[i], 'obs':list_obs[i] })
                     
                     
             #------------------------------
-            
+            '''
             
             
             myworld.close() 
