@@ -75,6 +75,7 @@ def welcome(request):
         
         with kiposcrum:
             
+            
             status = "OK!"
             
             qtd_agentes = len(kiposcrum["KIPCO__Agent"].instances())
@@ -194,7 +195,6 @@ def transforma_objeto(lista_instancias):
     list_nomes = []
     list_obs = []
     list_classe = []
-    list_estimated_value = []
     
     if len(lista_instancias) == 0:
         
@@ -882,6 +882,7 @@ def ver_backlog_produto(request):
             
             for i in range(len(contains)):
                 
+                # esse jeito de recuperar data property tá errado
                 list_estimated_value.append(str(kiposcrum[instancia].EstimatedBusinessValue))
                 
                 list_nomes.append(str(contains[i].Nome[0]))
