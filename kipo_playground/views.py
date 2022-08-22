@@ -739,17 +739,27 @@ def inserir_instancia(request):
                 kiposcrum["desenvolvedor1"].is_a()
                 '''
                 
-                kiposcrum[input_classe](input_nome + id_unico)
-                
-                if input_observacao != "":
-                    kiposcrum[input_nome + id_unico].Observacao.append(input_observacao)
+                busca = """
+                    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                    PREFIX owl: <http://www.w3.org/2002/07/owl#>
+                    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+                    PREFIX scrum: <http://www.semanticweb.org/fialho/kipo#>
+                    INSERT DATA {
+                        """ + str(input_nome + id_unico) + """ rdf:type """ + str(input_classe) + """.
+                    }
+                """
+                    
+                lista_intancias = list(myworld.sparql(busca)) 
+            
+                print(lista_intancias)
                 
                 sync_reasoner()
                 
                 status = "OK!"
                 
                 
-                myworld.close() # só fecha o bd, deixa as instâncias no bd
+                #myworld.close() # só fecha o bd, deixa as instâncias no bd
                 myworld.save() # persiste na ontologia
         
         except:
@@ -760,6 +770,9 @@ def inserir_instancia(request):
             input_classe = "Não foi recuperado"
         
         finally:
+            
+            print("myworld.close()")
+            myworld.close()
             
             #del myworld, kiposcrum    
             
