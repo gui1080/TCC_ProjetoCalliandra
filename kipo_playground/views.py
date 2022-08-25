@@ -671,73 +671,30 @@ def inserir_instancia(request):
     
     if request.method == 'POST':
         
-        if 'nome' in request.session:
-            del request.session['nome']
+        if 'input_dado' in request.session:
+            del request.session['input_dado']
     
-        if 'classe' in request.session:
-            del request.session['classe']
-            
-        if 'observacao' in request.session:
-            del request.session['observacao']
-            
-        input_nome = str(request.POST.get('nome'))
-        input_classe = str(request.POST.get('classe'))
-        input_observacao = str(request.POST.get('observacao'))
-        
-        status = "Indefinido"
+        input_nome = request.POST.get('nome')
+        input_classe = request.POST.get('classe')
+        input_obs = request.POST.get('observacao')
         
         print(input_nome)
         print(input_classe)
-        print(input_observacao)
-        print(status)
         
         
         # OWLREADY2
-        try:
-            
-            myworld = World(filename='backup.db', exclusive=False)
-            
-            #onto_path.append(os.path.dirname(__file__))
-            
-            # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
-            kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
-            
-        except:
-            
-            print("Erro no começo")
-            
         
-        # Sincronização
-        #--------------------------------------------------------------------------
-            
-        print("\n------------------------------------\n")
-        print("Sincronização!")
-            
-        try:
-            sync_reasoner()
-        except:
-            print("\n\nErro ao sincronizar.\n\n")
-        finally:
-            print("\n\nSincronização finalizada.\n\n")                
-
-        print("\n------------------------------------\n")
+        myworld = World(filename='backup.db', exclusive=False)
         
-        seed = str(time.time())
-        id_unico = faz_id(seed)
+        onto_path.append(os.path.dirname(__file__))
+        
+        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+        kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
+        
         
         try:
         
             with kiposcrum:
-                
-                '''
-                kiposcrum["KIPCO__Agent"].instances()
-                
-                kiposcrum["KIPCO__Agent"]("desenvolvedornovo")!!
-
-                kiposcrum.KIPCO__Agent("desenvolvedornovo")
-                
-                kiposcrum["desenvolvedor1"].is_a()
-                '''
                 
                 busca = """
                     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -746,51 +703,45 @@ def inserir_instancia(request):
                     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
                     PREFIX scrum: <http://www.semanticweb.org/fialho/kipo#>
                     INSERT DATA {
-                        """ + str(input_nome + id_unico) + """ rdf:type """ + str(input_classe) + """.
+                        """ + str(input_nome) + """ rdf:type """ + str(input_classe) + """.
                     }
                 """
-                    
-                lista_intancias = list(myworld.sparql(busca)) 
-            
-                print(lista_intancias)
+                
+                myworld.sparql(busca)
+
+                # Sincronização
+                #--------------------------------------------------------------------------
+                
+                print("\n------------------------------------\n")
+                print("Sincronização!")
+                
                 
                 sync_reasoner()
                 
                 status = "OK!"
-                
-                
-                #myworld.close() # só fecha o bd, deixa as instâncias no bd
-                myworld.save() # persiste na ontologia
+                myworld.save()
         
         except:
             
-            print("Falha de acesso!")
             status = "Erro!"
-            input_nome = "Não foi recuperado"
-            input_classe = "Não foi recuperado"
+            print("Falha de acesso!")
         
-        finally:
-            
-            print("myworld.close()")
-            myworld.close()
-            
-            #del myworld, kiposcrum    
-            
-            # fazer uma query aqui de SPARQL
-            
-            # faz query e bota resultado na sessão, um redirect vai botar o resultado
-            request.session['input_nome'] = input_nome + id_unico
-            request.session['input_classe'] = input_classe
-            request.session['ontologia_status'] = status
-            
-            print("\n\n\n\n\n")
-            print(status)
-            print("\n\n\n\n\n")
-            
-            return redirect('/kipo_playground/inserir_instancia_tela_ok/')
-            
+        myworld.close()
+        
+        del myworld, kiposcrum    
+        
+        # fazer uma query aqui de SPARQL
+        
+        # faz query e bota resultado na sessão, um redirect vai botar o resultado
+        request.session['input_nome'] = input_nome
+        request.session['input_classe'] = input_classe
+        request.session['input_status'] = status
+        return redirect('/kipo_playground/inserir_instancia_tela_ok/')
+        
     
     return render(request, 'instancias_inserir_select.html', context)
+
+
 
 # ------------------------------------------------------------
 
