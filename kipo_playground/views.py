@@ -807,6 +807,8 @@ def ver_backlog_produto(request):
             
             # kiposcrum.KIPCO__Agent("desenvolvedornovo")
             
+            # add kipo.backlog_sistema_venda_livros9221 contains do_decision na main de testes
+            
             instancia_backlog = str(kiposcrum["Product_Backlog"].instances().pop(1))
             
             print(instancia_backlog)
@@ -839,6 +841,8 @@ def ver_backlog_produto(request):
             objeto_ismanagedby = transforma_objeto(ismanagedby)
             objeto_contains = transforma_objeto(contains)    # pegar estimated business values
             
+            # se no objeto contains a classe é Decisão, fazer botão do dashboard
+            # da pra fazer isso no html
             
             # pegar objeto de contains com EstimatedBusinessValue
             #------------------------------
