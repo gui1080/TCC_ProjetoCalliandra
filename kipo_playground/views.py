@@ -798,16 +798,22 @@ def ver_backlog_produto(request):
         
         with kiposcrum:
             
+            # falta o ontoscrum__originator
+            # {kipo.Nome, kipo.ontoscrum__originator, kipo.ontoscrum__is_managed_by, kipo.INV_ontoscrum__has_output, kipo.INV_ontoscrum__has_input, kipo.INV_uses, kipo.INV_ontoscrum__affects, kipo.ontoscrum__contains, kipo.contains}
+            
             print("Criando Visualização de Product Backlog!")
             
             num_inst = 0
             
             # kiposcrum.KIPCO__Agent("desenvolvedornovo")
             
-            instancia_backlog = str(kiposcrum["Product_Backlog"].instances().pop(0))
+            instancia_backlog = str(kiposcrum["Product_Backlog"].instances().pop(1))
+            
             print(instancia_backlog)
+            
+            print(kiposcrum["Product_Backlog"].instances())
             instancia = instancia_backlog[5:]
-            print(instancia)
+            #print(instancia)
             
             status = "OK!" 
             
