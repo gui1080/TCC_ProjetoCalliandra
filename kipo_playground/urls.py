@@ -27,6 +27,8 @@ urlpatterns = [
     
     path('daily_dashboard/<str:instancia_daily>', views.daily_dashboard),
     
+    path('sprint_backlog/<str:instancia_sprint>', views.ver_sprint_backlog),
+    
     path('ver_backlog_produto/', views.ver_backlog_produto), 
     
 ]

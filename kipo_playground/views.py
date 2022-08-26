@@ -747,13 +747,102 @@ def inserir_instancia(request):
 
 '''
 
-def ver_sprint_backlog(request, instancia_sprint):
-    
     
 def daily_add(request):
     
 
 '''
+
+def ver_sprint_backlog(request, instancia_sprint):
+    
+    if 'num_inst' in request.session:
+        del request.session['num_inst']
+            
+    if 'status' in request.session:
+        del request.session['status']
+        
+    if 'num_prop_correlatas' in request.session:
+        del request.session['num_prop_correlatas']
+        
+        
+    instancia = instancia_sprint[5:]
+    print(instancia)
+    
+    # OWLREADY2
+    try:
+            
+        myworld = World(filename='backup.db', exclusive=False)
+            
+        #onto_path.append(os.path.dirname(__file__))
+            
+        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+        kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
+            
+    except:
+        
+        print("Erro no começo")
+        
+    sync_reasoner()
+    
+    #-----------------------------------------------------
+    
+    status = "OK!" 
+    
+    try:
+        
+        with kiposcrum:
+            
+            print("Criando Visualização de Sprint Backlog!")
+            
+            instancia_backlog_sprint = str(kiposcrum[instancia].ontoscrum__has_input.pop(0))
+            
+            backlog_sprint = instancia_backlog_sprint[5:]
+            
+            print(backlog_sprint)
+            
+            propriedades = kiposcrum[backlog_sprint].get_properties()
+            print(propriedades)
+            num_prop_correlatas = len(propriedades)
+            
+            num_inst = 0
+            
+            # faz as queries do que vai para a tela!
+            '''
+            {kipo.ontoscrum__during, kipo.INV_ontoscrum__affects, 
+            kipo.ontoscrum__contains, kipo.Nome, kipo.ontoscrum__performs, 
+            kipo.ontoscrum__is_managed_by, kipo.ontoscrum__is_executed_by, 
+            kipo.ontoscrum__has_output, kipo.INV_ontoscrum__has_output, 
+            kipo.ontoscrum__has_input, kipo.INV_ontoscrum__has_input}
+            '''
+            
+            # sprint backlog contains task descriptions!
+            contains = kiposcrum[backlog_sprint].ontoscrum__contains
+            print("Contains" + str(contains))
+            num_inst = num_inst + len(contains)
+            
+            
+            objeto_contains = transforma_objeto(contains)
+            
+            myworld.close()
+    except:
+        
+        status = "Erro!" 
+        num_prop_correlatas = "Desconhecido"
+        num_inst = "?"
+        instancia = "Erro!" 
+        
+        print("Falha de acesso!")
+    
+    request.session['status'] = status   # "OK!" ou "Erro!"
+    request.session['num_prop_correlatas'] = num_prop_correlatas
+    request.session['num_inst'] = str(num_inst)
+    
+    #context = {"instancia_backlog": instancia_backlog, "objeto_ismanagedby": objeto_ismanagedby, "objeto_contains": objeto_contains}
+    
+    context = {"instancia_backlog_sprint":instancia_backlog_sprint, "objeto_contains": objeto_contains}
+    
+    return render(request, 'backlog_sprint.html', context)
+
 
 def ver_backlog_produto(request):
     
@@ -789,6 +878,7 @@ def ver_backlog_produto(request):
     except:
         
         print("Erro no começo")
+        
         
     sync_reasoner()
     
@@ -904,7 +994,6 @@ def ver_backlog_produto(request):
     request.session['num_inst'] = str(num_inst)
     
     context = {"instancia_backlog": instancia_backlog, "objeto_ismanagedby": objeto_ismanagedby, "objeto_contains": objeto_contains}
-    
     
     return render(request, 'backlog_produto.html', context)
 
