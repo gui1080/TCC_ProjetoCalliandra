@@ -14,7 +14,7 @@ Para criar ambiente virtual de Python3, execute:
 
 ## Dependências
 
-O script *./dependencias.sh* cria um ambiente virtual, o executa e baixa dependências. 
+O script *./dependencias.sh* baixa dependências e executa o programa. 
 
 Para dar permissão para rodar o script, execute:
 
@@ -26,6 +26,9 @@ Para verificar as permissões do script de dependências, execute:
 
 Para rodar, execute:
 
+
+> python3 -m venv venv
+> source venv/bin/activate
 > ./dependencias.sh
 
 - Python (v3.9.10)
