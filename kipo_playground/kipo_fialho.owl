@@ -940,7 +940,10 @@
     </EquivalentClasses>
     <EquivalentClasses>
         <Class IRI="#DO__Decision"/>
-        <Class IRI="#Task_Description"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#INV_ontoscrum__contains"/>
+            <Class IRI="#Sprint_Backlog"/>
+        </ObjectSomeValuesFrom>
     </EquivalentClasses>
     <EquivalentClasses>
         <Class IRI="#DO__Decision"/>
