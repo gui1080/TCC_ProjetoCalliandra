@@ -784,6 +784,10 @@
         <DataProperty IRI="#StatusProblemaResolvido"/>
     </Declaration>
     <EquivalentClasses>
+        <Class IRI="#Artifact_Item"/>
+        <Class IRI="#DO__Decision"/>
+    </EquivalentClasses>
+    <EquivalentClasses>
         <Class IRI="#BPO__Association"/>
         <ObjectIntersectionOf>
             <ObjectExactCardinality cardinality="1">
@@ -937,10 +941,6 @@
                 <Class IRI="#DO__Disadvantage"/>
             </ObjectUnionOf>
         </ObjectExactCardinality>
-    </EquivalentClasses>
-    <EquivalentClasses>
-        <Class IRI="#DO__Decision"/>
-        <Class IRI="#Task_Description"/>
     </EquivalentClasses>
     <EquivalentClasses>
         <Class IRI="#DO__Decision"/>
