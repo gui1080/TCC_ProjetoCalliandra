@@ -31,4 +31,7 @@ urlpatterns = [
     
     path('ver_backlog_produto/', views.ver_backlog_produto), 
     
+    path('decision_select/', views.decision_select),
+    path('decision_dashboard/<str:instancia_decisao>', views.decision_dashboard),
+    
 ]

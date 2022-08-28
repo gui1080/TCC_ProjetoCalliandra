@@ -187,6 +187,175 @@ def sprint_select(request):
         
     context = {"objetos_final": objetos_final}
     return render(request, 'seleciona_sprint.html', context)
+
+# !SELECIONA DECISAO
+# !------------------------------------------------------------
+
+def decision_select(request):
+    
+    # OWLREADY2
+    try:
+            
+        myworld = World(filename='backup.db', exclusive=False)
+            
+        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+        kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
+            
+    except:
+            
+        print("Erro no começo")
+        
+    sync_reasoner()
+        
+    objetos_final = []
+        
+    try:
+        
+        with kiposcrum:
+                
+            lista_instancias = kiposcrum["DO__Decision"].instances()
+            
+            print("\n\n\n\n")
+            print(lista_instancias)
+            print("\n\n\n\n")
+            
+            num_inst = len(lista_instancias)
+            
+            print("\n\n\n\n")
+            print(num_inst)
+            print("\n\n\n\n")
+                
+            status = "OK!"
+                
+            list_nomes = []
+            list_obs = []
+                
+            for i in range(len(lista_instancias)):
+                    
+                list_nomes.append(lista_instancias[i].Nome[0])
+                
+                if not lista_instancias[i].Observacao:
+                    list_obs.append("Sem observações")
+                else:
+                    list_obs.append(lista_instancias[i].Observacao)
+                    
+            for i in range(len(lista_instancias)):
+                objetos_final.append({'instancia':lista_instancias[i],'nome':list_nomes[i], 'obs':list_obs[i]})
+                
+            myworld.close() # só fecha o bd, deixa as instâncias no bd
+            
+    except:
+            
+        status = "Erro!" 
+        num_inst = "Desconhecido"
+        
+        print("---------------------------")
+        print("Falha de acesso!")
+        print(sys.exc_info()[0])
+        print(sys.exc_info()[1])
+        print(sys.exc_info()[2])
+        
+        print("---------------------------")
+
+    
+    
+    
+    request.session['num_inst'] = num_inst
+    request.session['status'] = status
+        
+    context = {"objetos_final": objetos_final}
+    return render(request, 'seleciona_decisao.html', context)
+    
+# VER DADOS DA DECISAO
+def decision_dashboard(request, instancia_decisao):
+    
+    # instancia_decisao é a decisao a ser usada
+    
+    
+    if 'num_inst' in request.session:
+        del request.session['num_inst']
+            
+    if 'status' in request.session:
+        del request.session['status']
+        
+    if 'num_prop_correlatas' in request.session:
+        del request.session['num_prop_correlatas']
+        
+    if 'num_inst' in request.session:
+        del request.session['num_inst']
+        
+        
+    # OWLREADY2
+    try:
+            
+        myworld = World(filename='backup.db', exclusive=False)
+            
+        #onto_path.append(os.path.dirname(__file__))
+            
+        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+        kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
+            
+    except:
+        
+        print("Erro no começo")
+        
+    sync_reasoner()
+    
+    #-----------------------------------------------------
+    
+    try:
+        
+        with kiposcrum:
+            
+            print("Criando dashboard de DO__Decision!")
+            
+            num_inst = 0
+            
+            # a query sai com prefixo "kipo."
+            instancia = instancia_decisao[5:]
+            print(instancia)
+            
+            # propriedades
+            propriedades = kiposcrum[instancia].get_properties()
+            print(propriedades)
+            num_prop_correlatas = len(propriedades)
+            
+            
+            '''
+            propriedades!
+            
+            {kipo.StatusProblemaResolvido, kipo.INV_influences, kipo.INV_composes, 
+            kipo.INV_ontoscrum__performs, kipo.pos_state, 
+            kipo.considers, kipo.Nome, kipo.INV_threatens}
+
+            
+            '''
+            
+            
+            status = "OK!" 
+            myworld.close() 
+        
+    except:
+            
+        status = "Erro!" 
+        num_inst = "Desconhecido"
+        num_prop_correlatas = "Desconhecido"
+        num_inst = 0
+            
+        print("Falha de acesso!")
+    
+    request.session['num_inst'] = num_inst
+    request.session['status'] = status   # "OK!" ou "Erro!"
+    request.session['num_prop_correlatas'] = num_prop_correlatas
+    request.session['num_inst'] = str(num_inst)
+    
+    context = {"instancia_decision":instancia_decisao}
+    
+    return render(request, 'decision_dashboard.html', context)
+    
+    
+
+    
     
 def transforma_objeto(lista_instancias):
     
