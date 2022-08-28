@@ -7,7 +7,7 @@ urlpatterns = [
     path('welcome/', views.welcome),
     
     # Sobre
-    path('sobre/', views.sobre),
+    path('sobre/', views.sobre), 
     
     # Teste para ver instâncias
     path('instancias_teste/', views.instancias_teste),

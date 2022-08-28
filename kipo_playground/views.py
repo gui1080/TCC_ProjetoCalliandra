@@ -11,7 +11,7 @@ import sys
 
 # Comandos básicos
 # source venv/bin/activate
-# python3 manage.py runserver
+# python3 manage.py runserver 
 
 # !SCRIPTS AUXILIARES
 # !------------------------------------------------------------
@@ -808,11 +808,10 @@ def ver_sprint_backlog(request, instancia_sprint):
             
             # faz as queries do que vai para a tela!
             '''
-            {kipo.ontoscrum__during, kipo.INV_ontoscrum__affects, 
-            kipo.ontoscrum__contains, kipo.Nome, kipo.ontoscrum__performs, 
-            kipo.ontoscrum__is_managed_by, kipo.ontoscrum__is_executed_by, 
-            kipo.ontoscrum__has_output, kipo.INV_ontoscrum__has_output, 
-            kipo.ontoscrum__has_input, kipo.INV_ontoscrum__has_input}
+            {kipo.ontoscrum__during, kipo.ontoscrum__has_input, kipo.Nome, 
+            kipo.ontoscrum__contains, kipo.ontoscrum__has_output, kipo.ontoscrum__is_executed_by, 
+            kipo.ontoscrum__is_managed_by, kipo.INV_ontoscrum__affects, kipo.INV_ontoscrum__has_input, 
+            kipo.ontoscrum__performs, kipo.INV_ontoscrum__has_output}
             '''
             
             # sprint backlog contains task descriptions!
@@ -820,8 +819,38 @@ def ver_sprint_backlog(request, instancia_sprint):
             print("Contains" + str(contains))
             num_inst = num_inst + len(contains)
             
+            # o que ocorre durante essa sprint?
+            during = kiposcrum[backlog_sprint].ontoscrum__during
+            print("During" + str(during))
+            num_inst = num_inst + len(during)
+            
+            # input
+            has_input = kiposcrum[backlog_sprint].ontoscrum__has_input
+            print("has_input" + str(has_input))
+            num_inst = num_inst + len(has_input)
+            
+            # output
+            has_output = kiposcrum[backlog_sprint].ontoscrum__has_output
+            print("has_output" + str(has_output))
+            num_inst = num_inst + len(has_output)
+            
+            # sprint performs o que?
+            performs = kiposcrum[backlog_sprint].ontoscrum__performs
+            print("performs" + str(performs))
+            num_inst = num_inst + len(performs)
+            
+            # quem executa sprint?
+            is_executed_by = kiposcrum[backlog_sprint].ontoscrum__is_executed_by
+            print("is_executed_by" + str(is_executed_by))
+            num_inst = num_inst + len(is_executed_by)
+            
             
             objeto_contains = transforma_objeto(contains)
+            objeto_during = transforma_objeto(during)
+            objeto_has_input = transforma_objeto(has_input)
+            objeto_has_output = transforma_objeto(has_output)
+            objeto_performs = transforma_objeto(performs)
+            objeto_is_executed_by = transforma_objeto(is_executed_by)
             
             myworld.close()
     except:
@@ -839,7 +868,7 @@ def ver_sprint_backlog(request, instancia_sprint):
     
     #context = {"instancia_backlog": instancia_backlog, "objeto_ismanagedby": objeto_ismanagedby, "objeto_contains": objeto_contains}
     
-    context = {"instancia_backlog_sprint":instancia_backlog_sprint, "objeto_contains": objeto_contains}
+    context = {"instancia_backlog_sprint":instancia_backlog_sprint, "objeto_contains": objeto_contains, "objeto_during": objeto_during, "objeto_has_input": objeto_has_input, "objeto_has_output": objeto_has_output, "objeto_performs": objeto_performs, "objeto_is_executed_by": objeto_is_executed_by}
     
     return render(request, 'backlog_sprint.html', context)
 
@@ -889,7 +918,9 @@ def ver_backlog_produto(request):
         with kiposcrum:
             
             # falta o ontoscrum__originator
-            # {kipo.Nome, kipo.ontoscrum__originator, kipo.ontoscrum__is_managed_by, kipo.INV_ontoscrum__has_output, kipo.INV_ontoscrum__has_input, kipo.INV_uses, kipo.INV_ontoscrum__affects, kipo.ontoscrum__contains, kipo.contains}
+            # {kipo.Nome, kipo.ontoscrum__originator, kipo.ontoscrum__is_managed_by, kipo.INV_ontoscrum__has_output, 
+            # kipo.INV_ontoscrum__has_input, kipo.INV_uses, kipo.INV_ontoscrum__affects, 
+            # kipo.ontoscrum__contains, kipo.contains}
             
             print("Criando Visualização de Product Backlog!")
             
