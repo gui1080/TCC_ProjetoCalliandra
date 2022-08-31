@@ -215,10 +215,6 @@ def decision_select(request):
                 
             lista_instancias = kiposcrum["DO__Decision"].instances()
             
-            print("\n\n\n\n")
-            print(lista_instancias)
-            print("\n\n\n\n")
-            
             num_inst = len(lista_instancias)
             
             print("\n\n\n\n")
@@ -229,17 +225,25 @@ def decision_select(request):
                 
             list_nomes = []
             list_obs = []
-                
+            
+            qntd_decisoes_reais = 0
+            
+            
+
             for i in range(len(lista_instancias)):
-                    
-                list_nomes.append(lista_instancias[i].Nome[0])
                 
-                if not lista_instancias[i].Observacao:
-                    list_obs.append("Sem observações")
-                else:
-                    list_obs.append(lista_instancias[i].Observacao)
+                if "DO__Decision"  in str(lista_instancias[i].is_a):
+                        
+                    list_nomes.append(lista_instancias[i].Nome[0])
                     
-            for i in range(len(lista_instancias)):
+                    if not lista_instancias[i].Observacao:
+                        list_obs.append("Sem observações")
+                    else:
+                        list_obs.append(lista_instancias[i].Observacao)
+                    
+                    qntd_decisoes_reais = qntd_decisoes_reais + 1
+                    
+            for i in range(qntd_decisoes_reais):
                 objetos_final.append({'instancia':lista_instancias[i],'nome':list_nomes[i], 'obs':list_obs[i]})
                 
             myworld.close() # só fecha o bd, deixa as instâncias no bd
