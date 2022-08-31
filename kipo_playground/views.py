@@ -331,6 +331,31 @@ def decision_dashboard(request, instancia_decisao):
             
             '''
             
+            # decisão influenciada por
+            INV_influences = kiposcrum[instancia].INV_influences
+            print("INV_influences " + str(INV_influences))
+            num_inst = num_inst + len(INV_influences)
+            
+            # itens que compoem decisão
+            INV_composes = kiposcrum[instancia].INV_composes
+            print("INV_composes " + str(INV_composes))
+            num_inst = num_inst + len(INV_composes)
+            
+            # decisao considera
+            considers = kiposcrum[instancia].considers
+            print("considers " + str(considers))
+            num_inst = num_inst + len(considers)
+            
+            # decisao ameaçada por
+            INV_threatens = kiposcrum[instancia].INV_threatens
+            print("INV_threatens " + str(INV_threatens))
+            num_inst = num_inst + len(INV_threatens)
+            
+            objeto_INV_influences = transforma_objeto(INV_influences)
+            objeto_INV_composes = transforma_objeto(INV_composes)
+            objeto_considers = transforma_objeto(considers)
+            objeto_INV_threatens = transforma_objeto(INV_threatens)
+            
             
             status = "OK!" 
             myworld.close() 
@@ -349,7 +374,7 @@ def decision_dashboard(request, instancia_decisao):
     request.session['num_prop_correlatas'] = num_prop_correlatas
     request.session['num_inst'] = str(num_inst)
     
-    context = {"instancia_decision":instancia_decisao}
+    context = {"instancia_decision": instancia_decisao, "objeto_INV_influences": objeto_INV_influences, "objeto_INV_composes": objeto_INV_composes, "objeto_considers": objeto_considers, "objeto_INV_threatens": objeto_INV_threatens}
     
     return render(request, 'decision_dashboard.html', context)
     

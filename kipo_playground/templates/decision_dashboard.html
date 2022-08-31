@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h2>{{ instancia_decision }}</h2> 
+<h2>{{ instancia_decision }}</h2>  
 
 <div class="card_view">
     
@@ -66,10 +66,145 @@
 
 </div>
 
+</br>
 
+<div class="recent-grid">
+    <div class="projects">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-light">O que influencia a Decisão</h2>
+            </div>
 
+            <div class="card-body">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <td>Classes</td>
+                            <td>Instâncias</td>
+                            <td>Nomes</td>
+                            <td>Observações</td>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        {% for obj in objeto_INV_influences %}
+                        <tr>
+                            <td>{{ obj.classe_inst }}</td>
+                            <td>{{ obj.instancia }}</td>
+                            <td>{{ obj.nome }}</td>
+                            <td>{{ obj.obs }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
+</br>
 
+<div class="recent-grid">
+    <div class="projects">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-light">Itens que formam a Decisão</h2>
+            </div>
+
+            <div class="card-body">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <td>Classes</td>
+                            <td>Instâncias</td>
+                            <td>Nomes</td>
+                            <td>Observações</td>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        {% for obj in objeto_INV_composes %}
+                        <tr>
+                            <td>{{ obj.classe_inst }}</td>
+                            <td>{{ obj.instancia }}</td>
+                            <td>{{ obj.nome }}</td>
+                            <td>{{ obj.obs }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</br>
+
+<div class="recent-grid">
+    <div class="projects">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-light">A Decisão considera</h2>
+            </div>
+
+            <div class="card-body">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <td>Classes</td>
+                            <td>Instâncias</td>
+                            <td>Nomes</td>
+                            <td>Observações</td>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        {% for obj in objeto_considers %}
+                        <tr>
+                            <td>{{ obj.classe_inst }}</td>
+                            <td>{{ obj.instancia }}</td>
+                            <td>{{ obj.nome }}</td>
+                            <td>{{ obj.obs }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</br>
+
+<div class="recent-grid">
+    <div class="projects">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-light">O que ameaça a Decisão</h2>
+            </div>
+
+            <div class="card-body">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <td>Classes</td>
+                            <td>Instâncias</td>
+                            <td>Nomes</td>
+                            <td>Observações</td>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        {% for obj in objeto_INV_threatens %}
+                        <tr>
+                            <td>{{ obj.classe_inst }}</td>
+                            <td>{{ obj.instancia }}</td>
+                            <td>{{ obj.nome }}</td>
+                            <td>{{ obj.obs }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 </br>
 </br>

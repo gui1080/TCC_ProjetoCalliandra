@@ -940,13 +940,6 @@
     </EquivalentClasses>
     <EquivalentClasses>
         <Class IRI="#DO__Decision"/>
-        <ObjectSomeValuesFrom>
-            <ObjectProperty IRI="#INV_ontoscrum__contains"/>
-            <Class IRI="#Sprint_Backlog"/>
-        </ObjectSomeValuesFrom>
-    </EquivalentClasses>
-    <EquivalentClasses>
-        <Class IRI="#DO__Decision"/>
         <ObjectMinCardinality cardinality="1">
             <ObjectProperty IRI="#can_solve"/>
             <Class IRI="#DO__Question"/>
@@ -1128,6 +1121,13 @@
             <ObjectProperty IRI="#creates"/>
             <Class IRI="#KIPCO__Mental_Image"/>
         </ObjectMinCardinality>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Sprint_Backlog"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#ontoscrum__contains"/>
+            <Class IRI="#DO__Decision"/>
+        </ObjectSomeValuesFrom>
     </EquivalentClasses>
     <SubClassOf>
         <Class IRI="#Artifact_Item"/>
