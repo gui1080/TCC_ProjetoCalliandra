@@ -25,12 +25,14 @@ urlpatterns = [
     path('sprint_dashboard/<str:instancia_sprint>', views.sprint_dashboard),
     path('sprint_add/', views.sprint_add),
     
+    # visualização de dashboard
     path('daily_dashboard/<str:instancia_daily>', views.daily_dashboard),
-    
     path('sprint_backlog/<str:instancia_sprint>', views.ver_sprint_backlog),
     
+    # backlog do produto
     path('ver_backlog_produto/', views.ver_backlog_produto), 
     
+    # visualização da decisão
     path('decision_select/', views.decision_select),
     path('decision_dashboard/<str:instancia_decisao>', views.decision_dashboard),
     
