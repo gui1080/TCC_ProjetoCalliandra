@@ -26,7 +26,6 @@ Para verificar as permissões do script de dependências, execute:
 
 Para rodar, execute:
 
-
 > python3 -m venv venv
 > source venv/bin/activate
 > ./dependencias.sh

@@ -1128,7 +1128,7 @@ def ver_backlog_produto(request):
             
             # add kipo.backlog_sistema_venda_livros9221 contains do_decision na main de testes
             
-            instancia_backlog = str(kiposcrum["Product_Backlog"].instances().pop(1))
+            instancia_backlog = str(kiposcrum["Product_Backlog"].instances().pop(0))
             
             print(instancia_backlog)
             
