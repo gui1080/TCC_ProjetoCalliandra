@@ -84,6 +84,7 @@
                             <td>Instâncias</td>
                             <td>Nomes</td>
                             <td>Observações</td>
+                            <td>Decisão</td>
                         </tr>
                     </thead>
                     <tbody> 
@@ -93,6 +94,12 @@
                             <td>{{ obj.instancia }}</td>
                             <td>{{ obj.nome }}</td>
                             <td>{{ obj.obs }}</td>
+                            {% if obj.classe_inst == "kipo.DO__Decision" %}
+                            <td>  <a class="btn-warning" href="/kipo_playground/decision_dashboard/{{obj.instancia}}">Decidir!</a>  </td>
+                            {% endif %}
+                            {% if obj.classe_inst != "kipo.DO__Decision" %}
+                            <td>Não envolve Decisões!</td>
+                            {% endif %}
                         </tr>
                         {% endfor %}
                     </tbody>

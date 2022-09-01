@@ -618,6 +618,8 @@ def sprint_add(request):
 
 # ------------------------------------------------------------
 
+# tratar possibilidade que relacionamentos venham vazios!
+
 # !VISUALIZAÇÃO DE TRABALHO DIÁRIO DENTRO DE UMA SPRINT
 # !------------------------------------------------------------
 
