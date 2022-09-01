@@ -33,7 +33,53 @@ def faz_id(input_str):
     
     return resultado_id
 
-# ------------------------------------------------------------
+    
+def transforma_objeto(lista_instancias):
+    
+    objetos_final = []
+    
+    list_nomes = []
+    list_obs = []
+    list_classe = []
+    
+    if len(lista_instancias) == 0:
+        
+        list_nomes.append("Sem Nome!")
+        list_classe.append("Sem Classe!")
+        list_obs.append("Sem Observações!")
+        #lista_instancias.append("Sem instancias!")
+        
+        objetos_final.append({'classe_inst': "Sem Classe!", 'instancia': "Sem instancias!",'nome': "Sem Nome!", 'obs': "Sem Observações!"})
+        return objetos_final
+        
+    else:
+    
+        for i in range(len(lista_instancias)):
+                            
+            list_nomes.append(str(lista_instancias[i].Nome[0]))
+                
+            list_classe.append(str(lista_instancias[i].is_a.pop(0)))
+                
+            if not lista_instancias[i].Observacao:
+                list_obs.append("Sem observações")
+            else:
+                list_obs.append(str(lista_instancias[i].Observacao))
+            
+        print("---------------")
+        print(len(list_nomes))
+        print(len(list_obs))
+        print(len(list_classe))
+        print(len(lista_instancias))
+        print(str(lista_instancias[0]))
+        print("---------------")
+        
+        for i in range(len(lista_instancias)):
+            objetos_final.append({'classe_inst':list_classe[i], 'instancia':str(lista_instancias[i]),'nome':list_nomes[i], 'obs':list_obs[i]})
+            
+        return objetos_final                 
+
+# !------------------------------------------------------------
+
 def welcome(request):
     
     if 'status' in request.session:
@@ -383,53 +429,6 @@ def decision_dashboard(request, instancia_decisao):
     return render(request, 'decision_dashboard.html', context)
     
     
-
-    
-    
-def transforma_objeto(lista_instancias):
-    
-    objetos_final = []
-    
-    list_nomes = []
-    list_obs = []
-    list_classe = []
-    
-    if len(lista_instancias) == 0:
-        
-        list_nomes.append("Sem Nome!")
-        list_classe.append("Sem Classe!")
-        list_obs.append("Sem Observações!")
-        lista_instancias.append("Sem instancias!")
-        
-        objetos_final.append({'classe_inst': "Sem Classe!", 'instancia': "Sem instancias!",'nome': "Sem Nome!", 'obs': "Sem Observações!"})
-
-        
-    else:
-    
-        for i in range(len(lista_instancias)):
-                            
-            list_nomes.append(str(lista_instancias[i].Nome[0]))
-                
-            list_classe.append(str(lista_instancias[i].is_a.pop(0)))
-                
-            if not lista_instancias[i].Observacao:
-                list_obs.append("Sem observações")
-            else:
-                list_obs.append(str(lista_instancias[i].Observacao))
-            
-        print("---------------")
-        print(len(list_nomes))
-        print(len(list_obs))
-        print(len(list_classe))
-        print(len(lista_instancias))
-        print(str(lista_instancias[0]))
-        print("---------------")
-        
-        for i in range(len(lista_instancias)):
-            objetos_final.append({'classe_inst':list_classe[i], 'instancia':str(lista_instancias[i]),'nome':list_nomes[i], 'obs':list_obs[i]})
-            
-    return objetos_final                 
-
 # !SPRINT
 #!-----------------------------------------------------
 
@@ -617,8 +616,6 @@ def sprint_add(request):
     return render(request, 'instancias_tipo_select.html', context)
 
 # ------------------------------------------------------------
-
-# tratar possibilidade que relacionamentos venham vazios!
 
 # !VISUALIZAÇÃO DE TRABALHO DIÁRIO DENTRO DE UMA SPRINT
 # !------------------------------------------------------------
