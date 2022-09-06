@@ -1,5 +1,7 @@
 """Módulo de URLs de kipo_playground
 
+Define uma lista com as possíveis URLs e sua equivalências com as suas views.
+
 """
 
 from django.urls import path

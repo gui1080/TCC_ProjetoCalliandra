@@ -1,5 +1,11 @@
 """Módulo de Views de kipo_playground
 
+Módulo principal que define a visualização com contexto de templates em HTML na pasta '/kipo_playground/templates', que também usa '/kipo_playground/static'.
+
+Módulo de gestão de formulários, gestão de Banco de Dados e definição de contexto por meio de acesso para ontologia '/kipo_playground/kipo_fialho.owl', com instâncias de caso de estudo definidas em 'backup.db'. 
+
+Essas views são geridas com endereços por meio do arquivo 'urls.py'. 
+
 """
 
 from multiprocessing import context

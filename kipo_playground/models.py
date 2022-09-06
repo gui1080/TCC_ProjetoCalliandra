@@ -1,5 +1,10 @@
 """Módulo de Models de kipo_playground
 
+Define modelos de dados para gerar os formulários usados na interação básica com o Sistema Calliandra.
+
+Foi feito um modelo para uma nova instância de Sprint (campos 'nome' e 'observação'), para inserir uma nova instância (campos 'nome', 'classe' e 'observação') e para recuperar uma instância baseada em tipo (campo 'busca', com a listagem de possíveis classes).
+
+
 """
 
 from django.db import models

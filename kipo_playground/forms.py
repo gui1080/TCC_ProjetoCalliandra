@@ -1,5 +1,7 @@
 """Módulo de Forms de kipo_playground
 
+Em base de modelos estabelecidos, contém formulários para inserir uma nova instância, para recuperar as instâncias de um tipo e para inserir uma sprint nova.
+
 """
 
 from django.forms import ModelForm
