@@ -1,3 +1,7 @@
+"""Módulo de Views de kipo_playground
+
+"""
+
 from multiprocessing import context
 from typing import final
 from django.shortcuts import render, redirect
@@ -16,6 +20,12 @@ import sys
 # !SCRIPTS AUXILIARES
 # !------------------------------------------------------------
 def faz_id(input_str):
+    """ Pega uma string e gera um id único básico para cada instância na Ontologia.
+        
+        :param input_str: String que vai servir como input para o ID. 
+    
+        :return: Valor numérico único como string de até 4 caracteres. 
+    """
     
     resultado_id = str(abs(hash(input_str)) % (10 ** 4))
     
@@ -35,6 +45,12 @@ def faz_id(input_str):
 
     
 def transforma_objeto(lista_instancias):
+    """ Pega um objeto da Ontologia e transforma em um dicionário, no formato que o DJango bota no template corretamente.
+        
+        :param input_str: Lista de instâncias que viram objeto. 
+    
+        :return: Dicionário com campos 'classe', 'instância', 'nome' e 'observação'. 
+    """
     
     objetos_final = []
     
@@ -81,6 +97,12 @@ def transforma_objeto(lista_instancias):
 # !------------------------------------------------------------
 
 def welcome(request):
+    """ View de tela de início do sistema.
+        
+        :param request: HTTP Request. 
+    
+        :return: Objeto de render de 'welcome_graficos.html'. 
+    """
     
     if 'status' in request.session:
         del request.session['status']
@@ -156,6 +178,12 @@ def sobre(request):
 # !------------------------------------------------------------
 
 def instancias_teste(request):
+    """ View de tela de testes de acesso ao Banco de Dados. Visualização de Agentes.
+        
+        :param request: HTTP Request. 
+    
+        :return: Objeto de render de 'instancias.html'. 
+    """
     
     # OWLREADY2
     try:
@@ -228,11 +256,23 @@ def instancias_teste(request):
 
 # mostra o input de todas as instâncias de dada classe
 def instancias_tipo_show(request):
+    """ View de visualização de instâncias de uma dada classe no Banco de Dados. 
+        
+        :param request: HTTP Request. 
+    
+        :return: Objeto de render de 'instancias_tipo_show.html'. 
+    """
     
     return render(request, 'instancias_tipo_show.html')
 
 # seleciona classe para ver
 def instancias_tipo(request):
+    """ View de seleção para visualização de instâncias de uma dada classe no Banco de Dados. 
+        
+        :param request: HTTP Request. 
+    
+        :return: Objeto de render de 'instancias_tipo_show.html' (método POST) e instancias_tipo_select.html (método GET). 
+    """
     
     form = novo_instancias_tipoForm()
 
@@ -329,14 +369,25 @@ def instancias_tipo(request):
 # !INSERINDO INSTÂNCIAS
 # !------------------------------------------------------------
 
-# inserir_instancia -> inserir_instancia_tela_ok
-
 def inserir_instancia_tela_ok(request):
-    # menu de mostrar instancia pra botar + espaço pra definir o nome
+    """ View de confirmação de que uma instância foi adicionada com sucesso.
+    
+        :param request: HTTP Request. 
+    
+        :return: Objeto de render de 'inserir_instancia_tela_ok.html'. 
+    """
+    
     return render(request, 'inserir_instancia_tela_ok.html')
 
 # instancia pra botar + espaço pra definir o nome
 def inserir_instancia(request):
+    """ View para pegar uma instância a ser adicionada no Banco de Dados.
+    
+        :param request: HTTP Request. 
+    
+        :return: Objeto de render de 'instancias_inserir_select.html' ou redirect para view 'inserir_instancia_tela_ok'. 
+    """
+    
 
     form = inserir_instancias_tipoForm()
 
@@ -420,6 +471,12 @@ def inserir_instancia(request):
 # !------------------------------------------------------------
 
 def sprint_select(request):
+    """ View de seleção de Sprints para sua visualização.
+    
+        :param request: HTTP Request. 
+    
+        :return: Objeto de render de 'seleciona_sprint.html'. 
+    """
     
     # OWLREADY2
     try:
@@ -497,6 +554,14 @@ def sprint_select(request):
 
 # VER DADOS DA SPRINT
 def sprint_dashboard(request, instancia_sprint):
+    """ View de seleção de Sprints para sua visualização.
+    
+        :param request: HTTP Request. 
+        :param instancia_sprint: String com Instância a ser visualizada no formato 'nome + id_único'. Exemplo: 'sprint_da_semana1234'. 
+    
+        :return: Objeto de render de 'sprint_dashboard.html'. 
+    """
+    
     
     # instancia_sprint é a sprint a ser usada
     
@@ -605,9 +670,14 @@ def sprint_dashboard(request, instancia_sprint):
     return render(request, 'sprint_dashboard.html', context)
     
     
-
 def sprint_add(request):
-
+    """ View de adiçao de uma nova Sprints.
+    
+        :param request: HTTP Request. 
+    
+        :return: Objeto de render de 'instancias_tipo_select.html' ou redirect para view de 'inserir_instancia_tela_ok'. 
+    """
+    
     form = inserir_instancias_sprintForm()
 
     context = {'form':form}
@@ -682,7 +752,13 @@ def sprint_add(request):
 # !------------------------------------------------------------
 
 def daily_dashboard(request, instancia_daily):
+    """ View de visualizaçao de Trabalho Diário de uma Sprint.
     
+        :param request: HTTP Request. 
+        :param instancia_daily: String com Instância a ser visualizada no formato 'nome + id_único'. Exemplo: 'daily_dia_29_setembro1234'. 
+    
+        :return: Objeto de render de 'daily_dashboard.html'. 
+    """
     
     # a query sai com prefixo "kipo."
     instancia = instancia_daily[5:]
@@ -816,7 +892,18 @@ def daily_add(request):
 
 '''
 
+    
+# !BACKLOGS
+#!-----------------------------------------------------
+
 def ver_sprint_backlog(request, instancia_sprint):
+    """ View de visualizaçao de Backlog de uma Sprint.
+    
+        :param request: HTTP Request. 
+        :param instancia_sprint: String com Instância a ser visualizada no formato 'nome + id_único'. Exemplo: 'backlog_primeira_sprint1234'. 
+    
+        :return: Objeto de render de 'backlog_sprint.html'. 
+    """
     
     if 'num_inst' in request.session:
         del request.session['num_inst']
@@ -937,6 +1024,12 @@ def ver_sprint_backlog(request, instancia_sprint):
 
 
 def ver_backlog_produto(request):
+    """ View de visualizaçao de Backlog do Produto. No caso de estudo, só tem 1 Backlog de Produto, logo não existe seleção para Backlog de Produto.
+    
+        :param request: HTTP Request. 
+    
+        :return: Objeto de render de 'backlog_produto.html'. 
+    """
     
     # ObjectProperty!
     # ontoscrum__originator
@@ -1096,6 +1189,12 @@ def ver_backlog_produto(request):
 # !------------------------------------------------------------
 
 def decision_select(request):
+    """ View de seleção de Decisão. 
+    
+        :param request: HTTP Request. 
+    
+        :return: Objeto de render de 'seleciona_decisao.html'. 
+    """
     
     # OWLREADY2
     try:
@@ -1173,11 +1272,17 @@ def decision_select(request):
         
     context = {"objetos_final": objetos_final}
     return render(request, 'seleciona_decisao.html', context)
-    
+
+
 # VER DADOS DA DECISAO
 def decision_dashboard(request, instancia_decisao):
+    """ View de Visualização de dados da Decisão, com o objetivo de auxiliar na tomada de Decisão. 
     
-    # instancia_decisao é a decisao a ser usada
+        :param request: HTTP Request. 
+        :param instancia_decisao: String com a Instância da Decisão a ser visualizada no formato "nome + id". Exemplo: "decidir_BD1234". 
+        
+        :return: Objeto de render de 'decision_dashboard.html'. 
+    """
     
     
     if 'num_inst' in request.session:
@@ -1286,8 +1391,6 @@ def decision_dashboard(request, instancia_decisao):
     
     return render(request, 'decision_dashboard.html', context)
     
-    
-# !SPRINT
-#!-----------------------------------------------------
+
 # ------------------------------------------------------------
 

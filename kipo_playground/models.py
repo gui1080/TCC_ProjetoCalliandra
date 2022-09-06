@@ -1,3 +1,7 @@
+"""Módulo de Models de kipo_playground
+
+"""
+
 from django.db import models
 
 # Create your models here.

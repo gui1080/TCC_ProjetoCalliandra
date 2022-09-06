@@ -1,3 +1,7 @@
+"""Módulo de Apps de kipo_playground
+
+"""
+
 from django.apps import AppConfig
 
 

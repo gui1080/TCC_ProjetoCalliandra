@@ -1,3 +1,7 @@
+"""Módulo de URLs de kipo_playground
+
+"""
+
 from django.urls import path
 from . import views
 
