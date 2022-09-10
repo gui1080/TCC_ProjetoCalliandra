@@ -225,20 +225,6 @@ def instancias_teste(request):
         :return: Objeto de render de 'instancias.html'. 
     """
     
-    # OWLREADY2
-    try:
-        
-        myworld = World(filename='backup.db', exclusive=False)
-        
-        #onto_path.append(os.path.dirname(__file__))
-        
-        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
-        kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
-        
-    except:
-        
-        print("Erro no começo")
-        
     query_feita = "kiposcrum['KIPCO__Agent'].instances()"
     
     print(query_feita)
@@ -248,8 +234,17 @@ def instancias_teste(request):
     list_nomes = []
     list_obs = []
     objetos_final = []
-    # se não for nessa estrutura, dá TABLE LOCKED!
+
+
+    # OWLREADY2
     try:
+        
+        myworld = World(filename='backup.db', exclusive=False)
+        
+        #onto_path.append(os.path.dirname(__file__))
+        
+        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+        kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
         
         with kiposcrum:
             
@@ -273,8 +268,6 @@ def instancias_teste(request):
             
             status = "OK!"
             
-            myworld.close() # só fecha o bd, deixa as instâncias no bd
-            #myworld.save() # persiste na ontologia
         
     except:
         
@@ -284,6 +277,8 @@ def instancias_teste(request):
         num_inst = 0
         
     finally:
+        
+        myworld.close()
         
         context = {"objetos_final": objetos_final, "query_feita": query_feita, "num_inst": num_inst, "status": status}
     
