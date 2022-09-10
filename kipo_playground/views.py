@@ -126,55 +126,89 @@ def welcome(request):
     ['2017', 1030] ]
     '''
     
+    files = os.listdir('.')
+    achou_bd = 0
     
-    # OWLREADY2
-    try:
+    for file in files:
             
-        myworld = World(filename='backup.db', exclusive=False)
-            
-        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
-        kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
-            
-    except:
-            
-        print("Erro no começo")
+        if "backup.db" in file:
+            achou_bd = 1
         
-    sync_reasoner()
+    if achou_bd == 0:
+        print("NÃO ACHEI BD")
     
-    #-----------------------------------------------------
-    
-    lista_dados_qtd_fim = []
-    
-    try:
         
-        with kiposcrum:
+        # OWLREADY2
+        try:
+                
+            myworld = World(filename='backup.db', exclusive=False)
             
+            onto_path.append(os.path.dirname(__file__))
             
-            status = "OK!"
+            # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+            kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
             
-            qtd_agentes = len(kiposcrum["KIPCO__Agent"].instances())
-            qtd_taskdescription = len(kiposcrum["Task_Description"].instances())
-            qtd_daily = len(kiposcrum["scrum_Daily"].instances())
-            qtd_decision = len(kiposcrum["DO__Decision"].instances())
+            kiposcrum["Product_Backlog"]("backlog_do_sistema" + "1234")
+            kiposcrum["backlog_do_sistema" + "1234"].Nome.append("backlog_do_sistema")
+            kiposcrum["backlog_do_sistema" + "1234"].Observacao.append("Criado automaticamente na abertura do sistema!")
+        
+            myworld.save()
+        
+        except:
             
-            lista_dados_qtd = [["Classe", "Quantidade"],
-                                ["KIPCO__Agent", qtd_agentes], 
-                                ["Task_Description", qtd_taskdescription], 
-                                ["scrum_Daily", qtd_daily], 
-                                ["DO__Decision", qtd_decision]]
+            print("Erro no começo criando BD")
             
-            lista_dados_qtd_fim = json.dumps(lista_dados_qtd)
+        finally:
             
             myworld.close()
             
-    except:
-        
-        qtd_agentes = 0
-        status = "Erro!"
+            return render(request, 'welcome_graficos.html', context)
     
-    context = {"lista_dados_qtd": lista_dados_qtd_fim}
-    request.session['status'] = status
-    return render(request, 'welcome_graficos.html', context)
+    
+    else:    
+    #-----------------------------------------------------
+        
+        
+        lista_dados_qtd_fim = []
+        
+        try:
+            
+            myworld = World(filename='backup.db', exclusive=False)
+            
+            kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
+            
+            
+            with kiposcrum:
+                
+                
+                status = "OK!"
+                
+                qtd_agentes = len(kiposcrum["KIPCO__Agent"].instances())
+                qtd_taskdescription = len(kiposcrum["Task_Description"].instances())
+                qtd_daily = len(kiposcrum["scrum_Daily"].instances())
+                qtd_decision = len(kiposcrum["DO__Decision"].instances())
+                
+                lista_dados_qtd = [["Classe", "Quantidade"],
+                                    ["KIPCO__Agent", qtd_agentes], 
+                                    ["Task_Description", qtd_taskdescription], 
+                                    ["scrum_Daily", qtd_daily], 
+                                    ["DO__Decision", qtd_decision]]
+                
+                lista_dados_qtd_fim = json.dumps(lista_dados_qtd)
+                
+                
+                
+        except:
+            
+            qtd_agentes = 0
+            status = "Erro!"
+        
+        finally:
+            myworld.close()
+        
+        context = {"lista_dados_qtd": lista_dados_qtd_fim}
+        request.session['status'] = status
+        return render(request, 'welcome_graficos.html', context)
 
 def sobre(request):
     
@@ -408,59 +442,40 @@ def inserir_instancia(request):
         input_classe = request.POST.get('classe')
         input_obs = request.POST.get('observacao')
         
-        print(input_nome)
-        print(input_classe)
-        
+        seed = str(time.time())
+        id_unico = faz_id(seed)
         
         # OWLREADY2
-        
-        myworld = World(filename='backup.db', exclusive=False)
-        
-        onto_path.append(os.path.dirname(__file__))
-        
-        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
-        kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
-        
-        
         try:
-        
+    
+            myworld = World(filename='backup.db', exclusive=False)
+                
+            #onto_path.append(os.path.dirname(__file__))
+                
+            # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+            kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
+            
             with kiposcrum:
                 
-                busca = """
-                    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                    PREFIX owl: <http://www.w3.org/2002/07/owl#>
-                    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-                    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-                    PREFIX scrum: <http://www.semanticweb.org/fialho/kipo#>
-                    INSERT DATA {
-                        """ + str(input_nome) + """ rdf:type """ + str(input_classe) + """.
-                    }
-                """
+                kiposcrum[input_classe](input_nome + id_unico)
                 
-                myworld.sparql(busca)
-
-                # Sincronização
-                #--------------------------------------------------------------------------
+                kiposcrum[input_nome + id_unico].Nome.append(input_nome)
                 
-                print("\n------------------------------------\n")
-                print("Sincronização!")
+                if input_obs != "":
+                    kiposcrum[input_nome + id_unico].Observacao.append(input_obs)
                 
-                
-                sync_reasoner()
+                myworld.save()
                 
                 status = "OK!"
-                myworld.save()
-        
-        except:
             
-            status = "Erro!"
-            print("Falha de acesso!")
+        except:
+            status = "Erro!"    
+
+        finally:
+            myworld.close()
+            
+
         
-        myworld.close()
-        
-        del myworld, kiposcrum    
-        
-        # fazer uma query aqui de SPARQL
         
         # faz query e bota resultado na sessão, um redirect vai botar o resultado
         request.session['input_nome'] = input_nome
