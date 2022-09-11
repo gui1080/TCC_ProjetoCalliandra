@@ -329,6 +329,11 @@ def instancias_tipo(request):
         
         print(input_dado)
         
+        objetos_final = []
+        
+        list_nomes = []
+        list_obs = []
+        
         # OWLREADY2
         try:
             
@@ -337,17 +342,9 @@ def instancias_tipo(request):
             #onto_path.append(os.path.dirname(__file__))
             
             # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
-            kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
-            
-        except:
-        
-            print("Erro no começo")
-        
-        sync_reasoner()
-        
-        objetos_final = []
-        
-        try:
+            kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
+
+            sync_reasoner()
         
             with kiposcrum:
                 
@@ -357,8 +354,6 @@ def instancias_tipo(request):
                 
                 status = "OK!"
                 
-                list_nomes = []
-                list_obs = []
                 
                 for i in range(len(lista_instancias)):
                     
@@ -374,11 +369,7 @@ def instancias_tipo(request):
                     objetos_final.append({'instancia':lista_instancias[i],'nome':list_nomes[i], 'obs':list_obs[i]})
                 
                 
-                
-                #print(lista_instancias)
-        
                 myworld.close() # só fecha o bd, deixa as instâncias no bd
-                #myworld.save() # persiste na ontologia
         
         except:
             
@@ -386,6 +377,10 @@ def instancias_tipo(request):
             num_inst = "Desconhecido"
             
             print("Falha de acesso!")
+        
+        finally:
+            
+            myworld.close()
         
         #del myworld, kiposcrum    
         
@@ -494,23 +489,18 @@ def sprint_select(request):
         :return: Objeto de render de 'seleciona_sprint.html'. 
     """
     
+    objetos_final = []
+    
     # OWLREADY2
     try:
             
         myworld = World(filename='backup.db', exclusive=False)
             
         # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
-        kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
+        kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
             
-    except:
-            
-        print("Erro no começo")
         
-    sync_reasoner()
-        
-    objetos_final = []
-        
-    try:
+        sync_reasoner()
         
         with kiposcrum:
                 
@@ -543,7 +533,7 @@ def sprint_select(request):
             for i in range(len(lista_instancias)):
                 objetos_final.append({'instancia':lista_instancias[i],'nome':list_nomes[i], 'obs':list_obs[i]})
                 
-            myworld.close() # só fecha o bd, deixa as instâncias no bd
+            
             
     except:
             
@@ -558,6 +548,9 @@ def sprint_select(request):
         
         print("---------------------------")
 
+    finally:
+        
+        myworld.close() # só fecha o bd, deixa as instâncias no bd
     
     
     
@@ -600,21 +593,13 @@ def sprint_dashboard(request, instancia_sprint):
             
         myworld = World(filename='backup.db', exclusive=False)
             
-        #onto_path.append(os.path.dirname(__file__))
-            
         # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
-        kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
+        kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
             
-    except:
         
-        print("Erro no começo")
-        
-    sync_reasoner()
+        sync_reasoner()
     
-    #-----------------------------------------------------
     
-    try:
-        
         with kiposcrum:
             
             print("Criando dashboard de Sprint!")
@@ -664,7 +649,6 @@ def sprint_dashboard(request, instancia_sprint):
             objeto_INV_simultaneo = transforma_objeto(INV_simultaneo)
             
             status = "OK!" 
-            myworld.close() 
         
     except:
             
@@ -674,6 +658,12 @@ def sprint_dashboard(request, instancia_sprint):
         num_inst = 0
             
         print("Falha de acesso!")
+        
+    
+    finally:
+        
+        myworld.close() 
+        
     
     request.session['num_inst'] = num_inst
     request.session['status'] = status   # "OK!" ou "Erro!"
@@ -711,24 +701,20 @@ def sprint_add(request):
         
         status = "Erro!"
         
+        seed = str(time.time())
+        id_unico = faz_id(seed)
+        
+        
         # OWLREADY2
         try:
             
             myworld = World(filename='backup.db', exclusive=False)
             
             # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
-            kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
+            kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
             
-        except:
+            sync_reasoner()
         
-            print("Erro no começo")
-        
-        sync_reasoner()
-        
-        seed = str(time.time())
-        id_unico = faz_id(seed)
-        
-        try:
         
             with kiposcrum:
                 
@@ -743,7 +729,6 @@ def sprint_add(request):
                 
                 
                 myworld.save() # persiste na ontologia
-                myworld.close()
         
         except:
             
@@ -753,15 +738,15 @@ def sprint_add(request):
         
         finally:
             
-            # faz query e bota resultado na sessão, um redirect vai botar o resultado
-            request.session['input_nome'] = input_nome + id_unico
-            request.session['input_classe'] = input_classe
-            request.session['ontologia_status'] = status
-            return redirect('/kipo_playground/inserir_instancia_tela_ok/')
+            myworld.close()
             
+        # faz query e bota resultado na sessão, um redirect vai botar o resultado
+        request.session['input_nome'] = input_nome + id_unico
+        request.session['input_classe'] = input_classe
+        request.session['ontologia_status'] = status
         
+        return redirect('/kipo_playground/inserir_instancia_tela_ok/')
         
-    
     return render(request, 'instancias_tipo_select.html', context)
 
 # !VISUALIZAÇÃO DE TRABALHO DIÁRIO DENTRO DE UMA SPRINT
@@ -807,29 +792,20 @@ def daily_dashboard(request, instancia_daily):
         
     # OWLREADY2
     try:
-            
+        
         myworld = World(filename='backup.db', exclusive=False)
-            
-        #onto_path.append(os.path.dirname(__file__))
-            
+        
         # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
-        kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
-            
-    except:
+        kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
         
-        print("Erro no começo")
-        
-    sync_reasoner()
-    
-    #-----------------------------------------------------
-    
-    try:
-        
+        sync_reasoner()
+
+        num_inst = 0
+
         with kiposcrum:
             
             print("Criando dashboard de Sprint!")
             
-            num_inst = 0
             
             # kiposcrum.KIPCO__Agent("desenvolvedornovo")
             
@@ -874,7 +850,6 @@ def daily_dashboard(request, instancia_daily):
             objeto_performs = transforma_objeto(performs)
             
             status = "OK!" 
-            myworld.close() 
         
     except:
             
@@ -883,6 +858,10 @@ def daily_dashboard(request, instancia_daily):
         num_inst = "?"
             
         print("Falha de acesso!")
+    
+    finally:
+        
+        myworld.close() 
     
     request.session['status'] = status   # "OK!" ou "Erro!"
     request.session['num_prop_correlatas'] = num_prop_correlatas
@@ -939,26 +918,20 @@ def ver_sprint_backlog(request, instancia_sprint):
             
         myworld = World(filename='backup.db', exclusive=False)
             
-        #onto_path.append(os.path.dirname(__file__))
-            
         # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
-        kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
+        kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
             
-    except:
         
-        print("Erro no começo")
-        
-    sync_reasoner()
+        sync_reasoner()
+     
+        num_inst = 0
     
-    #-----------------------------------------------------
-    
-    status = "OK!" 
-    
-    try:
         
         with kiposcrum:
             
             print("Criando Visualização de Sprint Backlog!")
+            
+            status = "OK!"
             
             instancia_backlog_sprint = str(kiposcrum[instancia].ontoscrum__has_input.pop(0))
             
@@ -970,7 +943,6 @@ def ver_sprint_backlog(request, instancia_sprint):
             print(propriedades)
             num_prop_correlatas = len(propriedades)
             
-            num_inst = 0
             
             # faz as queries do que vai para a tela!
             '''
@@ -1018,7 +990,6 @@ def ver_sprint_backlog(request, instancia_sprint):
             objeto_performs = transforma_objeto(performs)
             objeto_is_executed_by = transforma_objeto(is_executed_by)
             
-            myworld.close()
     except:
         
         status = "Erro!" 
@@ -1027,7 +998,11 @@ def ver_sprint_backlog(request, instancia_sprint):
         instancia = "Erro!" 
         
         print("Falha de acesso!")
-    
+        
+    finally:
+        
+        myworld.close()
+        
     request.session['status'] = status   # "OK!" ou "Erro!"
     request.session['num_prop_correlatas'] = num_prop_correlatas
     request.session['num_inst'] = str(num_inst)
@@ -1065,28 +1040,19 @@ def ver_backlog_produto(request):
     if 'num_prop_correlatas' in request.session:
         del request.session['num_prop_correlatas']
     
-  
+    num_inst = 0
+    
     # OWLREADY2
     try:
             
         myworld = World(filename='backup.db', exclusive=False)
             
-        #onto_path.append(os.path.dirname(__file__))
-            
         # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
-        kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
+        kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
             
-    except:
         
-        print("Erro no começo")
-        
-        
-    sync_reasoner()
-    
-    #-----------------------------------------------------
-    
-    try:
-        
+        sync_reasoner()
+
         with kiposcrum:
             
             # falta o ontoscrum__originator
@@ -1096,7 +1062,6 @@ def ver_backlog_produto(request):
             
             print("Criando Visualização de Product Backlog!")
             
-            num_inst = 0
             
             # kiposcrum.KIPCO__Agent("desenvolvedornovo")
             
@@ -1139,48 +1104,6 @@ def ver_backlog_produto(request):
             
             # pegar objeto de contains com EstimatedBusinessValue
             #------------------------------
-            '''
-            objeto_contains = []
-            
-            list_nomes = []
-            list_obs = []
-            list_classe = []
-            list_estimated_value = []
-            
-            for i in range(len(contains)):
-                
-                # esse jeito de recuperar data property tá errado
-                list_estimated_value.append(str(kiposcrum[instancia].EstimatedBusinessValue))
-                
-                list_nomes.append(str(contains[i].Nome[0]))
-                        
-                list_classe.append(str(contains[i].is_a.pop(0)))
-                        
-                if not contains[i].Observacao:
-                    list_obs.append("Sem observações")
-                else:
-                    list_obs.append(str(contains[i].Observacao))
-                    
-                print("---------------")
-                print(len(list_nomes))
-                print(len(list_obs))
-                print(len(list_classe))
-                print(len(contains))
-                print("current estimated business value " + str(kiposcrum[instancia].EstimatedBusinessValue))
-                print("estimated business values " + str(list_estimated_value.pop(0)))
-                print(str(contains[0]))
-                print("---------------")
-            
-            # 'estimatedbusinessvalue': list_estimated_value[i]    
-            for i in range(len(contains)):
-                objeto_contains.append({'classe_inst':list_classe[i], 'instancia':str(contains[i]),'nome':list_nomes[i], 'obs':list_obs[i] })
-                    
-                    
-            #------------------------------
-            '''
-            
-            
-            myworld.close() 
         
     except:
             
@@ -1191,6 +1114,10 @@ def ver_backlog_produto(request):
         instancia = "Erro!" 
         
         print("Falha de acesso!")
+        
+    finally:
+        
+        myworld.close() 
     
     request.session['status'] = status   # "OK!" ou "Erro!"
     request.session['num_prop_correlatas'] = num_prop_correlatas
@@ -1212,23 +1139,24 @@ def decision_select(request):
         :return: Objeto de render de 'seleciona_decisao.html'. 
     """
     
+    objetos_final = []
+    
+    list_nomes = []
+    list_obs = []
+    
+    qntd_decisoes_reais = 0
+    
     # OWLREADY2
     try:
             
         myworld = World(filename='backup.db', exclusive=False)
             
         # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
-        kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
+        kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
             
-    except:
-            
-        print("Erro no começo")
         
-    sync_reasoner()
+        sync_reasoner()
         
-    objetos_final = []
-        
-    try:
         
         with kiposcrum:
                 
@@ -1241,14 +1169,7 @@ def decision_select(request):
             print("\n\n\n\n")
                 
             status = "OK!"
-                
-            list_nomes = []
-            list_obs = []
             
-            qntd_decisoes_reais = 0
-            
-            
-
             for i in range(len(lista_instancias)):
                 
                 if "DO__Decision"  in str(lista_instancias[i].is_a):
@@ -1264,8 +1185,6 @@ def decision_select(request):
                     
             for i in range(qntd_decisoes_reais):
                 objetos_final.append({'instancia':lista_instancias[i],'nome':list_nomes[i], 'obs':list_obs[i]})
-                
-            myworld.close() # só fecha o bd, deixa as instâncias no bd
             
     except:
             
@@ -1280,9 +1199,10 @@ def decision_select(request):
         
         print("---------------------------")
 
-    
-    
-    
+    finally:
+        
+        myworld.close() # só fecha o bd, deixa as instâncias no bd
+
     request.session['num_inst'] = num_inst
     request.session['status'] = status
         
@@ -1313,32 +1233,23 @@ def decision_dashboard(request, instancia_decisao):
     if 'num_inst' in request.session:
         del request.session['num_inst']
         
-        
+    num_inst = 0
+    
     # OWLREADY2
     try:
             
         myworld = World(filename='backup.db', exclusive=False)
             
-        #onto_path.append(os.path.dirname(__file__))
-            
         # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
-        kiposcrum = myworld.get_ontology(os.path.dirname(__file__) + '/kipo_fialho.owl').load()
+        kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
             
-    except:
         
-        print("Erro no começo")
-        
-    sync_reasoner()
-    
-    #-----------------------------------------------------
-    
-    try:
+        sync_reasoner()
         
         with kiposcrum:
             
             print("Criando dashboard de DO__Decision!")
             
-            num_inst = 0
             
             # a query sai com prefixo "kipo."
             instancia = instancia_decisao[5:]
@@ -1356,7 +1267,6 @@ def decision_dashboard(request, instancia_decisao):
             {kipo.StatusProblemaResolvido, kipo.INV_influences, kipo.INV_composes, 
             kipo.INV_ontoscrum__performs, kipo.pos_state, 
             kipo.considers, kipo.Nome, kipo.INV_threatens}
-
             
             '''
             
@@ -1387,7 +1297,6 @@ def decision_dashboard(request, instancia_decisao):
             
             
             status = "OK!" 
-            myworld.close() 
         
     except:
             
@@ -1397,6 +1306,10 @@ def decision_dashboard(request, instancia_decisao):
         num_inst = 0
             
         print("Falha de acesso!")
+    
+    finally:
+        
+        myworld.close() 
     
     request.session['num_inst'] = num_inst
     request.session['status'] = status   # "OK!" ou "Erro!"
