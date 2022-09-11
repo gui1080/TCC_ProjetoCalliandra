@@ -502,7 +502,7 @@ def retirar_instancia(request, instancia):
             # recupera classe!
             # deleta instancia!
                 
-            #input_classe = str(instancia.is_a())
+            #input_classe = str(input_nome.is_a.pop(0))
                 
             print("------------------")
             #print(input_nome)
