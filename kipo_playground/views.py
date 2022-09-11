@@ -249,7 +249,6 @@ def instancias_teste(request):
         with kiposcrum:
             
             lista_instancias = kiposcrum["KIPCO__Agent"].instances() 
-            print("foi")
             
             
             for i in range(len(lista_instancias)):
@@ -369,7 +368,7 @@ def instancias_tipo(request):
                     objetos_final.append({'instancia':lista_instancias[i],'nome':list_nomes[i], 'obs':list_obs[i]})
                 
                 
-                myworld.close() # só fecha o bd, deixa as instâncias no bd
+                #myworld.close() # só fecha o bd, deixa as instâncias no bd
         
         except:
             
@@ -485,48 +484,49 @@ def retirar_instancia(request, instancia):
     context = {'form':form}
     '''
     
-    if request.method == 'POST':
     
-        input_nome = str(instancia)
+    input_nome = instancia[5:]
     
-        try:
+    try:
+        myworld = World(filename='backup.db', exclusive=False)
+                
+                
+        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+        kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
         
-            myworld = World(filename='backup.db', exclusive=False)
+        sync_reasoner()
+        
+        with kiposcrum:
                 
+            # nome ja recuperado
+            # recupera classe!
+            # deleta instancia!
                 
-            # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
-            kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
+            #input_classe = str(instancia.is_a())
                 
-            with kiposcrum:
-                    
-                # nome ja recuperado
-                # recupera classe!
-                # deleta instancia!
+            print("------------------")
+            #print(input_nome)
+            print("------------------")
                 
-                input_classe = str(instancia.is_a.pop(0))
-                
-                print(str(instancia.is_a.pop(0)))
-                
-                #destroy_entity(kiposcrum[input_classe](input_nome))
-                
-                myworld.save()
-                    
-                status = "OK!"
-                
-        except:
-            status = "Erro!"    
+            #destroy_entity(kiposcrum[input_classe](input_nome))
+            
+            status = "OK!"
             input_classe = "Erro!"
+                
+    except:
+        
+        status = "Erro!"    
+        input_classe = "Erro!"
 
-        finally:
-            myworld.close()
+    finally:
+        
+        myworld.close()
     
-        request.session['input_nome'] = input_nome
-        request.session['input_classe'] = input_classe
-        request.session['input_status'] = status
-        return redirect(request, '/kipo_playground/inserir_instancia_tela_ok/')
+    request.session['input_nome'] = input_nome
+    request.session['input_classe'] = input_classe
+    request.session['input_status'] = status
+    return render(request, 'inserir_instancia_tela_ok.html')
     
-    return render(request, 'deletar_instancias.html', context)
-
 
 # !MÓDULO DE GESTÃO DE SPRINTS
 # !SELECIONA SPRINT

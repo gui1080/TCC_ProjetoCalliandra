@@ -68,6 +68,7 @@
                             <td>Instâncias de Agentes</td>
                             <td>Nomes de Agentes</td>
                             <td>Observações</td>
+                            <td>Deletar</td>
                         </tr>
                     </thead>
                     <tbody> 
@@ -76,6 +77,7 @@
                             <td>{{ obj.instancia }}</td>
                             <td>{{ obj.nome }}</td>
                             <td>{{ obj.obs }}</td>
+                            <td>  <a class="btn-warning" href="/kipo_playground/retirar_instancia/{{obj.instancia}}">Deletar!</a>  </td>
                         </tr>
                         {% endfor %}
                     </tbody>
