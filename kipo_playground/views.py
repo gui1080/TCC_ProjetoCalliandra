@@ -477,6 +477,57 @@ def inserir_instancia(request):
     return render(request, 'instancias_inserir_select.html', context)
 
 
+def retirar_instancia(request, instancia):
+    
+    '''
+    form = inserir_instancias_tipoForm()
+
+    context = {'form':form}
+    '''
+    
+    if request.method == 'POST':
+    
+        input_nome = str(instancia)
+    
+        try:
+        
+            myworld = World(filename='backup.db', exclusive=False)
+                
+                
+            # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+            kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
+                
+            with kiposcrum:
+                    
+                # nome ja recuperado
+                # recupera classe!
+                # deleta instancia!
+                
+                input_classe = str(instancia.is_a.pop(0))
+                
+                print(str(instancia.is_a.pop(0)))
+                
+                #destroy_entity(kiposcrum[input_classe](input_nome))
+                
+                myworld.save()
+                    
+                status = "OK!"
+                
+        except:
+            status = "Erro!"    
+            input_classe = "Erro!"
+
+        finally:
+            myworld.close()
+    
+        request.session['input_nome'] = input_nome
+        request.session['input_classe'] = input_classe
+        request.session['input_status'] = status
+        return redirect(request, '/kipo_playground/inserir_instancia_tela_ok/')
+    
+    return render(request, 'deletar_instancias.html', context)
+
+
 # !MÓDULO DE GESTÃO DE SPRINTS
 # !SELECIONA SPRINT
 # !------------------------------------------------------------

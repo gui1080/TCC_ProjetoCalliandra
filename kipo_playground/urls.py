@@ -25,6 +25,7 @@ urlpatterns = [
     # Inserir instâncias
     path('inserir_instancia/', views.inserir_instancia),
     path('inserir_instancia_tela_ok/', views.inserir_instancia_tela_ok),
+    path('retirar_instancia/<str:instancia>', views.retirar_instancia),
     
     # selecionar sprints
     path('sprints_select/', views.sprint_select),
