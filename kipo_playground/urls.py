@@ -28,9 +28,9 @@ urlpatterns = [
     path('retirar_instancia/<str:instancia>', views.retirar_instancia),
     
     # selecionar sprints
-    path('sprints_select/', views.sprint_select),
+    path('sprint_select/', views.sprint_select),
     path('sprint_dashboard/<str:instancia_sprint>', views.sprint_dashboard),
-    path('sprint_add/', views.sprint_add),
+    path('add_classe/<str:classe_inst>', views.add_classe),
     
     # visualização de dashboard
     path('daily_dashboard/<str:instancia_daily>', views.daily_dashboard),

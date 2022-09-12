@@ -13,7 +13,7 @@ from typing import final
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import Template, Context
-from .forms import novo_instancias_tipoForm, inserir_instancias_tipoForm, inserir_instancias_sprintForm
+from .forms import novo_instancias_tipoForm, inserir_instancias_tipoForm, inserir_instancias_dada_classeForm
 from owlready2 import *         # https://pypi.org/project/Owlready2/
 from os.path import exists
 import json 
@@ -79,7 +79,7 @@ def transforma_objeto(lista_instancias):
         for i in range(len(lista_instancias)):
                             
             list_nomes.append(str(lista_instancias[i].Nome[0]))
-                
+            
             list_classe.append(str(lista_instancias[i].is_a.pop(0)))
                 
             if not lista_instancias[i].Observacao:
@@ -540,7 +540,7 @@ def sprint_select(request):
         :return: Objeto de render de 'seleciona_sprint.html'. 
     """
     
-    objetos_final = []
+    objetos_sprints = []
     
     # OWLREADY2
     try:
@@ -560,30 +560,18 @@ def sprint_select(request):
             print("\n\n\n\n")
             print(lista_instancias)
             print("\n\n\n\n")
-            
+
             num_inst = len(lista_instancias)
             
             print("\n\n\n\n")
             print(num_inst)
             print("\n\n\n\n")
-                
+            
             status = "OK!"
-                
-            list_nomes = []
-            list_obs = []
-                
-            for i in range(len(lista_instancias)):
-                    
-                list_nomes.append(lista_instancias[i].Nome[0])
-                
-                if not lista_instancias[i].Observacao:
-                    list_obs.append("Sem observações")
-                else:
-                    list_obs.append(lista_instancias[i].Observacao)
-                    
-            for i in range(len(lista_instancias)):
-                objetos_final.append({'instancia':lista_instancias[i],'nome':list_nomes[i], 'obs':list_obs[i]})
-                
+            
+            
+            # era pra ser "kipo.KIPCO__Knowledge_Intensive_Process"
+            objetos_sprints = transforma_objeto(lista_instancias)
             
             
     except:
@@ -608,7 +596,7 @@ def sprint_select(request):
     request.session['num_inst'] = num_inst
     request.session['status'] = status
         
-    context = {"objetos_final": objetos_final}
+    context = {"objetos_sprints": objetos_sprints}
     return render(request, 'seleciona_sprint.html', context)
 
 
@@ -707,7 +695,7 @@ def sprint_dashboard(request, instancia_sprint):
         num_inst = "Desconhecido"
         num_prop_correlatas = "Desconhecido"
         num_inst = 0
-            
+        
         print("Falha de acesso!")
         
     
@@ -727,15 +715,15 @@ def sprint_dashboard(request, instancia_sprint):
     return render(request, 'sprint_dashboard.html', context)
     
     
-def sprint_add(request):
-    """ View de adiçao de uma nova Sprints.
+def add_classe(request, classe_inst):
+    """ View de adiçao de uma nova instancia, dada uma classe.
     
         :param request: HTTP Request. 
     
         :return: Objeto de render de 'instancias_tipo_select.html' ou redirect para view de 'inserir_instancia_tela_ok'. 
     """
     
-    form = inserir_instancias_sprintForm()
+    form = inserir_instancias_dada_classeForm()
 
     context = {'form':form}
     
@@ -747,7 +735,6 @@ def sprint_add(request):
             del request.session['observacao']
             
         input_nome = str(request.POST.get('nome'))
-        input_classe = "scrum_Sprint"
         input_observacao = str(request.POST.get('observacao'))
         
         status = "Erro!"
@@ -766,10 +753,11 @@ def sprint_add(request):
             
             sync_reasoner()
         
-        
+            print(classe_inst)
+            
             with kiposcrum:
                 
-                kiposcrum[input_classe](input_nome + id_unico)
+                kiposcrum[classe_inst](input_nome + id_unico)
                 
                 if input_observacao != "":
                     kiposcrum[input_nome + id_unico].Observacao.append(input_observacao)
@@ -793,7 +781,7 @@ def sprint_add(request):
             
         # faz query e bota resultado na sessão, um redirect vai botar o resultado
         request.session['input_nome'] = input_nome + id_unico
-        request.session['input_classe'] = input_classe
+        request.session['input_classe'] = classe_inst
         request.session['ontologia_status'] = status
         
         return redirect('/kipo_playground/inserir_instancia_tela_ok/')
@@ -1216,14 +1204,14 @@ def decision_select(request):
             num_inst = len(lista_instancias)
             
             print("\n\n\n\n")
-            print(num_inst)
+            print(lista_instancias)
             print("\n\n\n\n")
                 
             status = "OK!"
             
             for i in range(len(lista_instancias)):
                 
-                if "DO__Decision"  in str(lista_instancias[i].is_a):
+                if "DO__Decision" in str(lista_instancias[i].is_a):
                         
                     list_nomes.append(lista_instancias[i].Nome[0])
                     

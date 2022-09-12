@@ -10,7 +10,7 @@ Foi feito um modelo para uma nova instância de Sprint (campos 'nome' e 'observa
 from django.db import models
 
 # Create your models here.
-class inserir_instancias_sprint(models.Model):
+class inserir_instancias_dada_classe(models.Model):
     
     
     nome = models.CharField(max_length=255, null=False)
