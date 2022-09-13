@@ -879,9 +879,9 @@ def add_classe_com_relacionamento(request, classe_inst, relacinamento_inst, refe
                 if input_observacao != "":
                     kiposcrum[input_nome + id_unico].Observacao.append(input_observacao)
                 
-                if relacinamento_inst == "INV_Influences":
+                if relacinamento_inst == "INV_influences":
                     
-                    kiposcrum[referencia_inst].INV_Influences.append(kiposcrum[input_nome + id_unico])
+                    kiposcrum[referencia_inst].INV_influences.append(kiposcrum[input_nome + id_unico])
                 
                 sync_reasoner()
                 
