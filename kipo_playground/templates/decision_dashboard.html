@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h2>{{ instancia_decision }}</h2>  
+<h2>{{ request.session.instancia_decision }}</h2>  
 
 <div class="card_view">
     
@@ -100,6 +100,9 @@
         </div>
     </div>
 </div>
+
+<a class="btn btn-primary" href="/kipo_playground/add_classe_com_relacionamento/KIPCO__Experience/INV_influences/{{ request.session.instancia_decision }}">Adicionar Influência</a>
+
 
 </br>
 
@@ -214,7 +217,7 @@
 </br>
 </br>
 
-<a class="btn btn-primary" href="/kipo_playground/welcome">Adicionar Dia de Trabalho</a>
+<a class="btn btn-primary" href="/kipo_playground/add_classe/DO__Decision">Adicionar Decisão</a>
 
 </br>
 </br>

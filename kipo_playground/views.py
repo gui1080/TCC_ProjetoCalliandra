@@ -828,6 +828,89 @@ def add_classe(request, classe_inst):
         
     return render(request, 'instancias_tipo_select.html', context)
 
+def add_classe_com_relacionamento(request, classe_inst, relacinamento_inst, referencia_inst):
+
+    form = inserir_instancias_dada_classeForm()
+
+    context = {'form':form}
+    
+    if request.method == 'POST':
+        
+        if 'nome' in request.session:
+            del request.session['nome']
+        if 'observacao' in request.session:
+            del request.session['observacao']
+            
+        input_nome = str(request.POST.get('nome'))
+        input_observacao = str(request.POST.get('observacao'))
+        
+        status = "Erro!"
+        
+        seed = str(time.time())
+        id_unico = faz_id(seed)
+        
+        
+        # OWLREADY2
+        try:
+            
+            myworld = World(filename='backup.db', exclusive=False)
+            
+            # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+            kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
+            
+            sync_reasoner()
+        
+            print(classe_inst)
+            
+            with kiposcrum:
+                
+                '''
+                kiposcrum[classe_inst](input_nome + id_unico)
+                
+                kiposcrum[input_nome + id_unico].Nome.append(input_nome)
+                
+                if input_observacao != "":
+                    kiposcrum[input_nome + id_unico].Observacao.append(input_observacao)
+                
+                sync_reasoner()
+                
+                status = "OK!"
+                
+                
+                myworld.save() # persiste na ontologia
+                '''
+                
+                
+                # input_nome = nome da nova instância
+                # classe_inst = classe da nova instância
+                # relacinamento_inst = relacionamento que nova instancia vai ter com "referencia_inst"
+                # input_nome da classe classe_int tem relacionamento_inst com referencia_inst, que é uma instância
+                
+                print("input_nome " + str(input_nome))
+                print("classe_inst " + str(classe_inst))
+                print("relacinamento_inst " + str(relacinamento_inst))
+                print("referencia_inst " + str(referencia_inst))
+                
+        except:
+            
+            print("Falha de acesso!")
+            input_nome = "Não foi recuperado"
+            input_classe = "Não foi recuperado"
+        
+        finally:
+            
+            myworld.close()
+            
+        # faz query e bota resultado na sessão, um redirect vai botar o resultado
+        request.session['input_nome'] = input_nome + id_unico
+        request.session['input_classe'] = classe_inst
+        request.session['ontologia_status'] = status
+        
+        return redirect('/kipo_playground/inserir_instancia_tela_ok/')
+        
+    return render(request, 'instancias_tipo_select.html', context)
+
+
 # !VISUALIZAÇÃO DE TRABALHO DIÁRIO DENTRO DE UMA SPRINT
 # !------------------------------------------------------------
 
@@ -1309,8 +1392,6 @@ def decision_dashboard(request, instancia_decisao):
     if 'num_prop_correlatas' in request.session:
         del request.session['num_prop_correlatas']
         
-    if 'num_inst' in request.session:
-        del request.session['num_inst']
         
     num_inst = 0
     
@@ -1383,6 +1464,7 @@ def decision_dashboard(request, instancia_decisao):
         num_inst = "Desconhecido"
         num_prop_correlatas = "Desconhecido"
         num_inst = 0
+        instancia = "Erro!"
             
         print("Falha de acesso!")
     
@@ -1390,12 +1472,12 @@ def decision_dashboard(request, instancia_decisao):
         
         myworld.close() 
     
-    request.session['num_inst'] = num_inst
     request.session['status'] = status   # "OK!" ou "Erro!"
     request.session['num_prop_correlatas'] = num_prop_correlatas
     request.session['num_inst'] = str(num_inst)
+    request.session['instancia_decision'] = str(instancia)
     
-    context = {"instancia_decision": instancia_decisao, "objeto_INV_influences": objeto_INV_influences, "objeto_INV_composes": objeto_INV_composes, "objeto_considers": objeto_considers, "objeto_INV_threatens": objeto_INV_threatens}
+    context = {"objeto_INV_influences": objeto_INV_influences, "objeto_INV_composes": objeto_INV_composes, "objeto_considers": objeto_considers, "objeto_INV_threatens": objeto_INV_threatens}
     
     return render(request, 'decision_dashboard.html', context)
     

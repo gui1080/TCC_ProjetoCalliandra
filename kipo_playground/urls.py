@@ -31,6 +31,7 @@ urlpatterns = [
     path('sprint_select/', views.sprint_select),
     path('sprint_dashboard/<str:instancia_sprint>', views.sprint_dashboard),
     path('add_classe/<str:classe_inst>', views.add_classe),
+    path('add_classe_com_relacionamento/<str:classe_inst>/<str:relacinamento_inst>/<str:referencia_inst>', views.add_classe_com_relacionamento),
     
     # visualização de dashboard
     path('daily_dashboard/<str:instancia_daily>', views.daily_dashboard),
