@@ -610,6 +610,8 @@ def sprint_select(request):
                 objetos_final.append({'classe_inst':list_classe[i], 'instancia':str(lista_instancias[i]),'nome':list_nomes[i], 'obs':list_obs[i]})
             '''
             
+            objetos_sprints = transforma_objeto(lista_instancias)
+            
     except:
             
         status = "Erro!" 
@@ -794,6 +796,8 @@ def add_classe(request, classe_inst):
             with kiposcrum:
                 
                 kiposcrum[classe_inst](input_nome + id_unico)
+                
+                kiposcrum[input_nome + id_unico].Nome.append(input_nome)
                 
                 if input_observacao != "":
                     kiposcrum[input_nome + id_unico].Observacao.append(input_observacao)
