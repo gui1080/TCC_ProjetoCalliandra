@@ -844,8 +844,6 @@ def add_classe_com_relacionamento(request, classe_inst, relacinamento_inst, refe
         input_nome = str(request.POST.get('nome'))
         input_observacao = str(request.POST.get('observacao'))
         
-        status = "Erro!"
-        
         seed = str(time.time())
         id_unico = faz_id(seed)
         
@@ -864,7 +862,16 @@ def add_classe_com_relacionamento(request, classe_inst, relacinamento_inst, refe
             
             with kiposcrum:
                 
-                '''
+                print("input_nome " + str(input_nome))
+                print("classe_inst " + str(classe_inst))
+                print("relacinamento_inst " + str(relacinamento_inst))
+                print("referencia_inst " + str(referencia_inst))
+                
+                # input_nome = nome da nova instância
+                # classe_inst = classe da nova instância
+                # relacinamento_inst = relacionamento que nova instancia vai ter com "referencia_inst"
+                # input_nome da classe classe_int tem relacionamento_inst com referencia_inst, que é uma instância
+                
                 kiposcrum[classe_inst](input_nome + id_unico)
                 
                 kiposcrum[input_nome + id_unico].Nome.append(input_nome)
@@ -872,30 +879,22 @@ def add_classe_com_relacionamento(request, classe_inst, relacinamento_inst, refe
                 if input_observacao != "":
                     kiposcrum[input_nome + id_unico].Observacao.append(input_observacao)
                 
+                if relacinamento_inst == "INV_Influences":
+                    kiposcrum[input_nome + id_unico].INV_Influences.append(kiposcrum[referencia_inst])
+                
                 sync_reasoner()
                 
                 status = "OK!"
                 
-                
                 myworld.save() # persiste na ontologia
-                '''
                 
-                
-                # input_nome = nome da nova instância
-                # classe_inst = classe da nova instância
-                # relacinamento_inst = relacionamento que nova instancia vai ter com "referencia_inst"
-                # input_nome da classe classe_int tem relacionamento_inst com referencia_inst, que é uma instância
-                
-                print("input_nome " + str(input_nome))
-                print("classe_inst " + str(classe_inst))
-                print("relacinamento_inst " + str(relacinamento_inst))
-                print("referencia_inst " + str(referencia_inst))
                 
         except:
             
             print("Falha de acesso!")
             input_nome = "Não foi recuperado"
             input_classe = "Não foi recuperado"
+            status = "Erro!"
         
         finally:
             
