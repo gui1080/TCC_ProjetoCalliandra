@@ -571,8 +571,44 @@ def sprint_select(request):
             
             
             # era pra ser "kipo.KIPCO__Knowledge_Intensive_Process"
-            objetos_sprints = transforma_objeto(lista_instancias)
+            #objetos_sprints = transforma_objeto(lista_instancias)
             
+            # debugar!! No 1 dá ruim quando adiciona algo novo.
+            print(str(lista_instancias[0].Nome[0]))
+            print(str(lista_instancias[0].is_a.pop(0)))
+            print(str(lista_instancias[0].Observacao))
+            
+            '''
+            
+            list_nomes = []
+            list_classe = []
+            list_obs = []
+            objetos_final = []
+            
+            for i in range(len(lista_instancias)):
+                            
+                list_nomes.append(str(lista_instancias[i].Nome[0]))
+            
+                list_classe.append(str(lista_instancias[i].is_a.pop(0)))
+                
+                if not lista_instancias[i].Observacao:
+                    list_obs.append("Sem observações")
+                else:
+                    list_obs.append(str(lista_instancias[i].Observacao))
+            
+            
+            print("---------------")
+            print(len(list_nomes))
+            print(len(list_obs))
+            print(len(list_classe))
+            print(len(lista_instancias))
+            print("---------------")
+            '''
+            
+            '''
+            for i in range(len(lista_instancias)):
+                objetos_final.append({'classe_inst':list_classe[i], 'instancia':str(lista_instancias[i]),'nome':list_nomes[i], 'obs':list_obs[i]})
+            '''
             
     except:
             
