@@ -55,6 +55,7 @@
                         <tr>
                             <td>Instâncias de Decisões</td>
                             <td>Nomes das Decisões</td>
+                            <td>Status</td>
                             <td>Observações</td>
                             <td>Ver Dashboard</td>
                         </tr>
@@ -64,6 +65,7 @@
                         <tr>
                             <td>{{ obj.instancia }}</td>
                             <td>{{ obj.nome }}</td>
+                            <td>{{ obj.status }}</td>
                             <td>{{ obj.obs }}</td>
                             <td>  <a class="btn-warning" href="/kipo_playground/decision_dashboard/{{obj.instancia}}">Dashboard</a>  </td>
                         </tr>

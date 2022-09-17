@@ -58,6 +58,7 @@
                             <td>Observações</td>
                             <td>Ver Dashboard</td>
                             <td>Ver Backlog</td>
+                            <td>Opções</td>
                         </tr>
                     </thead>
                     <tbody> 
@@ -68,6 +69,7 @@
                             <td>{{ obj.obs }}</td>
                             <td>  <a class="btn-warning" href="/kipo_playground/sprint_dashboard/{{obj.instancia}}">Dashboard</a>  </td>
                             <td>  <a class="btn-warning" href="/kipo_playground/sprint_backlog/{{obj.instancia}}">Sprint Backlog</a>  </td>
+                            <td>  <a class="btn-warning" href="/kipo_playground/sprint_options/{{obj.instancia}}">Ver Opções</a>  </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -88,5 +90,6 @@
 
 </br>
 </br>
+
 
 {% endblock %}

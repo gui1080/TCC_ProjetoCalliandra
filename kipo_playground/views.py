@@ -233,7 +233,7 @@ def instancias_teste(request):
     
     list_nomes = []
     list_obs = []
-    objetos_final = []
+    objetos_final = [] 
 
 
     # OWLREADY2
@@ -578,37 +578,6 @@ def sprint_select(request):
             print(str(lista_instancias[0].is_a.pop(0)))
             print(str(lista_instancias[0].Observacao))
             
-            '''
-            
-            list_nomes = []
-            list_classe = []
-            list_obs = []
-            objetos_final = []
-            
-            for i in range(len(lista_instancias)):
-                            
-                list_nomes.append(str(lista_instancias[i].Nome[0]))
-            
-                list_classe.append(str(lista_instancias[i].is_a.pop(0)))
-                
-                if not lista_instancias[i].Observacao:
-                    list_obs.append("Sem observações")
-                else:
-                    list_obs.append(str(lista_instancias[i].Observacao))
-            
-            
-            print("---------------")
-            print(len(list_nomes))
-            print(len(list_obs))
-            print(len(list_classe))
-            print(len(lista_instancias))
-            print("---------------")
-            '''
-            
-            '''
-            for i in range(len(lista_instancias)):
-                objetos_final.append({'classe_inst':list_classe[i], 'instancia':str(lista_instancias[i]),'nome':list_nomes[i], 'obs':list_obs[i]})
-            '''
             
             objetos_sprints = transforma_objeto(lista_instancias)
             
@@ -847,6 +816,8 @@ def add_classe_com_relacionamento(request, classe_inst, relacinamento_inst, refe
         seed = str(time.time())
         id_unico = faz_id(seed)
         
+        if ".kipo" in referencia_inst:
+            referencia_inst = referencia_inst[5:]
         
         # OWLREADY2
         try:
@@ -879,9 +850,47 @@ def add_classe_com_relacionamento(request, classe_inst, relacinamento_inst, refe
                 if input_observacao != "":
                     kiposcrum[input_nome + id_unico].Observacao.append(input_observacao)
                 
+                
+                # relacionamentos
+                # --------------------------
+                
                 if relacinamento_inst == "INV_influences":
                     
                     kiposcrum[referencia_inst].INV_influences.append(kiposcrum[input_nome + id_unico])
+                
+                if relacinamento_inst == "INV_composes":
+                    
+                    kiposcrum[referencia_inst].INV_composes.append(kiposcrum[input_nome + id_unico])
+                
+                if relacinamento_inst == "INV_threatens":
+                    
+                    kiposcrum[referencia_inst].INV_threatens.append(kiposcrum[input_nome + id_unico])
+                
+                if relacinamento_inst == "considers":
+                    
+                    kiposcrum[referencia_inst].considers.append(kiposcrum[input_nome + id_unico])
+                
+                if relacinamento_inst == "ontoscrum__is_executed_by":
+                    
+                    kiposcrum[referencia_inst].ontoscrum__is_executed_by.append(kiposcrum[input_nome + id_unico])
+                
+                if relacinamento_inst == "ontoscrum__simultaneously":
+                    
+                    kiposcrum[referencia_inst].ontoscrum__simultaneously.append(kiposcrum[input_nome + id_unico])
+                
+                if relacinamento_inst == "ontoscrum__contains":
+                    
+                    kiposcrum[referencia_inst].ontoscrum__contains.append(kiposcrum[input_nome + id_unico])
+                
+                if relacinamento_inst == "ontoscrum__during":
+                    
+                    kiposcrum[referencia_inst].ontoscrum__during.append(kiposcrum[input_nome + id_unico])
+                
+                if relacinamento_inst == "ontoscrum__performs":
+                    
+                    kiposcrum[referencia_inst].ontoscrum__performs.append(kiposcrum[input_nome + id_unico])
+                
+                # --------------------------
                 
                 sync_reasoner()
                 
@@ -910,6 +919,13 @@ def add_classe_com_relacionamento(request, classe_inst, relacinamento_inst, refe
         
     return render(request, 'instancias_tipo_select.html', context)
 
+def sprint_options(request, instancia_sprint):
+    
+    instancia = instancia_sprint[5:]
+    
+    context = {"instancia_sprint":instancia}
+    
+    return render(request, 'sprint_options.html', context)
 
 # !VISUALIZAÇÃO DE TRABALHO DIÁRIO DENTRO DE UMA SPRINT
 # !------------------------------------------------------------
@@ -1305,6 +1321,7 @@ def decision_select(request):
     
     list_nomes = []
     list_obs = []
+    list_status_problema = []
     
     qntd_decisoes_reais = 0
     
@@ -1343,10 +1360,23 @@ def decision_select(request):
                     else:
                         list_obs.append(lista_instancias[i].Observacao)
                     
+                    print("Status de Item Resolvido (1 = aberto, 0 = resolvido) -> " + str(lista_instancias[i].StatusProblemaResolvido.pop(0)))
+                    
+                    
+                    # check if empty list
+                    if str(lista_instancias[i].StatusProblemaResolvido.pop(0)) == "0":
+                        
+                        list_status_problema.append("Aberto")
+                        
+                    else:
+                        
+                        list_status_problema.append("Resolvido")
+                        
+                    
                     qntd_decisoes_reais = qntd_decisoes_reais + 1
                     
             for i in range(qntd_decisoes_reais):
-                objetos_final.append({'instancia':lista_instancias[i],'nome':list_nomes[i], 'obs':list_obs[i]})
+                objetos_final.append({'instancia':lista_instancias[i],'nome':list_nomes[i], 'obs':list_obs[i], 'status':list_status_problema[i]})
             
     except:
             
