@@ -1349,6 +1349,8 @@ def decision_select(request):
                 
             status = "OK!"
             
+            print(str(len(lista_instancias)))
+            
             for i in range(len(lista_instancias)):
                 
                 if "DO__Decision" in str(lista_instancias[i].is_a):
@@ -1363,16 +1365,22 @@ def decision_select(request):
                     print("Status de Item Resolvido (1 = aberto, 0 = resolvido) -> " + str(lista_instancias[i].StatusProblemaResolvido.pop(0)))
                     
                     
-                    # check if empty list
-                    if str(lista_instancias[i].StatusProblemaResolvido.pop(0)) == "0":
-                        
-                        list_status_problema.append("Aberto")
-                        
+                    # se lista n esta vazia
+                    if lista_instancias[i].StatusProblemaResolvido:
+                    
+                        if str(lista_instancias[i].StatusProblemaResolvido.pop(0)) == "0":
+                            
+                            list_status_problema.append("Aberto")
+                            
+                        else:
+                            
+                            list_status_problema.append("Resolvido")
+                            
+                    
                     else:
                         
-                        list_status_problema.append("Resolvido")
+                        list_status_problema.append("Indefinido")
                         
-                    
                     qntd_decisoes_reais = qntd_decisoes_reais + 1
                     
             for i in range(qntd_decisoes_reais):
