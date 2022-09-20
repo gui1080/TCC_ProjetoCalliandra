@@ -58,6 +58,7 @@
                             <td>Status</td>
                             <td>Observações</td>
                             <td>Ver Dashboard</td>
+                            <td>Deletar</td>
                         </tr>
                     </thead>
                     <tbody> 
@@ -68,6 +69,7 @@
                             <td>{{ obj.status }}</td>
                             <td>{{ obj.obs }}</td>
                             <td>  <a class="btn-warning" href="/kipo_playground/decision_dashboard/{{obj.instancia}}">Dashboard</a>  </td>
+                            <td>  <a class="btn-warning" href="/kipo_playground/retirar_instancia/{{obj.instancia}}">Deletar!</a>  </td>
                         </tr>
                         {% endfor %}
                     </tbody>

@@ -82,7 +82,8 @@
                             <td>Classes</td>
                             <td>Instâncias</td>
                             <td>Nomes</td>
-                            <td>Observações</td>
+                            <td>Observações</td> 
+                            <td>Deletar</td>
                         </tr>
                     </thead>
                     <tbody> 
@@ -91,7 +92,8 @@
                             <td>{{ obj.classe_inst }}</td>
                             <td>{{ obj.instancia }}</td>
                             <td>{{ obj.nome }}</td>
-                            <td>{{ obj.obs }}</td>
+                            <td>{{ obj.obs }}</td> 
+                            <td>  <a class="btn-warning" href="/kipo_playground/retirar_instancia/{{obj.instancia}}">Deletar!</a>  </td>
                         </tr>
                         {% endfor %}
                     </tbody>
