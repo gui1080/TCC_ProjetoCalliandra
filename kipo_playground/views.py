@@ -4,7 +4,7 @@ Módulo principal que define a visualização com contexto de templates em HTML 
 
 Módulo de gestão de formulários, gestão de Banco de Dados e definição de contexto por meio de acesso para ontologia '/kipo_playground/kipo_fialho.owl', com instâncias de caso de estudo definidas em 'backup.db'. 
 
-Essas views são geridas com endereços por meio do arquivo 'urls.py'. 
+Essas views são geridas com endereços por meio do arquivo 'urls.py'.  
 
 """
 
@@ -1544,4 +1544,136 @@ def decision_dashboard(request, instancia_decisao):
     
 
 # ------------------------------------------------------------
+
+def gestao_artefatos(request):
+    
+    # ai eu tenho que descobrir quais os objetos que vou listar
+    # criar um botao que faz input e output de cada artefato
+    
+    if 'status' in request.session:
+        del request.session['status']
+        
+    if 'num_inst' in request.session:
+        del request.session['num_inst']
+        
+        
+    # OWLREADY2
+    try:
+            
+        myworld = World(filename='backup.db', exclusive=False)
+            
+        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+        kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
+            
+        
+        sync_reasoner()
+    
+    
+        with kiposcrum:
+        
+            lista_instancias = kiposcrum["aaaaa"].instances()
+            
+
+            num_inst = len(lista_instancias)
+            
+            print("\n\n\n\n")
+            print(num_inst)
+            print("\n\n\n\n")
+            
+            objeto_artefatos = transforma_objeto(lista_instancias)
+            
+            status = "OK!"
+        
+    except:
+            
+        status = "Erro!" 
+        num_inst = "Desconhecido"
+        
+        print("Falha de acesso!")
+        
+    
+    finally:
+        
+        myworld.close() 
+        
+    
+    request.session['status'] = status   # "OK!" ou "Erro!"
+    request.session['num_inst'] = str(num_inst)
+    
+    context = {"objeto_artefatos": objeto_artefatos}
+    
+    
+    return render(request, 'artefatos_dashboard.html', context)
+
+# ------------------------------------------------------------
+
+def gestao_pessoas(request):
+    
+    # ai tenho que botar um bot~ao que aloca trabalho para cada pessoa
+    # botao que adiciona novas pessoas
+    
+    if 'status' in request.session:
+        del request.session['status']
+        
+    if 'num_inst' in request.session:
+        del request.session['num_inst']
+        
+    num_inst = 0
+        
+    # OWLREADY2
+    try:
+            
+        myworld = World(filename='backup.db', exclusive=False)
+            
+        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+        kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
+            
+        
+        sync_reasoner()
+    
+    
+        with kiposcrum:
+        
+            lista_instancias_agentes = kiposcrum["KIPCO__Agent"].instances()
+            
+            lista_instancias_agentes_externo = kiposcrum["KIPCO__External_Agent"].instances()
+            
+            lista_instancias_agentes_impacto = kiposcrum["KIPCO__Impact_Agent"].instances()
+            
+            lista_instancias_agentes_inovacao = kiposcrum["KIPCO__Innovation_Agent"].instances()
+            
+            
+            num_inst = num_inst + len(lista_instancias_agentes) + len(lista_instancias_agentes_externo) + len(lista_instancias_agentes_impacto) + len(lista_instancias_agentes_inovacao)
+            
+            print("\n\n\n\n")
+            print(num_inst)
+            print("\n\n\n\n")
+            
+            objeto_agentes = transforma_objeto(lista_instancias_agentes)
+            objeto_agentes_externo = transforma_objeto(lista_instancias_agentes_externo)
+            objeto_agentes_impacto = transforma_objeto(lista_instancias_agentes_impacto)
+            objeto_agentes_inovacao = transforma_objeto(lista_instancias_agentes_inovacao)
+            
+            status = "OK!"
+        
+    except:
+            
+        status = "Erro!" 
+        num_inst = "Desconhecido"
+        
+        print("Falha de acesso!")
+        
+    
+    finally:
+        
+        myworld.close() 
+        
+    
+    request.session['status'] = status   # "OK!" ou "Erro!"
+    request.session['num_inst'] = str(num_inst)
+    
+    context = {"objeto_agentes": objeto_agentes, "objeto_agentes_externo": objeto_agentes_externo, "objeto_agentes_impacto": objeto_agentes_impacto, "objeto_agentes_inovacao": objeto_agentes_inovacao}
+    
+    
+    return render(request, 'gestao_pessoas.html', context)
 

@@ -45,4 +45,9 @@ urlpatterns = [
     path('decision_select/', views.decision_select),
     path('decision_dashboard/<str:instancia_decisao>', views.decision_dashboard),
     
+    path('gestao_artefatos/', views.gestao_artefatos),
+    #
+    
+    path('gestao_pessoas/', views.gestao_pessoas),
+    
 ]
