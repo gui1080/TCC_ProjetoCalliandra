@@ -9,11 +9,16 @@ Essas views são geridas com endereços por meio do arquivo 'urls.py'.
 """
 
 # fazer tela de alocar pessoas para tarefas
+
+# posso alocar a pessoa com:
 # KIPCO__Knowledge_Intensive_Process -> Sprint
 # KIPCO__Knowledge_Intesive_Activity -> trabalho diário na sprint
 # -> sprint backlog
 
+
 # fazer tela para adicionar inputs e outputs para tarefas
+
+# posso alocar o artefato com:
 # KIPCO__Knowledge_Intensive_Process -> Sprint
 # KIPCO__Knowledge_Intesive_Activity -> trabalho diário na sprint
 # -> sprint backlog
