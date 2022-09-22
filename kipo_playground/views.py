@@ -487,7 +487,9 @@ def retirar_instancia(request, instancia, classe):
     context = {'form':form}
     '''
     
+    # tirando prefixo "kipo."
     input_nome = instancia[5:]
+    input_classe = classe[5:] 
     
     try:
         myworld = World(filename='backup.db', exclusive=False)
@@ -508,10 +510,10 @@ def retirar_instancia(request, instancia, classe):
                 
             print("------------------")
             print(input_nome)
-            print(classe)
+            print(input_classe)
             print("------------------")
                 
-            #destroy_entity(kiposcrum[classe](input_nome))
+            #destroy_entity(kiposcrum[input_classe](input_nome))
             
             status = "OK!"
             input_classe = classe
