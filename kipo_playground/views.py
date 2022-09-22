@@ -233,6 +233,7 @@ def instancias_teste(request):
     
     list_nomes = []
     list_obs = []
+    list_classes = []
     objetos_final = [] 
 
 
@@ -255,13 +256,15 @@ def instancias_teste(request):
                 
                 list_nomes.append(lista_instancias[i].Nome[0])
                 
+                list_classes.append(str(lista_instancias[i].is_a.pop(0)))
+                
                 if not lista_instancias[i].Observacao:
                     list_obs.append("Sem observações")
                 else:
                     list_obs.append(lista_instancias[i].Observacao)
             
             for i in range(len(lista_instancias)):
-                objetos_final.append({'instancia':lista_instancias[i],'nome':list_nomes[i], 'obs':list_obs[i]})
+                objetos_final.append({'classe_inst':list_classes[i], 'instancia':lista_instancias[i],'nome':list_nomes[i], 'obs':list_obs[i]})
                 
             num_inst = len(lista_instancias)
             
@@ -476,14 +479,13 @@ def inserir_instancia(request):
     return render(request, 'instancias_inserir_select.html', context)
 
 
-def retirar_instancia(request, instancia):
+def retirar_instancia(request, instancia, classe):
     
     '''
     form = inserir_instancias_tipoForm()
 
     context = {'form':form}
     '''
-    
     
     input_nome = instancia[5:]
     
@@ -494,10 +496,10 @@ def retirar_instancia(request, instancia):
         # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
         kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
         
-        sync_reasoner()
-        
         with kiposcrum:
-                
+            
+            sync_reasoner()
+
             # nome ja recuperado
             # recupera classe!
             # deleta instancia!
@@ -505,14 +507,17 @@ def retirar_instancia(request, instancia):
             #input_classe = str(input_nome.is_a.pop(0))
                 
             print("------------------")
-            #print(input_nome)
+            print(input_nome)
+            print(classe)
             print("------------------")
                 
-            #destroy_entity(kiposcrum[input_classe](input_nome))
+            #destroy_entity(kiposcrum[classe](input_nome))
             
             status = "OK!"
-            input_classe = "Erro!"
-                
+            input_classe = classe
+            
+            #myworld.save()
+            
     except:
         
         status = "Erro!"    

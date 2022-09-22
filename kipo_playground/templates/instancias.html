@@ -65,6 +65,7 @@
                 <table width="100%">
                     <thead>
                         <tr>
+                            <td>Classe</td>
                             <td>Instâncias de Agentes</td>
                             <td>Nomes de Agentes</td>
                             <td>Observações</td>
@@ -74,10 +75,11 @@
                     <tbody> 
                         {% for obj in objetos_final %}
                         <tr>
+                            <td>{{ obj.classe_inst }}</td>
                             <td>{{ obj.instancia }}</td>
                             <td>{{ obj.nome }}</td>
                             <td>{{ obj.obs }}</td>
-                            <td>  <a class="btn-warning" href="/kipo_playground/retirar_instancia/{{obj.instancia}}">Deletar!</a>  </td>
+                            <td>  <a class="btn-warning" href="/kipo_playground/retirar_instancia/{{obj.instancia}}/{{obj.classe_inst}}">Deletar!</a>  </td>
                         </tr>
                         {% endfor %}
                     </tbody>
