@@ -8,6 +8,16 @@ Essas views são geridas com endereços por meio do arquivo 'urls.py'.
 
 """
 
+# fazer tela de alocar pessoas para tarefas
+# KIPCO__Knowledge_Intensive_Process -> Sprint
+# KIPCO__Knowledge_Intesive_Activity -> trabalho diário na sprint
+# -> sprint backlog
+
+# fazer tela para adicionar inputs e outputs para tarefas
+# KIPCO__Knowledge_Intensive_Process -> Sprint
+# KIPCO__Knowledge_Intesive_Activity -> trabalho diário na sprint
+# -> sprint backlog
+
 from multiprocessing import context
 from typing import final
 from django.shortcuts import render, redirect
@@ -778,6 +788,15 @@ def add_classe(request, classe_inst):
                 if input_observacao != "":
                     kiposcrum[input_nome + id_unico].Observacao.append(input_observacao)
                 
+                if classe_inst == "KIPCO__Knowledge_Intensive_Process":
+                    # é uma sprint, tenho que criar um backlog também!
+                    
+                    kiposcrum["Sprint_Backlog"]("backlog_" + input_nome + id_unico)
+
+                    kiposcrum["backlog_" + input_nome + id_unico].Nome.append("backlog_" + input_nome)
+                    
+                    kiposcrum["backlog_" + input_nome + id_unico].Observacao.append("Backlog criado automaticamente para " + input_nome)
+                    
                 sync_reasoner()
                 
                 status = "OK!"
@@ -950,9 +969,6 @@ def daily_dashboard(request, instancia_daily):
     instancia = instancia_daily[5:]
     print(instancia)
     
-    context = {"instancia_daily":instancia_daily}
-    
-    
     # ontoscrum__perfoms
     # INV_ontoscrum__during
     # ontoscrum__hasOutput
@@ -1052,7 +1068,7 @@ def daily_dashboard(request, instancia_daily):
     request.session['num_prop_correlatas'] = num_prop_correlatas
     request.session['num_inst'] = str(num_inst)
     
-    context = {"instancia":instancia_daily , "objeto_inv_during":objeto_inv_during, "objetos_has_input":objeto_has_input, "objetos_has_output":objeto_has_output,
+    context = {"instancia_daily":instancia_daily , "objeto_inv_during":objeto_inv_during, "objetos_has_input":objeto_has_input, "objetos_has_output":objeto_has_output,
                 "objetos_has_isexecutedby":objeto_has_isexecutedby, "objeto_performs":objeto_performs}
     
     

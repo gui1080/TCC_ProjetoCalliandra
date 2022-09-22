@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h2>{{instancia_daily}}</h2> 
+<h2>{{ instancia_daily }}</h2> 
 
 
 <div class="card_view">
@@ -84,6 +84,7 @@
                             <td>Instâncias</td>
                             <td>Nomes</td>
                             <td>Observações</td>
+                            <td>Deletar</td>
                         </tr>
                     </thead>
                     <tbody> 
@@ -93,6 +94,7 @@
                             <td>{{ obj.instancia }}</td>
                             <td>{{ obj.nome }}</td>
                             <td>{{ obj.obs }}</td>
+                            <td>  <a class="btn-warning" href="/kipo_playground/retirar_instancia/{{obj.instancia}}/{{obj.classe_inst}}">Deletar!</a>  </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -102,6 +104,17 @@
     </div>
 </div>
 
+<div class="recent-grid-add">
+    <a class="btn btn-primary" href="/kipo_playground/add_classe_com_relacionamento/Sprint_Tasks_Control/ontoscrum__performs/{{ instancia_daily }}">Adicionar Task "Control"</a>
+</div>
+
+<div class="recent-grid-add">
+    <a class="btn btn-primary" href="/kipo_playground/add_classe_com_relacionamento/Sprint_Tasks_Updating/ontoscrum__performs/{{ instancia_daily }}">Adicionar "Task Update"</a>
+</div>
+
+<div class="recent-grid-add">
+    <a class="btn btn-primary" href="/kipo_playground/add_classe_com_relacionamento/Feature_Development/ontoscrum__performs/{{ instancia_daily }}">Adicionar Desenvolvimento de Feature</a>
+</div>
 
 </br>
 
@@ -120,6 +133,7 @@
                             <td>Instâncias</td>
                             <td>Nomes</td>
                             <td>Observações</td>
+                            <td>Deletar</td>
                         </tr>
                     </thead>
                     <tbody> 
@@ -129,6 +143,7 @@
                             <td>{{ obj.instancia }}</td>
                             <td>{{ obj.nome }}</td>
                             <td>{{ obj.obs }}</td>
+                            <td>  <a class="btn-warning" href="/kipo_playground/retirar_instancia/{{obj.instancia}}/{{obj.classe_inst}}">Deletar!</a>  </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -138,8 +153,11 @@
     </div>
 </div>
 
-</br>
+<div class="recent-grid-add">
+    <a class="btn btn-primary" href="/kipo_playground/add_classe_com_relacionamento/scrum_Daily_Scrum_Meeting/INV_ontoscrum__during/{{ instancia_daily }}">Adicionar Reunião Diária</a>
+</div>
 
+</br>
 
 <div class="recent-grid">
     <div class="projects">
@@ -156,6 +174,7 @@
                             <td>Instâncias</td>
                             <td>Nomes</td>
                             <td>Observações</td>
+                            <td>Deletar</td>
                         </tr>
                     </thead>
                     <tbody> 
@@ -165,6 +184,7 @@
                             <td>{{ obj.instancia }}</td>
                             <td>{{ obj.nome }}</td>
                             <td>{{ obj.obs }}</td>
+                            <td>  <a class="btn-warning" href="/kipo_playground/retirar_instancia/{{obj.instancia}}/{{obj.classe_inst}}">Deletar!</a>  </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -191,6 +211,7 @@
                             <td>Instâncias</td>
                             <td>Nomes</td>
                             <td>Observações</td>
+                            <td>Deletar</td>
                         </tr>
                     </thead>
                     <tbody> 
@@ -200,6 +221,7 @@
                             <td>{{ obj.instancia }}</td>
                             <td>{{ obj.nome }}</td>
                             <td>{{ obj.obs }}</td>
+                            <td>  <a class="btn-warning" href="/kipo_playground/retirar_instancia/{{obj.instancia}}/{{obj.classe_inst}}">Deletar!</a>  </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -215,7 +237,7 @@
     <div class="projects">
         <div class="card">
             <div class="card-header">
-                <h2 class="text-light">Quem executa Sprint</h2>
+                <h2 class="text-light">Quem executa Trabalho Diário</h2>
             </div>
 
             <div class="card-body">
@@ -226,6 +248,7 @@
                             <td>Instâncias</td>
                             <td>Nomes</td>
                             <td>Observações</td>
+                            <td>Deletar</td>
                         </tr>
                     </thead>
                     <tbody> 
@@ -235,6 +258,7 @@
                             <td>{{ obj.instancia }}</td>
                             <td>{{ obj.nome }}</td>
                             <td>{{ obj.obs }}</td>
+                            <td>  <a class="btn-warning" href="/kipo_playground/retirar_instancia/{{obj.instancia}}/{{obj.classe_inst}}">Deletar!</a>  </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -244,13 +268,15 @@
     </div>
 </div>
 
+<div class="recent-grid-add">
+    <a class="btn btn-primary" href="/kipo_playground/add_classe_com_relacionamento/KIPCO__Agent/ontoscrum__is_executed_by/{{ instancia_daily }}">Adicionar Nova Instância de Agente Envolvido!s</a>
+</div>
+
 </br>
+
 </br>
 <a class="btn btn-primary" href="/kipo_playground/sprints_select">Voltar</a>
 </br>
-</br>
-<a class="btn btn-primary" href="/kipo_playground/welcome">Adicionar Tarefa do Backlog</a>
-
 
 
 {% endblock %}
