@@ -513,12 +513,12 @@ def retirar_instancia(request, instancia, classe):
             print(input_classe)
             print("------------------")
                 
-            #destroy_entity(kiposcrum[input_classe](input_nome))
+            destroy_entity(kiposcrum[input_classe](input_nome))
             
             status = "OK!"
             input_classe = classe
             
-            #myworld.save()
+            myworld.save()
             
     except:
         
