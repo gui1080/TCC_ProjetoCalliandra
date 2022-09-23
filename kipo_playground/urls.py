@@ -49,5 +49,6 @@ urlpatterns = [
     #
     
     path('gestao_pessoas/', views.gestao_pessoas),
+    path('alocar_pessoa/<str:instancia_pessoa>', views.alocar_pessoa),
     
 ]

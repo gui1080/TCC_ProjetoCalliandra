@@ -1682,3 +1682,26 @@ def gestao_pessoas(request):
     
     return render(request, 'gestao_pessoas.html', context)
 
+def alocar_pessoa(request, instancia_pessoa):
+    
+    # listar tarefas onde esse agente pode trabalhar
+    # ai botar um botão que cria o relacionamento
+    
+    instancia = instancia_pessoa[5:]
+    
+    try:
+        
+        status = "OK!"
+        num_inst = "0"
+    
+    except:
+        
+        status = "Erro!"
+        num_inst = "0"
+        
+    request.session['status'] = status   # "OK!" ou "Erro!"
+    request.session['num_inst'] = str(num_inst)
+    
+    context = {"instancia": instancia}
+    
+    return render(request, 'alocar_pessoas.html', context)
