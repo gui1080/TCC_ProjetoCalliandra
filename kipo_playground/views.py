@@ -1754,10 +1754,10 @@ def add_relacionamento(request, instancia1, relacao, instancia2):
     #instancia1 -> relacao -> instancia1
     
     if "kipo." in instancia1:
-        instancia1.replace("kipo.", "")
+        instancia1 = instancia1.replace("kipo.", "")
     
     if "kipo." in instancia2:
-        instancia2.replace("kipo.", "")
+        instancia2 = instancia2.replace("kipo.", "")
     
     # OWLREADY2
     try:
