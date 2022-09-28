@@ -51,4 +51,6 @@ urlpatterns = [
     path('gestao_pessoas/', views.gestao_pessoas),
     path('alocar_pessoa/<str:instancia_pessoa>', views.alocar_pessoa),
     
+    path('add_relacionamento/<str:instancia1>/<str:relacao>/<str:instancia2>', views.add_relacionamento),
+    
 ]

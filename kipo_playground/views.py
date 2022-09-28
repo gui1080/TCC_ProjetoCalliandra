@@ -32,7 +32,7 @@ from .forms import novo_instancias_tipoForm, inserir_instancias_tipoForm, inseri
 from owlready2 import *         # https://pypi.org/project/Owlready2/
 from os.path import exists
 import json 
-import sys
+import sys 
 
 # Comandos básicos
 # source venv/bin/activate
@@ -1689,19 +1689,103 @@ def alocar_pessoa(request, instancia_pessoa):
     
     instancia = instancia_pessoa[5:]
     
+    num_inst = 0
+    
+    if 'status' in request.session:
+        del request.session['status']
+    
+    if 'num_inst' in request.session:
+        del request.session['num_inst']
+    
+    # listar
+    # KIPCO__Knowledge_Intensive_Process -> Sprint
+    # KIPCO__Knowledge_Intesive_Activity -> trabalho diário na sprint
+    # Sprint_Backlog -> sprint backlog
+    
+    # OWLREADY2
     try:
         
-        status = "OK!"
-        num_inst = "0"
+        myworld = World(filename='backup.db', exclusive=False)
+        
+        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+        kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
+        
+        
+        sync_reasoner()
+
     
+        with kiposcrum:
+            
+            lista_processos_intensivos = kiposcrum["KIPCO__Knowledge_Intensive_Process"].instances()
+            lista_atividades = kiposcrum["KIPCO__Knowledge_Intesive_Activity"].instances()
+            lista_sprint_backlog = kiposcrum["Sprint_Backlog"].instances()
+            
+            num_inst = num_inst + len(lista_processos_intensivos) + len(lista_atividades) + len(lista_sprint_backlog)
+            
+            print("\n\n\n\n")
+            print(num_inst)
+            print("\n\n\n\n")
+            
+            objetos_processos = transforma_objeto(lista_processos_intensivos)
+            objetos_atividades = transforma_objeto(lista_atividades)
+            objetos_sprint_backlogs = transforma_objeto(lista_sprint_backlog)
+            
+            status = "OK!"
+
     except:
         
         status = "Erro!"
         num_inst = "0"
         
+    
+    # ai aloca tarefa fazendo a relaçao
+    # instancia -> ontoscrum__is_executed_by -> agente
+    
     request.session['status'] = status   # "OK!" ou "Erro!"
     request.session['num_inst'] = str(num_inst)
     
-    context = {"instancia": instancia}
+    context = {"instancia": instancia, "objetos_processos": objetos_processos, "objetos_atividades": objetos_atividades, "objetos_sprint_backlogs": objetos_sprint_backlogs} 
     
     return render(request, 'alocar_pessoas.html', context)
+
+
+def add_relacionamento(request, instancia1, relacao, instancia2):
+    
+    #instancia1 -> relacao -> instancia1
+    
+    if "kipo." in instancia1:
+        instancia1.replace("kipo.", "")
+    
+    if "kipo." in instancia2:
+        instancia2.replace("kipo.", "")
+    
+    # OWLREADY2
+    try:
+        
+        myworld = World(filename='backup.db', exclusive=False)
+        
+        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+        kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
+        
+        sync_reasoner()
+        
+        
+        with kiposcrum:
+            
+            if relacao == "ontoscrum__is_executed_by":
+                
+                kiposcrum[instancia1].ontoscrum__is_executed_by.append(kiposcrum[instancia2])
+                
+            status = "OK!"
+            
+    except:
+        
+        status = "Erro!"
+        
+    request.session['relacionamento'] = relacao
+    request.session['instancia1'] = instancia1
+    request.session['instancia2'] = instancia2
+    request.session['status'] = status
+    
+    
+    return render(request, 'inserir_relacao_tela_ok.html')
