@@ -1585,7 +1585,7 @@ def gestao_artefatos(request):
             print(num_inst)
             print("\n\n\n\n")
             
-            objeto_artefatos = transforma_objeto(lista_instancias)
+            #objeto_artefatos = transforma_objeto(lista_instancias)
             
             status = "OK!"
         
@@ -1605,10 +1605,11 @@ def gestao_artefatos(request):
     request.session['status'] = status   # "OK!" ou "Erro!"
     request.session['num_inst'] = str(num_inst)
     
-    context = {"objeto_artefatos": objeto_artefatos}
+    #context = {"objeto_artefatos": objeto_artefatos}
     
-    
-    return render(request, 'artefatos_dashboard.html', context)
+    return render(request, 'artefatos_dashboard.html')
+
+#    return render(request, 'artefatos_dashboard.html', context)
 
 # ------------------------------------------------------------
 
