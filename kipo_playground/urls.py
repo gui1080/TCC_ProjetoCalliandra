@@ -46,7 +46,7 @@ urlpatterns = [
     path('decision_dashboard/<str:instancia_decisao>', views.decision_dashboard),
     
     path('gestao_artefatos/', views.gestao_artefatos),
-    #
+    path('alocar_para_tarefa/<str:instancia_artefato>', views.alocar_para_tarefa),
     
     path('gestao_pessoas/', views.gestao_pessoas),
     path('alocar_pessoa/<str:instancia_pessoa>', views.alocar_pessoa),

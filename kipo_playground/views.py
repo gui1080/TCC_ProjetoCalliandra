@@ -1610,6 +1610,77 @@ def gestao_artefatos(request):
 
     return render(request, 'artefatos_dashboard.html', context)
 
+def alocar_para_tarefa(request, instancia_artefato):
+    
+    num_inst = 0
+    
+    if 'status' in request.session:
+        del request.session['status']
+        
+    if 'num_inst' in request.session:
+        del request.session['num_inst']
+        
+        
+    # OWLREADY2
+    try:
+            
+        myworld = World(filename='backup.db', exclusive=False)
+            
+        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+        kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
+            
+        
+        sync_reasoner()
+    
+    
+        with kiposcrum:
+            
+            '''
+            !!!Classes para listar!!!
+            KIPCO__Knowledge_Intensive_Process
+            KIPCO__Knowledge_Intesive_Activity
+            '''
+            
+            lista_process = kiposcrum["KIPCO__Knowledge_Intensive_Process"].instances()
+            num_inst = num_inst + len(lista_process)
+            
+            lista_activity = kiposcrum["KIPCO__Knowledge_Intesive_Activity"].instances()
+            num_inst = num_inst + len(lista_activity)
+            
+            print("\n\n\n\n")
+            print(num_inst)
+            print("\n\n\n\n")
+            
+            objeto_processo = transforma_objeto(lista_process)
+            objeto_atividade = transforma_objeto(lista_activity)
+            
+            status = "OK!"
+        
+    except:
+            
+        status = "Erro!" 
+        num_inst = "Desconhecido"
+        
+        print("Falha de acesso!")
+        
+    
+    finally:
+        
+        myworld.close() 
+        
+    
+    request.session['status'] = status   # "OK!" ou "Erro!"
+    request.session['num_inst'] = str(num_inst)
+    request.session['instancia'] = instancia_artefato[5:]
+    
+    context = {"objeto_processo": objeto_processo, "objeto_atividade": objeto_atividade}
+    
+    #return render(request, 'artefatos_alocar_dashboard.html')
+    
+    # alocar input e output são "adicionar classe com relacionamento"
+    return render(request, 'artefatos_alocar_dashboard.html', context)
+
+
 # ------------------------------------------------------------
 
 def gestao_pessoas(request):
