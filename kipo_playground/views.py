@@ -1647,12 +1647,26 @@ def alocar_para_tarefa(request, instancia_artefato):
             lista_activity = kiposcrum["KIPCO__Knowledge_Intesive_Activity"].instances()
             num_inst = num_inst + len(lista_activity)
             
+            lista_artefatos = kiposcrum["Sprint_Backlog"].instances()
+            
+            for i in range(len(lista_artefatos)):
+                
+                if instancia_artefato[5:] in str(lista_artefatos[i]):
+                    
+                    # artefato n pode ser input ou output dele mesmo...
+                    # nem vai para a lista das possibilidades de se alocar input/output
+                    lista_artefatos.pop(i)
+                    break # n vai ter mais de uma ocorrencia, quando achar pode terminar o loop
+            
+            num_inst = num_inst + len(lista_artefatos)
+            
             print("\n\n\n\n")
             print(num_inst)
             print("\n\n\n\n")
             
             objeto_processo = transforma_objeto(lista_process)
             objeto_atividade = transforma_objeto(lista_activity)
+            objeto_artefatos = transforma_objeto(lista_artefatos)
             
             status = "OK!"
         
@@ -1673,7 +1687,7 @@ def alocar_para_tarefa(request, instancia_artefato):
     request.session['num_inst'] = str(num_inst)
     request.session['instancia'] = instancia_artefato[5:]
     
-    context = {"objeto_processo": objeto_processo, "objeto_atividade": objeto_atividade}
+    context = {"objeto_processo": objeto_processo, "objeto_atividade": objeto_atividade, "objeto_artefatos": objeto_artefatos}
     
     #return render(request, 'artefatos_alocar_dashboard.html')
     
@@ -1758,7 +1772,7 @@ def alocar_pessoa(request, instancia_pessoa):
     # listar tarefas onde esse agente pode trabalhar
     # ai botar um botão que cria o relacionamento
     
-    instancia = instancia_pessoa[5:]
+    instancia = instancia_pessoa[5:] 
     
     num_inst = 0
     
@@ -1822,7 +1836,7 @@ def alocar_pessoa(request, instancia_pessoa):
 
 def add_relacionamento(request, instancia1, relacao, instancia2):
     
-    #instancia1 -> relacao -> instancia1
+    # instancia1 -> relacao -> instancia1
     
     if "kipo." in instancia1:
         instancia1 = instancia1.replace("kipo.", "")
@@ -1846,7 +1860,15 @@ def add_relacionamento(request, instancia1, relacao, instancia2):
             if relacao == "ontoscrum__is_executed_by":
                 
                 kiposcrum[instancia1].ontoscrum__is_executed_by.append(kiposcrum[instancia2])
+            
+            elif relacao == "ontoscrum__has_input":
+            
+                kiposcrum[instancia1].ontoscrum__has_input.append(kiposcrum[instancia2])
+            
+            elif relacao == "ontoscrum__has_output":
                 
+                kiposcrum[instancia1].ontoscrum__has_output.append(kiposcrum[instancia2])
+            
             status = "OK!"
             
     except:

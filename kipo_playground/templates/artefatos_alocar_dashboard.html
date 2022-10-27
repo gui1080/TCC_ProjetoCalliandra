@@ -72,9 +72,9 @@
                             <td>{{ obj.nome }}</td>
                             <td>{{ obj.obs }}</td>
                             
-                            <td> <a class="btn-warning" href="/kipo_playground/">Alocar Output!</a> </td>
+                            <td> <a class="btn-warning" href="/kipo_playground/add_relacionamento/{{ obj.instancia }}/ontoscrum__has_output/{{ request.session.instancia }}">Alocar Output!</a> </td> 
 
-                            <td> <a class="btn-warning" href="/kipo_playground/">Alocar Input!</a> </td>
+                            <td> <a class="btn-warning" href="/kipo_playground/add_relacionamento/{{ obj.instancia }}/ontoscrum__has_input/{{ request.session.instancia }}">Alocar Input!</a> </td>
                         
                         </tr>
                         {% endfor %}
@@ -115,9 +115,52 @@
                             <td>{{ obj.nome }}</td>
                             <td>{{ obj.obs }}</td>
                             
-                            <td> <a class="btn-warning" href="/kipo_playground/">Alocar Output!</a> </td>
+                            <td> <a class="btn-warning" href="/kipo_playground/add_relacionamento/{{ obj.instancia }}/ontoscrum__has_output/{{ request.session.instancia }}">Alocar Output!</a> </td>
 
-                            <td> <a class="btn-warning" href="/kipo_playground/">Alocar Input!</a> </td>
+                            <td> <a class="btn-warning" href="/kipo_playground/add_relacionamento/{{ obj.instancia }}/ontoscrum__has_input/{{ request.session.instancia }}">Alocar Input!</a> </td>
+                        
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</br>
+
+<div class="recent-grid">
+    <div class="projects">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-light">Artefatos</h2>
+            </div>
+
+            <div class="card-body">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <td>Classes</td>
+                            <td>Instâncias</td>
+                            <td>Nomes</td>
+                            <td>Observações</td>
+                            <td>Definir como Output</td>
+                            <td>Definir como Input</td>
+                        
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        {% for obj in objeto_artefatos %}
+                        <tr>
+                            <td>{{ obj.classe_inst }}</td>
+                            <td>{{ obj.instancia }}</td>
+                            <td>{{ obj.nome }}</td>
+                            <td>{{ obj.obs }}</td>
+                            
+                            <td> <a class="btn-warning" href="/kipo_playground/add_relacionamento/{{ obj.instancia }}/ontoscrum__has_output/{{ request.session.instancia }}">Alocar Output!</a> </td>
+
+                            <td> <a class="btn-warning" href="/kipo_playground/add_relacionamento/{{ obj.instancia }}/ontoscrum__has_input/{{ request.session.instancia }}">Alocar Input!</a> </td>
                         
                         </tr>
                         {% endfor %}
