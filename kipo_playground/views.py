@@ -96,7 +96,7 @@ def transforma_objeto(lista_instancias):
             list_nomes.append(str(lista_instancias[i].Nome[0]))
             
             list_classe.append(str(lista_instancias[i].is_a.pop(0)))
-                
+            
             if not lista_instancias[i].Observacao:
                 list_obs.append("Sem observações")
             else:
@@ -202,12 +202,14 @@ def welcome(request):
                 qtd_taskdescription = len(kiposcrum["Task_Description"].instances())
                 qtd_daily = len(kiposcrum["scrum_Daily"].instances())
                 qtd_decision = len(kiposcrum["DO__Decision"].instances())
+                qtd_sprints = len(kiposcrum["scrum_Sprint"].instances())
                 
                 lista_dados_qtd = [["Classe", "Quantidade"],
                                     ["KIPCO__Agent", qtd_agentes], 
                                     ["Task_Description", qtd_taskdescription], 
                                     ["scrum_Daily", qtd_daily], 
-                                    ["DO__Decision", qtd_decision]]
+                                    ["DO__Decision", qtd_decision], 
+                                    ["scrum_Sprint", qtd_sprints]]
                 
                 lista_dados_qtd_fim = json.dumps(lista_dados_qtd)
                 
@@ -1301,9 +1303,14 @@ def ver_backlog_produto(request):
             print("Contains" + str(contains))
             num_inst = num_inst + len(contains)
             
+            print("--------")
+            print("business value")
+            print(str(kiposcrum['tela_login9142'].EstimatedBusinessValue))
+            print("--------")
+            
             # objeto_originator = transforma_objeto(originator)
             objeto_ismanagedby = transforma_objeto(ismanagedby)
-            objeto_contains = transforma_objeto(contains)    # pegar estimated business values
+            objeto_contains = transforma_objeto(contains)    
             
             # se no objeto contains a classe é Decisão, fazer botão do dashboard
             # da pra fazer isso no html
@@ -1333,6 +1340,78 @@ def ver_backlog_produto(request):
     
     return render(request, 'backlog_produto.html', context)
 
+def ver_item_backlog(request, instancia_item):
+    
+    if 'num_inst' in request.session:
+        del request.session['num_inst']
+            
+    if 'status' in request.session:
+        del request.session['status']
+        
+    if 'num_prop_correlatas' in request.session:
+        del request.session['num_prop_correlatas'] 
+        
+    
+    try:
+            
+        myworld = World(filename='backup.db', exclusive=False)
+            
+        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+        kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
+            
+        
+        sync_reasoner()
+
+        with kiposcrum:
+            
+            
+            item = instancia_item[5:]
+            print(item)
+            
+            status = "OK!" 
+            
+            observacao =  str(kiposcrum[item].Observacao)
+            
+            if observacao == "[]":
+                string_infos = "Não foram alocadas informações para esta tarefa!"
+            else:
+                string_infos = observacao
+            
+            propriedades = kiposcrum[item].get_properties()
+            print(propriedades)
+            
+            item_resolvido = str(kiposcrum[item].StatusItemResolvido)
+            
+            if '1' in str(kiposcrum[item].StatusItemResolvido.pop(0)):
+                item_resolvido = "Não"
+            else:
+                item_resolvido = "Sim"
+            
+            business_value = "0"
+
+        
+    except:
+        
+        status = "Erro!" 
+        string_infos = "Erro!"
+        business_value = "0"
+        
+        print("Falha de acesso!")
+        
+    finally:
+        
+        myworld.close() 
+        
+    
+    request.session['status'] = status   # "OK!" ou "Erro!"
+    
+    context = {"string_infos" : string_infos, "business_value" : business_value, "item": item, "item_resolvido": item_resolvido}
+    
+    return render(request, 'backlog_item_status.html', context)
+
+# def mudar_obs(request, item):
+
+# def mudar_status(request, item):
 
 # !SELECIONA DECISAO
 # !------------------------------------------------------------

@@ -40,6 +40,9 @@ urlpatterns = [
     
     # backlog do produto
     path('ver_backlog_produto/', views.ver_backlog_produto), 
+    path('ver_item_backlog/<str:instancia_item>', views.ver_item_backlog), 
+    #path('mudar_obs/<str:item>', views.mudar_obs), 
+    #path('mudar_status/<str:item>', views.mudar_status), 
     
     # visualização da decisão
     path('decision_select/', views.decision_select),
