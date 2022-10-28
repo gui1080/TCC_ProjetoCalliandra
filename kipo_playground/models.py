@@ -10,6 +10,27 @@ Foi feito um modelo para uma nova instância de Sprint (campos 'nome' e 'observa
 from django.db import models
 
 # Create your models here.
+
+class definir_status_backlogitem(models.Model):
+    
+    OPCOES = (
+        ('Item não foi resolvido', 'Não'), 
+        ('Item foi resolvido', 'Sim')
+    )
+    
+    classe = models.CharField(max_length=255, null=False, choices=OPCOES)
+    
+    def __str__(self):
+        return self.classe
+
+class definir_obs_backlogitem(models.Model):
+    
+    
+    observacao = models.TextField()
+    
+    def __str__(self):
+        return self.observacao
+
 class inserir_instancias_dada_classe(models.Model):
     
     

@@ -28,7 +28,7 @@ from typing import final
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import Template, Context
-from .forms import novo_instancias_tipoForm, inserir_instancias_tipoForm, inserir_instancias_dada_classeForm
+from .forms import novo_instancias_tipoForm, inserir_instancias_tipoForm, inserir_instancias_dada_classeForm, definir_status_backlogitem_Form, definir_obs_backlogitem_Form
 from owlready2 import *         # https://pypi.org/project/Owlready2/
 from os.path import exists
 import json 

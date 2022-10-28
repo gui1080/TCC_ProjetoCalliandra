@@ -7,14 +7,14 @@ Em base de modelos estabelecidos, contém formulários para inserir uma nova ins
 from django.forms import ModelForm
 from django import forms
 
-from .models import novo_instancias_tipo, inserir_instancias_tipo, inserir_instancias_dada_classe
+from .models import novo_instancias_tipo, inserir_instancias_tipo, inserir_instancias_dada_classe, definir_obs_backlogitem, definir_status_backlogitem
 
 class inserir_instancias_dada_classeForm(ModelForm):
     
     class Meta:
         model = inserir_instancias_dada_classe
         fields = ['nome', 'observacao']
-    
+        
 
 class inserir_instancias_tipoForm(ModelForm):
     
@@ -28,4 +28,18 @@ class novo_instancias_tipoForm(ModelForm):
     class Meta:
         model = novo_instancias_tipo
         fields = ['busca']
+        
+
+class definir_status_backlogitem_Form(ModelForm):
+
+    class Meta:
+        model = definir_status_backlogitem
+        fields = ['classe']
+        
+
+class definir_obs_backlogitem_Form(ModelForm):
+    
+    class Meta:
+        model = definir_obs_backlogitem
+        fields = ['observacao']
         
