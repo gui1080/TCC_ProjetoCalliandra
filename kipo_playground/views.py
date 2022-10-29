@@ -133,7 +133,7 @@ def welcome(request):
     # quantidade de Task_Description
     # quantidade de scrum_Daily
     # quantidade de DO__Decision
-    ''' Formato dos dados pro Gráfico de Barras
+    ''' Formato dos dados pro Gráfico de Barras 
     [['Year', 'Sales'],
     ['2014', 1000],
     ['2015', 1170],
@@ -1409,7 +1409,54 @@ def ver_item_backlog(request, instancia_item):
     
     return render(request, 'backlog_item_status.html', context)
 
-# def mudar_obs(request, item):
+
+def mudar_obs(request, item):
+    
+    form = definir_obs_backlogitem_Form()
+
+    context = {'form':form}
+    
+    if request.method == 'POST':
+        
+        input_obs = request.POST.get('obs')
+        
+        seed = str(time.time())
+        id_unico = faz_id(seed)
+        
+        # OWLREADY2
+        try:
+    
+            myworld = World(filename='backup.db', exclusive=False)
+                
+            #onto_path.append(os.path.dirname(__file__))
+                
+            # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+            kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
+            
+            with kiposcrum:
+                
+                kiposcrum[item].Observacao.append(input_obs)
+                
+                myworld.save()
+                
+                status = "OK!"
+            
+        except:
+            status = "Erro!"    
+
+        finally:
+            myworld.close()
+            
+        request.session['input_status'] = status
+        return redirect('/kipo_playground/inserir_obs_tela_ok/')
+        
+    
+    return render(request, 'item_inserir_obs.html', context)
+
+def inserir_obs_tela_ok(request):
+    
+    return render(request, 'inserir_obs_tela_ok.html')
+
 
 # def mudar_status(request, item):
 
