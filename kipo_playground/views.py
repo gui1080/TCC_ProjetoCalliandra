@@ -1372,6 +1372,10 @@ def ver_item_backlog(request, instancia_item):
             
             observacao =  str(kiposcrum[item].Observacao)
             
+            print("--------------")
+            print(observacao)
+            print("--------------")
+            
             if observacao == "[]":
                 string_infos = "Não foram alocadas informações para esta tarefa!"
             else:
