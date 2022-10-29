@@ -1422,7 +1422,9 @@ def mudar_obs(request, item):
     
     if request.method == 'POST':
         
-        input_obs = request.POST.get('obs')
+        input_obs = str(request.POST.get('observacao'))
+        
+        print("string recuperada do form -> " + input_obs)
         
         seed = str(time.time())
         id_unico = faz_id(seed)
@@ -1439,7 +1441,7 @@ def mudar_obs(request, item):
             
             with kiposcrum:
                 
-                kiposcrum[item].Observacao.append(input_obs)
+                kiposcrum[item].Observacao = input_obs
                 
                 myworld.save()
                 
