@@ -11,6 +11,24 @@ from django.db import models
 
 # Create your models here.
 
+class definir_esforco_backlogitem(models.Model):
+    
+    OPCOES = (
+        ('2', '2'), 
+        ('3', '3'), 
+        ('5', '5'), 
+        ('7', '7'), 
+        ('11', '11'), 
+        ('13', '13'), 
+        ('17', '17'), 
+        ('19', '19')
+        )
+    
+    esforco = models.CharField(max_length=255, null=False, choices=OPCOES)
+    
+    def __str__(self):
+        return self.esforco
+
 class definir_status_backlogitem(models.Model):
     
     OPCOES = (

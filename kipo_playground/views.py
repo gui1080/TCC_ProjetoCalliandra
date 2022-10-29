@@ -28,7 +28,8 @@ from typing import final
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import Template, Context
-from .forms import novo_instancias_tipoForm, inserir_instancias_tipoForm, inserir_instancias_dada_classeForm, definir_status_backlogitem_Form, definir_obs_backlogitem_Form
+
+from .forms import novo_instancias_tipoForm, inserir_instancias_tipoForm, inserir_instancias_dada_classeForm, definir_status_backlogitem_Form, definir_obs_backlogitem_Form, definir_esforco_backlogitem_Form
 from owlready2 import *         # https://pypi.org/project/Owlready2/
 from os.path import exists
 import json 
@@ -1376,7 +1377,7 @@ def ver_item_backlog(request, instancia_item):
             print(observacao)
             print("--------------")
             
-            if observacao == "[]":
+            if observacao == "[]" or observacao == "None" or observacao == " " :
                 string_infos = "Não foram alocadas informações para esta tarefa!"
             else:
                 string_infos = observacao
@@ -1391,7 +1392,7 @@ def ver_item_backlog(request, instancia_item):
             else:
                 item_resolvido = "Sim"
             
-            business_value = "0"
+            business_value = str(kiposcrum[item].EstimatedBusinessValue.pop(0))
 
         
     except:
@@ -1426,9 +1427,6 @@ def mudar_obs(request, item):
         
         print("string recuperada do form -> " + input_obs)
         
-        seed = str(time.time())
-        id_unico = faz_id(seed)
-        
         # OWLREADY2
         try:
     
@@ -1441,7 +1439,7 @@ def mudar_obs(request, item):
             
             with kiposcrum:
                 
-                kiposcrum[item].Observacao = input_obs
+                kiposcrum[item].Observacao = [input_obs]
                 
                 myworld.save()
                 
@@ -1464,7 +1462,99 @@ def inserir_obs_tela_ok(request):
     return render(request, 'inserir_obs_tela_ok.html')
 
 
-# def mudar_status(request, item):
+def mudar_status(request, item):
+
+    form = definir_status_backlogitem_Form()
+
+    context = {'form':form}
+    
+    if request.method == 'POST':
+        
+        input_classe = str(request.POST.get('classe'))
+        
+        print("string recuperada do form -> " + input_classe)
+        
+        # OWLREADY2
+        try:
+    
+            myworld = World(filename='backup.db', exclusive=False)
+                
+            #onto_path.append(os.path.dirname(__file__))
+                
+            # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+            kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
+            
+            with kiposcrum:
+                
+                # tem que ser uma string com "0" (S) ou "1" (N)
+                
+                if "não" in input_classe.lower():
+                
+                    kiposcrum[item].StatusItemResolvido = ["1"]
+                
+                else:
+                
+                    kiposcrum[item].StatusItemResolvido = ["0"]
+                
+                myworld.save()
+                
+                status = "OK!"
+            
+        except:
+            status = "Erro!"    
+
+        finally:
+            myworld.close()
+            
+        request.session['input_status'] = status
+        return redirect('/kipo_playground/inserir_obs_tela_ok/')
+        
+    
+    return render(request, 'item_inserir_obs.html', context)
+
+def mudar_esforco(request, item):
+    
+    form = definir_esforco_backlogitem_Form()
+
+    context = {'form':form}
+    
+    if request.method == 'POST':
+        
+        input_esforco = str(request.POST.get('esforco'))
+        
+        print("\n\n\n\n")
+        print("string recuperada do form -> " + input_esforco)
+        
+        # OWLREADY2
+        try:
+    
+            myworld = World(filename='backup.db', exclusive=False)
+                
+            #onto_path.append(os.path.dirname(__file__))
+                
+            # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+            kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
+            
+            with kiposcrum:
+                
+                kiposcrum[item].EstimatedBusinessValue = [input_esforco]
+                
+                
+                myworld.save()
+                
+                status = "OK!"
+            
+        except:
+            status = "Erro!"    
+
+        finally:
+            myworld.close()
+            
+        request.session['input_status'] = status
+        return redirect('/kipo_playground/inserir_obs_tela_ok/')
+        
+    
+    return render(request, 'item_inserir_esforco.html', context)
 
 # !SELECIONA DECISAO
 # !------------------------------------------------------------

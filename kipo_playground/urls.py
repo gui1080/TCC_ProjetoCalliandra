@@ -43,7 +43,8 @@ urlpatterns = [
     path('ver_item_backlog/<str:instancia_item>', views.ver_item_backlog), 
     path('mudar_obs/<str:item>', views.mudar_obs), 
     path('inserir_obs_tela_ok/', views.inserir_obs_tela_ok),
-    #path('mudar_status/<str:item>', views.mudar_status), 
+    path('mudar_status/<str:item>', views.mudar_status), 
+    path('mudar_esforco/<str:item>', views.mudar_esforco),
     
     # visualização da decisão
     path('decision_select/', views.decision_select),
