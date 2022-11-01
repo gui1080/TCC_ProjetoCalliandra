@@ -1371,7 +1371,10 @@ def ver_item_backlog(request, instancia_item):
             
             status = "OK!" 
             
-            observacao =  str(kiposcrum[item].Observacao)
+            if str(kiposcrum[item].Observacao)[0] == '[':
+                observacao =  str(kiposcrum[item].Observacao)[2:-2]
+            else:
+                observacao =  str(kiposcrum[item].Observacao)
             
             print("--------------")
             print(observacao)

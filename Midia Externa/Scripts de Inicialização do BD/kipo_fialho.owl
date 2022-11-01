@@ -2939,6 +2939,46 @@
     </DataPropertyDomain>
     <DataPropertyDomain>
         <DataProperty IRI="#Observacao"/>
+        <Class IRI="#BPO"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Observacao"/>
+        <Class IRI="#BRO"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Observacao"/>
+        <Class IRI="#CO"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Observacao"/>
+        <Class IRI="#DO"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Observacao"/>
+        <Class IRI="#KIPCO"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Observacao"/>
+        <Class IRI="#Product_Backlog_Item"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Observacao"/>
+        <Class IRI="#ontoscrum__Artifacts"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Observacao"/>
+        <Class IRI="#ontoscrum__Events"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Observacao"/>
+        <Class IRI="#ontoscrum__Processes"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Observacao"/>
+        <Class IRI="#ontoscrum__Roles"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Observacao"/>
         <Class abbreviatedIRI="owl:Thing"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
