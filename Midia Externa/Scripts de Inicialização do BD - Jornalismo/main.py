@@ -486,21 +486,42 @@ def main():
         # tcc_casodeestudo_KIPO_decidirmateria.png
         # relacionamentos
 
-        
+        kiposcrum["resolver_impasse_rapidamente" + id_unico].used_intention.append(kiposcrum["tarefas_final_terceiro_trimestre_2021_dia_28_09_2021" + id_unico])
+
+        kiposcrum["necessidade_de_pagar_contas_na_redacao_jornalistica" + id_unico].becomes.append(kiposcrum["resolver_impasse_rapidamente" + id_unico])
+        kiposcrum["necessidade_de_pagar_contas_na_redacao_jornalistica" + id_unico].belongs_to.append(kiposcrum["gerente1" + id_unico])
+
+        kiposcrum["gerente1" + id_unico].undertakes_to_carry_out.append(kiposcrum["resolver_impasse_rapidamente" + id_unico])
+        kiposcrum["gerente1" + id_unico].undertakes_to_carry_out.append(kiposcrum["gerar_renda_para_redacao_jornalistica" + id_unico])
+        kiposcrum["gerente1" + id_unico].encerrar_atividades.append(kiposcrum["final_terceiro_trimestre_2021" + id_unico])
 
 
+        kiposcrum["materias_boas_sempre_devem_ser_publicadas" + id_unico].belongs_to.append(kiposcrum["gerente1" + id_unico])
+        kiposcrum["materias_boas_sempre_devem_ser_publicadas" + id_unico].is_motivated_by.append(kiposcrum["necessidade_de_pagar_contas_na_redacao_jornalistica" + id_unico])
+        kiposcrum["materias_boas_sempre_devem_ser_publicadas" + id_unico].is_motivated_by.append(kiposcrum["ate_agora_nenhum_risco_justificou_nao_publicar_boa_materia" + id_unico])
 
+        kiposcrum["liberdade_de_expressao_deve_ser_pilar_central_do_trabalho" + id_unico].belongs_to.append(kiposcrum["gerente1" + id_unico])
 
+        kiposcrum["gerente1" + id_unico].has_action.append(kiposcrum["definir_materia" + id_unico])
+
+        kiposcrum["definir_materia" + id_unico].uses_action.append(kiposcrum["tarefas_final_terceiro_trimestre_2021_dia_28_09_2021" + id_unico])
+        kiposcrum["definir_materia" + id_unico].propositional_content_of.append(kiposcrum["a_materia_polemica_do_jornalista2_deveria_ser_publicada?" + id_unico])
 
         # -------------------------------
 
 
+        kiposcrum["representante_investidores" + id_unico].identifies.append(kiposcrum["a_materia_polemica_do_jornalista2_deveria_ser_publicada?" + id_unico])
 
+        kiposcrum["materia_que_desagrada_grupo_pode_ser_prejudicial" + id_unico].belongs_to.append(kiposcrum["representante_investidores" + id_unico])
+        kiposcrum["materia_que_desagrada_grupo_pode_ser_prejudicial" + id_unico].is_motivated_by.append(kiposcrum["patrocinios_foram_perdidos_antes_por_conta_de_atritos_semelhantes" + id_unico])
 
+        kiposcrum["uma_materia_muito_polemica_afeta_reputacao_do_jornal_no_longo_prazo" + id_unico].belongs_to.append(kiposcrum["representante_investidores" + id_unico])
 
+        kiposcrum["experiencia_negativa_com_jornalista2" + id_unico].belongs_to.append(kiposcrum["representante_investidores" + id_unico])
+        kiposcrum["experiencia_negativa_com_jornalista2" + id_unico].influences.append(kiposcrum["decidir_materia_destaque_setembro" + id_unico])
         # -------------------------------
 
-
+        #decision is proper part of...
 
 
 
