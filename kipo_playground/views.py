@@ -1598,6 +1598,9 @@ def decision_select(request):
             
             print("\n\n\n\n")
             print(lista_instancias)
+            print(str(lista_instancias[0].is_a))
+            print(str(lista_instancias[1].is_a))
+            print(lista_instancias[0].Nome[0])
             print("\n\n\n\n")
                 
             status = "OK!"
@@ -1615,11 +1618,11 @@ def decision_select(request):
                     else:
                         list_obs.append(lista_instancias[i].Observacao)
                     
-                    print("Status de Item Resolvido (1 = aberto, 0 = resolvido) -> " + str(lista_instancias[i].StatusProblemaResolvido.pop(0)))
+                    print("Status de Item Resolvido (1 = aberto, 0 = resolvido) -> " + str(lista_instancias[i].StatusProblemaResolvido))
                     
                     
                     # se lista n esta vazia
-                    if lista_instancias[i].StatusProblemaResolvido:
+                    if len(lista_instancias[i].StatusProblemaResolvido) > 0:
                     
                         if str(lista_instancias[i].StatusProblemaResolvido.pop(0)) == "0":
                             

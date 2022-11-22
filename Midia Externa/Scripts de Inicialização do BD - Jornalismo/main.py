@@ -113,10 +113,12 @@ def main():
 
         kiposcrum["DO__Decision"]("escolher_novo_BD_cedoc" + id_unico)
         kiposcrum["escolher_novo_BD_cedoc" + id_unico].Nome.append("escolher_novo_BD_cedoc")
+        kiposcrum["escolher_novo_BD_cedoc" + id_unico].StatusProblemaResolvido.append("0")
 
         kiposcrum["DO__Decision"]("decidir_materia_destaque_setembro" + id_unico)
         kiposcrum["decidir_materia_destaque_setembro" + id_unico].Nome.append("decidir_materia_destaque_setembro")
-
+        kiposcrum["decidir_materia_destaque_setembro" + id_unico].StatusProblemaResolvido.append("1")
+        
         # -------------------------------
 
         kiposcrum["Sprint_Tasks_Updating"]("atualizacao_tarefas_sprint_final_de_setembro" + id_unico)
