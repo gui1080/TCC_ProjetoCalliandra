@@ -421,11 +421,11 @@ def main():
         kiposcrum["DO__Restriction"]("um_processo_judicial_deve_ser_evitado_por_ocupar_tempo" + id_unico)
         kiposcrum["um_processo_judicial_deve_ser_evitado_por_ocupar_tempo" + id_unico].Nome.append("um_processo_judicial_deve_ser_evitado_por_ocupar_tempo")
 
-        kiposcrum["DO__Feeling"]("" + id_unico)
-        kiposcrum["" + id_unico].Nome.append("")
+        kiposcrum["DO__Feeling"]("materia_que_desagrada_grupo_pode_ser_prejudicial" + id_unico)
+        kiposcrum["materia_que_desagrada_grupo_pode_ser_prejudicial" + id_unico].Nome.append("materia_que_desagrada_grupo_pode_ser_prejudicial")
 
-        kiposcrum["DO__Evidence"]("" + id_unico)
-        kiposcrum["" + id_unico].Nome.append("")
+        kiposcrum["DO__Evidence"]("patrocinios_foram_perdidos_antes_por_conta_de_atritos_semelhantes" + id_unico)
+        kiposcrum["patrocinios_foram_perdidos_antes_por_conta_de_atritos_semelhantes" + id_unico].Nome.append("patrocinios_foram_perdidos_antes_por_conta_de_atritos_semelhantes")
 
         kiposcrum["DO__Feeling"]("uma_materia_muito_polemica_afeta_reputacao_do_jornal_no_longo_prazo" + id_unico)
         kiposcrum["uma_materia_muito_polemica_afeta_reputacao_do_jornal_no_longo_prazo" + id_unico].Nome.append("uma_materia_muito_polemica_afeta_reputacao_do_jornal_no_longo_prazo")
@@ -435,23 +435,79 @@ def main():
 
         # sobre a decisão
 
+        kiposcrum["DO__Risk"]("risco_de_perder_relevancia_por_desperdicar_oportunidade_de_engajamento" + id_unico)
+        kiposcrum["risco_de_perder_relevancia_por_desperdicar_oportunidade_de_engajamento" + id_unico].Nome.append("risco_de_perder_relevancia_por_desperdicar_oportunidade_de_engajamento")
+
+        kiposcrum["DO__Risk"]("risco_de_desagradar_grupos_relevantes_por_assunto_da_noticia" + id_unico)
+        kiposcrum["risco_de_desagradar_grupos_relevantes_por_assunto_da_noticia" + id_unico].Nome.append("risco_de_desagradar_grupos_relevantes_por_assunto_da_noticia")
+
+        kiposcrum["DO__Criterion"]("riscos_legais" + id_unico)
+        kiposcrum["riscos_legais" + id_unico].Nome.append("riscos_legais")
+
+        kiposcrum["DO__Advantage"]("corte_de_gastos_em_caso_de_processo" + id_unico)
+        kiposcrum["corte_de_gastos_em_caso_de_processo" + id_unico].Nome.append("corte_de_gastos_em_caso_de_processo")
+
+        kiposcrum["DO__Disadvantage"]("materia_polemica_por_se_tratar_de_algo_que_desfavorece_um_grupo" + id_unico)
+        kiposcrum["materia_polemica_por_se_tratar_de_algo_que_desfavorece_um_grupo" + id_unico].Nome.append("materia_polemica_por_se_tratar_de_algo_que_desfavorece_um_grupo")
+
+        kiposcrum["DO__Alternative"]("publicar_materia_jornalista_2" + id_unico)
+        kiposcrum["publicar_materia_jornalista_2" + id_unico].Nome.append("publicar_materia_jornalista_2")
+
+        # -------------------------------
+
+        kiposcrum["DO__Criterion"]("engajamento" + id_unico)
+        kiposcrum["engajamento" + id_unico].Nome.append("engajamento")
+
+        kiposcrum["DO__Advantage"]("materia_exclusiva_rende_muito_dinheiro" + id_unico)
+        kiposcrum["materia_exclusiva_rende_muito_dinheiro" + id_unico].Nome.append("materia_exclusiva_rende_muito_dinheiro")
+
+        kiposcrum["DO__Disadvantage"]("arquivamento_nao_da_rendimento" + id_unico)
+        kiposcrum["arquivamento_nao_da_rendimento" + id_unico].Nome.append("arquivamento_nao_da_rendimento")
+
+        kiposcrum["DO__Alternative"]("arquivar_materia_jornalista2" + id_unico)
+        kiposcrum["arquivar_materia_jornalista2" + id_unico].Nome.append("arquivar_materia_jornalista2")
+
+        kiposcrum["DO__Risk"]("desagradar_stakeholder" + id_unico)
+        kiposcrum["desagradar_stakeholder" + id_unico].Nome.append("desagradar_stakeholder")
+
+        kiposcrum["DO__Risk"]("processo_judicial" + id_unico)
+        kiposcrum["processo_judicial" + id_unico].Nome.append("processo_judicial")
+
+        # -------------------------------
+
+        kiposcrum["DO__Discarded_Alternative"]("arquivar_materia_jornalista2" + id_unico)
+        kiposcrum["arquivar_materia_jornalista2" + id_unico + "1"].Nome.append("arquivar_materia_jornalista2")
+
+        kiposcrum["DO__Chosen_Alternative"]("publicar_materia_jornalista_2" + id_unico)
+        kiposcrum["publicar_materia_jornalista_2" + id_unico + "1"].Nome.append("publicar_materia_jornalista_2")
+
+        # -------------------------------
+        # -------------------------------
+        # tcc_casodeestudo_KIPO_decidirmateria.png
+        # relacionamentos
+
+        
+
+
+
+
 
         # -------------------------------
 
 
 
 
-        # -------------------------------
-
-
-
-
 
         # -------------------------------
 
 
 
+
+
         # -------------------------------
+
+
+
 
 
         # -------------------------------
