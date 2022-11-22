@@ -106,7 +106,7 @@ def main():
         kiposcrum["KIPCO__Agent"]("representante_investidores" + id_unico)
         kiposcrum["representante_investidores" + id_unico].Nome.append("representante_investidores")
 
-        kiposcrum["KIPCO__Agent"]("gerente1" + id_unico)
+        kiposcrum["KIPCO__Agent"]("fotografo1" + id_unico)
         kiposcrum["fotografo1" + id_unico].Nome.append("fotografo1")
 
         # -------------------------------
@@ -475,10 +475,10 @@ def main():
 
         # -------------------------------
 
-        kiposcrum["DO__Discarded_Alternative"]("arquivar_materia_jornalista2" + id_unico)
+        kiposcrum["DO__Discarded_Alternative"]("arquivar_materia_jornalista2" + id_unico + "1")
         kiposcrum["arquivar_materia_jornalista2" + id_unico + "1"].Nome.append("arquivar_materia_jornalista2")
 
-        kiposcrum["DO__Chosen_Alternative"]("publicar_materia_jornalista_2" + id_unico)
+        kiposcrum["DO__Chosen_Alternative"]("publicar_materia_jornalista_2" + id_unico + "1")
         kiposcrum["publicar_materia_jornalista_2" + id_unico + "1"].Nome.append("publicar_materia_jornalista_2")
 
         # -------------------------------
@@ -554,7 +554,7 @@ def main():
         kiposcrum["corte_de_gastos_em_caso_de_processo" + id_unico].according_to.append(kiposcrum["riscos_legais" + id_unico])
         kiposcrum["corte_de_gastos_em_caso_de_processo" + id_unico].propositional_content_of.append(kiposcrum["arquivar_materia_jornalista2" + id_unico])
 
-        kiposcrum["jornalista2" + id_unico].proposes.append(kiposcrum["publicar_materia_jornalista_2" + id_unico)
+        kiposcrum["jornalista2" + id_unico].proposes.append(kiposcrum["publicar_materia_jornalista_2" + id_unico])
         kiposcrum["representante_investidores" + id_unico].proposes.append(kiposcrum["arquivar_materia_jornalista2" + id_unico])
 
         kiposcrum["arquivar_materia_jornalista2" + id_unico + "1"].uses.append(kiposcrum["backlog_de_desenvolvimento_redacao_jornalista_2021" + id_unico])
