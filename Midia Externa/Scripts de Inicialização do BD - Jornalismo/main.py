@@ -346,7 +346,7 @@ def main():
         kiposcrum["definicao_materia_destaque_de_setembro" + id_unico].ontoscrum__contains.append(kiposcrum["materia_destaque_que_nao_ofusca_outras_ocorrencias_e_gera_receita" + id_unico])
         kiposcrum["definicao_materia_destaque_de_setembro" + id_unico].ontoscrum__contains.append(kiposcrum["lancamento_final_de_setembro" + id_unico])
         kiposcrum["definicao_materia_destaque_de_setembro" + id_unico].EstimatedBusinessValue.append( 13 )
-        kiposcrum["definicao_materia_destaque_de_setembro" + id_unico].StatusItemResolvido.append( 1 )
+        kiposcrum["definicao_materia_destaque_de_setembro" + id_unico].StatusItemResolvido.append( 0 )
 
 
         kiposcrum["backlog_de_desenvolvimento_redacao_jornalista_2021" + id_unico].ontoscrum__contains.append(kiposcrum["escolha_de_BD_a_ser_usado" + id_unico])
@@ -521,14 +521,77 @@ def main():
         kiposcrum["experiencia_negativa_com_jornalista2" + id_unico].influences.append(kiposcrum["decidir_materia_destaque_setembro" + id_unico])
         # -------------------------------
 
-        #decision is proper part of...
+        kiposcrum["tarefas_final_terceiro_trimestre_2021_dia_28_09_2021" + id_unico].ontoscrum__performs.append(kiposcrum["decidir_materia_destaque_setembro" + id_unico])
 
+        kiposcrum["decidir_materia_destaque_setembro" + id_unico].considers.append(kiposcrum["apenas_se_publica_bom_jornalismo" + id_unico])
+        kiposcrum["decidir_materia_destaque_setembro" + id_unico].considers.append(kiposcrum["um_processo_judicial_deve_ser_evitado_por_ocupar_tempo" + id_unico])
+        kiposcrum["decidir_materia_destaque_setembro" + id_unico].StatusItemResolvido.append( 1 )
 
+        # -------------------------------
+
+        kiposcrum["risco_de_perder_relevancia_por_desperdicar_oportunidade_de_engajamento" + id_unico].threatens.append(kiposcrum["decidir_materia_destaque_setembro" + id_unico])
+        kiposcrum["risco_de_perder_relevancia_por_desperdicar_oportunidade_de_engajamento" + id_unico].propositional_content_of.append(kiposcrum["arquivar_materia_jornalista2" + id_unico])
+
+        kiposcrum["risco_de_desagradar_grupos_relevantes_por_assunto_da_noticia" + id_unico].threatens.append(kiposcrum["decidir_materia_destaque_setembro" + id_unico])
+        kiposcrum["risco_de_desagradar_grupos_relevantes_por_assunto_da_noticia" + id_unico].propositional_content_of.append(kiposcrum["publicar_materia_jornalista_2" + id_unico])
 
         # -------------------------------
 
+        kiposcrum["decidir_materia_destaque_setembro" + id_unico].pos_state.append(kiposcrum["publicar_materia_jornalista_2" + id_unico])
+        kiposcrum["decidir_materia_destaque_setembro" + id_unico].pos_state.append(kiposcrum["arquivar_materia_jornalista2" + id_unico])
+        kiposcrum["decidir_materia_destaque_setembro" + id_unico].pos_state.append(kiposcrum["arquivar_materia_jornalista2" + id_unico + "1"])
+        kiposcrum["decidir_materia_destaque_setembro" + id_unico].pos_state.append(kiposcrum["publicar_materia_jornalista_2" + id_unico + "1"])
 
+        kiposcrum["arquivamento_nao_da_rendimento" + id_unico].according_to.append(kiposcrum["engajamento" + id_unico])
+        kiposcrum["arquivamento_nao_da_rendimento" + id_unico].propositional_content_of.append(kiposcrum["arquivar_materia_jornalista2" + id_unico])
 
+        kiposcrum["materia_exclusiva_rende_muito_dinheiro" + id_unico].according_to.append(kiposcrum["engajamento" + id_unico])
+        kiposcrum["materia_exclusiva_rende_muito_dinheiro" + id_unico].propositional_content_of.append(kiposcrum["publicar_materia_jornalista_2" + id_unico])
 
+        kiposcrum["materia_polemica_por_se_tratar_de_algo_que_desfavorece_um_grupo" + id_unico].according_to.append(kiposcrum["riscos_legais" + id_unico])
+        kiposcrum["materia_polemica_por_se_tratar_de_algo_que_desfavorece_um_grupo" + id_unico].propositional_content_of.append(kiposcrum["publicar_materia_jornalista_2" + id_unico])
+
+        kiposcrum["corte_de_gastos_em_caso_de_processo" + id_unico].according_to.append(kiposcrum["riscos_legais" + id_unico])
+        kiposcrum["corte_de_gastos_em_caso_de_processo" + id_unico].propositional_content_of.append(kiposcrum["arquivar_materia_jornalista2" + id_unico])
+
+        kiposcrum["jornalista2" + id_unico].proposes.append(kiposcrum["publicar_materia_jornalista_2" + id_unico)
+        kiposcrum["representante_investidores" + id_unico].proposes.append(kiposcrum["arquivar_materia_jornalista2" + id_unico])
+
+        kiposcrum["arquivar_materia_jornalista2" + id_unico + "1"].uses.append(kiposcrum["backlog_de_desenvolvimento_redacao_jornalista_2021" + id_unico])
+        kiposcrum["arquivar_materia_jornalista2" + id_unico].uses.append(kiposcrum["backlog_de_desenvolvimento_redacao_jornalista_2021" + id_unico])
+        kiposcrum["publicar_materia_jornalista_2" + id_unico + "1"].uses.append(kiposcrum["backlog_de_desenvolvimento_redacao_jornalista_2021" + id_unico])
+        kiposcrum["publicar_materia_jornalista_2" + id_unico].uses.append(kiposcrum["backlog_de_desenvolvimento_redacao_jornalista_2021" + id_unico])
+
+        kiposcrum["processo_judicial" + id_unico].propositional_content_of.append(kiposcrum["decidir_materia_destaque_setembro" + id_unico])
+        kiposcrum["desagradar_stakeholder" + id_unico].propositional_content_of.append(kiposcrum["decidir_materia_destaque_setembro" + id_unico])
+
+        kiposcrum["publicar_materia_jornalista_2" + id_unico + "1"].composes.append(kiposcrum["decidir_materia_destaque_setembro" + id_unico])
 
         # -------------------------------
+
+        print("\n------------------------------------\n")
+        print("Sincronização!")
+
+        try:
+            #kiposcrum.sync()
+            sync_reasoner()
+        except:
+            print("\n\nErro ao sincronizar.\n\n")
+        finally:
+            print("\n\nSincronização finalizada.\n\n")
+
+        print("\n------------------------------------\n")
+
+        myworld.save()
+
+        myworld.close()
+
+if __name__ == '__main__':
+
+    # contabiliza o tempo de execução!
+    inicio = time.time()
+    main()
+    fim = time.time()
+
+    duracao = (fim - inicio)/60
+    print("\n\n\nFim da execução!\n\nDuração da execução deste script: %f minutos." % (duracao) + "\n\n")
