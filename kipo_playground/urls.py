@@ -49,6 +49,7 @@ urlpatterns = [
     # visualização da decisão
     path('decision_select/', views.decision_select),
     path('decision_dashboard/<str:instancia_decisao>', views.decision_dashboard),
+    path('mudar_decisao_status/<str:instancia_decisao>', views.mudar_decisao_status),
     
     path('gestao_artefatos/', views.gestao_artefatos),
     path('alocar_para_tarefa/<str:instancia_artefato>', views.alocar_para_tarefa),

@@ -1306,7 +1306,7 @@ def ver_backlog_produto(request):
             
             print("--------")
             print("business value")
-            print(str(kiposcrum['tela_login9142'].EstimatedBusinessValue))
+            #print(str(kiposcrum['tela_login9142'].EstimatedBusinessValue))
             print("--------")
             
             # objeto_originator = transforma_objeto(originator)
@@ -1748,6 +1748,14 @@ def decision_dashboard(request, instancia_decisao):
             objeto_INV_composes = transforma_objeto(INV_composes)
             objeto_considers = transforma_objeto(considers)
             objeto_INV_threatens = transforma_objeto(INV_threatens)
+
+            if str(kiposcrum[instancia].StatusProblemaResolvido.pop(0)) == "0":
+                
+                status_decisao = "Aberto"
+                
+            else:
+                
+                status_decisao = "Resolvido"
             
             
             status = "OK!" 
@@ -1759,6 +1767,7 @@ def decision_dashboard(request, instancia_decisao):
         num_prop_correlatas = "Desconhecido"
         num_inst = 0
         instancia = "Erro!"
+        status_decisao = "Erro!" 
             
         print("Falha de acesso!")
     
@@ -1770,11 +1779,54 @@ def decision_dashboard(request, instancia_decisao):
     request.session['num_prop_correlatas'] = num_prop_correlatas
     request.session['num_inst'] = str(num_inst)
     request.session['instancia_decision'] = str(instancia)
+    request.session['decision_status'] = status_decisao
     
     context = {"objeto_INV_influences": objeto_INV_influences, "objeto_INV_composes": objeto_INV_composes, "objeto_considers": objeto_considers, "objeto_INV_threatens": objeto_INV_threatens}
     
     return render(request, 'decision_dashboard.html', context)
     
+
+def mudar_decisao_status(request, instancia_decisao):
+
+    print("!!!!!!!!!!!!!!!!!!!!")
+    print(instancia_decisao)
+
+    # OWLREADY2
+    try:
+            
+        myworld = World(filename='backup.db', exclusive=False)
+            
+        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+        kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
+            
+        
+        sync_reasoner()
+        
+        with kiposcrum:
+            
+            #kiposcrum[instancia_decisao].StatusProblemaResolvido.append("1")
+            print("cu\n\n\n")
+            #print(str(kiposcrum[instancia_decisao].StatusProblemaResolvido.pop(0)))
+
+            if str(kiposcrum[instancia_decisao].StatusProblemaResolvido.pop(0)) == "0":
+                print("aqui1")
+                kiposcrum[instancia_decisao].StatusProblemaResolvido.append("1")
+                
+            else:
+                print("aqui2")
+                kiposcrum[instancia_decisao].StatusProblemaResolvido.append("0")
+
+            myworld.save()
+
+    except:
+            
+        print("Falha de acesso!")
+    
+    finally:
+        
+        myworld.close() 
+
+    return redirect('/kipo_playground/decision_select/')
 
 # ------------------------------------------------------------
 
