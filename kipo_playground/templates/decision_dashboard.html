@@ -68,7 +68,15 @@
 
         <div>
             <h4 class="text-light">Decisão resolvida</h4>
-            <span class="text-light">{{request.session.decision_status}}</span>
+            
+            {% if request.session.decision_status == "Aberto" %}
+            <span class="text-warning">{{request.session.decision_status}}</span>
+            {% endif %}
+            
+            {% if request.session.decision_status == "Resolvido" %}
+            <span class="text-success">{{request.session.decision_status}}</span>
+            {% endif %}
+            
         </div>
         <div> 
             <span class="las la-clipboard-lis"></span>
