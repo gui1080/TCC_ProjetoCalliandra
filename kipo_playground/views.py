@@ -126,6 +126,8 @@ def welcome(request):
         :return: Objeto de render de 'welcome_graficos.html'. 
     """
     
+    # https://developers.google.com/chart/interactive/docs/gallery/barchart
+
     if 'status' in request.session:
         del request.session['status']
     
@@ -186,6 +188,8 @@ def welcome(request):
         
         
         lista_dados_qtd_fim = []
+
+        planning_poker_esforco = []
         
         try:
             
@@ -195,9 +199,8 @@ def welcome(request):
             
             
             with kiposcrum:
-                
-                
-                status = "OK!"
+
+                # ---------------------
                 
                 qtd_agentes = len(kiposcrum["KIPCO__Agent"].instances())
                 qtd_taskdescription = len(kiposcrum["Task_Description"].instances())
@@ -205,7 +208,7 @@ def welcome(request):
                 qtd_decision = len(kiposcrum["DO__Decision"].instances())
                 qtd_sprints = len(kiposcrum["scrum_Sprint"].instances())
                 
-                lista_dados_qtd = [["Classe", "Quantidade"],
+                lista_dados_qtd = [["Classe", "Quantidade de Instâncias"],
                                     ["KIPCO__Agent", qtd_agentes], 
                                     ["Task_Description", qtd_taskdescription], 
                                     ["scrum_Daily", qtd_daily], 
@@ -214,17 +217,89 @@ def welcome(request):
                 
                 lista_dados_qtd_fim = json.dumps(lista_dados_qtd)
                 
+
+                # ---------------------
+
+                '''
                 
+                # Opcoes cadastradas no planning poker
+
+                '2' 
+                '3' 
+                '5' 
+                '7' 
+                '11' 
+                '13' 
+                '17' 
+                '19'
                 
+                '''
+
+                planning_poker_esforco = [["Esforço da Tarefa", "Quantidade de Tarefas"],
+                                        ["2", 0],
+                                        ["3", 0],
+                                        ["5", 0],
+                                        ["7", 0],
+                                        ["11", 0],
+                                        ["13", 0],
+                                        ["17", 0],
+                                        ["19", 0]]
+
+                tarefas_backlog = kiposcrum["Product_Backlog_Item"].instances()
+                
+                print(tarefas_backlog)
+                print(len(tarefas_backlog))
+
+                for j in range(len(tarefas_backlog)):
+
+                    nome_tarefa = str(tarefas_backlog[j])[5:]
+                    
+                    esforco_tarefa = str(kiposcrum[nome_tarefa].EstimatedBusinessValue.pop(0))
+
+                    for i in range(len(planning_poker_esforco)):
+                        if planning_poker_esforco[i][0] == esforco_tarefa:
+                            planning_poker_esforco[i][1] = planning_poker_esforco[i][1] + 1
+
+                print(planning_poker_esforco)
+
+                # ---------------------
+
+                decisoes_resolvidas = [["Status", "Quantidade"], 
+                                        ["Resolvido", 0],
+                                        ["Pendente", 0]]
+                
+                decisoes = kiposcrum["DO__Decision"]. instances()
+
+                # resolvido = 1
+                # aberto = 0
+
+                for j in range(len(decisoes)):
+
+                    nome_decisao = str(decisoes[j])[5:]
+
+                    status = str(kiposcrum[nome_decisao].StatusProblemaResolvido.pop(0))
+
+                    
+                    if "0" in status:
+                        decisoes_resolvidas[1][1] = decisoes_resolvidas[1][1] + 1 
+                    else:
+                        decisoes_resolvidas[2][1] = decisoes_resolvidas[2][1] + 1
+
+
+                # ---------------------
+
+                status = "OK!"
+
         except:
             
             qtd_agentes = 0
             status = "Erro!"
         
         finally:
+
             myworld.close()
         
-        context = {"lista_dados_qtd": lista_dados_qtd_fim}
+        context = {"lista_dados_qtd": lista_dados_qtd_fim, "planning_poker_esforco": planning_poker_esforco, "decisoes_resolvidas": decisoes_resolvidas}
         request.session['status'] = status
         return render(request, 'welcome_graficos.html', context)
 

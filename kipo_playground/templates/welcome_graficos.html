@@ -34,12 +34,12 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawChart);
+      google.charts.setOnLoadCallback(drawChart1);
 
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable({{ lista_dados_qtd|safe }});
+      function drawChart1() {
+        var data1 = google.visualization.arrayToDataTable({{ lista_dados_qtd|safe }});
 
-        var options = {
+        var options1 = {
           chart: {
             title: 'Dados do Trabalho',
             subtitle: 'Quantidade de Instâncias',
@@ -48,14 +48,45 @@
           bars: 'horizontal' // Required for Material Bar Charts.
         };
 
-        var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+        var chart1 = new google.charts.Bar(document.getElementById('barchart_material1'));
 
-        chart.draw(data, google.charts.Bar.convertOptions(options));
+        chart1.draw(data1, google.charts.Bar.convertOptions(options1));
+      }
+</script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart2);
+
+      function drawChart2() {
+        var data2 = google.visualization.arrayToDataTable({{ planning_poker_esforco|safe }});
+
+        var options2 = {
+          chart: {
+            title: 'x',
+            subtitle: 'y',
+          },
+          backgroundColor: '#FFFFFF',
+          bars: 'horizontal' 
+        };
+
+        var chart2 = new google.charts.Bar(document.getElementById('barchart_material2'));
+
+        chart2.draw(data2, google.charts.Bar.convertOptions(options2));
       }
 </script>
 
 <div class="card_view">
-<div id="barchart_material" style="width: 700px; height: 300px;"></div>
+
+<div id="barchart_material1" style="width: 700px; height: 300px;"></div>
+</br>
+</br>
+
+<div id="barchart_material2" style="width: 700px; height: 300px;"></div>
+</br>
+</br>
+
 </div>
 
 
