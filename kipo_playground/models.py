@@ -8,7 +8,7 @@ Foi feito um modelo para uma nova instância de Sprint (campos 'nome' e 'observa
 """
 
 from django.db import models
-#from ckeditor.fields import RichTextField
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 
@@ -31,9 +31,9 @@ class MateriaJornalistica(models.Model):
     id = models.CharField(max_length=255, null=False, primary_key=True)
     titulo = models.CharField(max_length=255, null=False)
     #
-    # texto = RichTextField()
+    texto = RichTextField(blank=True, null=True)
     
-    texto = models.CharField(max_length=255)
+    #texto = models.CharField(max_length=255)
 
     sutien = models.CharField(max_length=255)
     editores = models.CharField(max_length=255)

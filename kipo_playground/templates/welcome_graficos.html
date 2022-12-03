@@ -37,8 +37,7 @@
           }
         </script>
         
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-            <script type="text/javascript">
+        <script type="text/javascript">
               google.charts.load('current', {'packages':['bar']});
               google.charts.setOnLoadCallback(drawChart2);
         
@@ -61,8 +60,7 @@
         </script>
         
         
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-          <script type="text/javascript">
+        <script type="text/javascript">
             google.charts.load("current", {packages:["corechart"]});
             google.charts.setOnLoadCallback(drawChart3);
             function drawChart3() {
@@ -73,7 +71,7 @@
                 is3D: true,
               };
         
-              var chart3 = new google.visualization.PieChart(document.getElementById('piechart_3d_1'));
+              var chart3 = new google.visualization.PieChart(document.getElementById('piechart_3d'));
               chart.draw(data3, options3);
             }
           </script>
@@ -94,6 +92,7 @@
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark text-light" href="/kipo_playground/ver_backlog_produto/">Backlog do Produto</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark text-light" href="/kipo_playground/gestao_pessoas/">Gestão de Agentes</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark text-light" href="/kipo_playground/gestao_artefatos/">Gestão de Artefatos</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark text-light" href="/kipo_playground/add_materia/">Adicionar Matéria Jornalística</a>
                 </div>
             </div>
             <!-- Page content wrapper-->
@@ -164,16 +163,13 @@
                       <div id="barchart_material2" style="width: 700px; height: 300px;"></div>
                       </br>
                     
+                      </br>
+                      <div id="piechart_3d" style="width: 700px; height: 300px;"></div>
+                    
                     </div>
                     
                     </br>
                     </br>
-                    
-                    <div class="card_view">
-                    
-                      <div id="piechart_3d_1" style="width: 700px; height: 300px;"></div>
-                    
-                    </div>
                     
             </div>
         </div>
