@@ -8,8 +8,40 @@ Foi feito um modelo para uma nova instância de Sprint (campos 'nome' e 'observa
 """
 
 from django.db import models
+#from ckeditor.fields import RichTextField
 
 # Create your models here.
+
+class MateriaJornalistica(models.Model):
+    
+    OPCOES = (
+        ('Política', 'Política'),
+        ('Esportes', 'Esportes'),
+        ('Coluna Autoral', 'Coluna Autoral'),
+        ('Variedades', 'Variedades'),
+        ('Notícias Internacionais', 'Notícias Internacionais'),
+        ('Celebridades', 'Celebridades'),
+        ('Anúncio', 'Anúncio'),
+        ('Tecnologia', 'Tecnologia'),
+        ('Vida e Estilo', 'Vida e Estilo'),
+        ('Saúde', 'Saúde'),
+        ('Notícia Regional', 'Notícia Regional')
+    )
+
+    id = models.CharField(max_length=255, null=False, primary_key=True)
+    titulo = models.CharField(max_length=255, null=False)
+    #
+    # texto = RichTextField()
+    
+    texto = models.CharField(max_length=255)
+
+    sutien = models.CharField(max_length=255)
+    editores = models.CharField(max_length=255)
+    autores = models.CharField(max_length=255, null=False)
+    main_keyword = models.CharField(max_length=255, null=False, choices=OPCOES)
+
+    def _str_(self):
+        return self.id
 
 class definir_esforco_backlogitem(models.Model):
     

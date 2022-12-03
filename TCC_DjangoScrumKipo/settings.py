@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CKEDITOR_BASEPATH = "/my_static/ckeditor/ckeditor/"
 
 # Application definition
 
@@ -39,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
-    'kipo_playground'
+    'kipo_playground', 
+    'ckeditor',
 ]
 
 MIDDLEWARE = [

@@ -8,6 +8,7 @@ pip3 install Django
 pip install django-crispy-form
 pip3 install django-crispy-form
 pip3 install --upgrade pip
+pip3 install django-ckeditor
 pip3 install numpy
 echo "Rodando Django -> 'python3 manage.py runserver'"
 python3 manage.py runserver

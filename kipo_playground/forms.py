@@ -7,7 +7,15 @@ Em base de modelos estabelecidos, contém formulários para inserir uma nova ins
 from django.forms import ModelForm
 from django import forms
 
-from .models import novo_instancias_tipo, inserir_instancias_tipo, inserir_instancias_dada_classe, definir_obs_backlogitem, definir_status_backlogitem, definir_esforco_backlogitem
+from .models import MateriaJornalistica, novo_instancias_tipo, inserir_instancias_tipo, inserir_instancias_dada_classe, definir_obs_backlogitem, definir_status_backlogitem, definir_esforco_backlogitem
+
+
+class MateriaJornalistica_Form(ModelForm):
+    
+    class Meta:
+        model = MateriaJornalistica
+        fields = ['id', 'titulo', 'texto', 'sutien', 'editores', 'autores', 'main_keyword']
+
 
 class definir_esforco_backlogitem_Form(ModelForm):
     
