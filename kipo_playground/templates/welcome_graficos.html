@@ -16,9 +16,11 @@
 
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
-          google.charts.load('current', {'packages':['bar']});
+          google.charts.load('current', {'packages':['corechart', 'bar']});
+          
           google.charts.setOnLoadCallback(drawChart1);
-    
+          
+          
           function drawChart1() {
             var data1 = google.visualization.arrayToDataTable({{ lista_dados_qtd|safe }});
     
@@ -34,48 +36,25 @@
             var chart1 = new google.charts.Bar(document.getElementById('barchart_material1'));
     
             chart1.draw(data1, google.charts.Bar.convertOptions(options1));
-          }
-        </script>
-        
-        <script type="text/javascript">
-              google.charts.load('current', {'packages':['bar']});
-              google.charts.setOnLoadCallback(drawChart2);
-        
-              function drawChart2() {
-                var data2 = google.visualization.arrayToDataTable({{ planning_poker_esforco|safe }});
-        
-                var options2 = {
-                  chart: {
-                    title: 'Dados dos itens de Backlog',
-                    subtitle: 'Quantidade de tarefas dado Esforço Previsto',
-                  },
-                  backgroundColor: '#FFFFFF',
-                  bars: 'horizontal' 
-                };
-        
-                var chart2 = new google.charts.Bar(document.getElementById('barchart_material2'));
-        
-                chart2.draw(data2, google.charts.Bar.convertOptions(options2));
-              }
-        </script>
-        
-        
-        <script type="text/javascript">
-            google.charts.load("current", {packages:["corechart"]});
-            google.charts.setOnLoadCallback(drawChart3);
-            function drawChart3() {
-              var data3 = google.visualization.arrayToDataTable({{ decisoes_resolvidas|safe }});
-        
-              var options3 = {
-                title: 'My Daily Activities',
-                is3D: true,
-              };
-        
-              var chart3 = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-              chart.draw(data3, options3);
-            }
-          </script>
           
+            var data2 = google.visualization.arrayToDataTable({{ planning_poker_esforco|safe }});
+    
+            var options2 = {
+              chart: {
+                title: 'Dados dos itens de Backlog',
+                subtitle: 'Quantidade de tarefas dado Esforço Previsto',
+              },
+              backgroundColor: '#FFFFFF',
+              bars: 'horizontal' 
+            };
+    
+            var chart2 = new google.charts.Bar(document.getElementById('barchart_material2'));
+    
+            chart2.draw(data2, google.charts.Bar.convertOptions(options2));
+          }
+
+        </script>
+        
       </head>
     <body>
         <div class="d-flex bg-dark-header" id="wrapper">
@@ -149,23 +128,49 @@
                     
                     
                         </div>
+
+                        <div class="card-single">  
+                    
+                          <div>
+                  
+                              <h4 class="text-light">Decisões Pendentes</h4>
+                              {% if decisao_pendente == "Sim" %}
+                              <span class="text-success">{{ decisao_pendente }}</span>
+                              {% endif %}
+                  
+                              {% if decisao_pendente == "Não" %}
+                              <span class="text-warning">{{ decisao_pendente }}</span>
+                              {% endif %}
+                  
+                          </div>
+                          <div> 
+                              <span class="las la-clipboard-lis"></span>
+                          </div>
+                  
+                  
+                      </div>
                     </div>
                     
                     </br>
+
+                    <div class="card_view">
+
+                        <img alt="scrum_img" src={% static "assets/scrum_img.png" %} width="951" height="251">
+                    
+                    </div>
+
                     </br>
+                    <div class="card_view">
+
+                    <div id="barchart_material1" style="width: 700px; height: 300px;"></div>
+                    </br>
+                    </br>
+                    </div>
                     
                     <div class="card_view">
-                    
-                      <div id="barchart_material1" style="width: 700px; height: 300px;"></div>
-                      </br>
-                      </br>
-                    
-                      <div id="barchart_material2" style="width: 700px; height: 300px;"></div>
-                      </br>
-                    
-                      </br>
-                      <div id="piechart_3d" style="width: 700px; height: 300px;"></div>
-                    
+                    <div id="barchart_material2" style="width: 700px; height: 300px;"></div>
+                    </br>
+                    </br>
                     </div>
                     
                     </br>

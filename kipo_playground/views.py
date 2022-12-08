@@ -264,10 +264,6 @@ def welcome(request):
 
                 # ---------------------
 
-                decisoes_resolvidas = [["Status", "Quantidade"], 
-                                        ["Resolvido", 0],
-                                        ["Pendente", 0]]
-                
                 decisoes = kiposcrum["DO__Decision"]. instances()
 
                 # resolvido = 1
@@ -281,13 +277,14 @@ def welcome(request):
 
                     
                     if "0" in status:
-                        decisoes_resolvidas[1][1] = decisoes_resolvidas[1][1] + 1 
+                        decisao_pendente = "Não"
                     else:
-                        decisoes_resolvidas[2][1] = decisoes_resolvidas[2][1] + 1
+                        decisao_pendente = "Sim"
+                        break
 
 
                 # ---------------------
-
+                
                 status = "OK!"
 
         except:
@@ -299,7 +296,7 @@ def welcome(request):
 
             myworld.close()
         
-        context = {"lista_dados_qtd": lista_dados_qtd_fim, "planning_poker_esforco": planning_poker_esforco, "decisoes_resolvidas": decisoes_resolvidas}
+        context = {"lista_dados_qtd": lista_dados_qtd_fim, "planning_poker_esforco": planning_poker_esforco, "decisao_pendente": decisao_pendente}
         request.session['status'] = status
         return render(request, 'welcome_graficos.html', context)
 
@@ -1652,7 +1649,9 @@ def decision_select(request):
     list_status_problema = []
     
     qntd_decisoes_reais = 0
-    
+    problemas_resolvidos = 0
+    problemas_em_aberto = 0
+
     # OWLREADY2
     try:
             
@@ -1702,10 +1701,12 @@ def decision_select(request):
                         if str(lista_instancias[i].StatusProblemaResolvido.pop(0)) == "0":
                             
                             list_status_problema.append("Aberto")
+                            problemas_em_aberto = problemas_em_aberto + 1
                             
                         else:
                             
                             list_status_problema.append("Resolvido")
+                            problemas_resolvidos = problemas_resolvidos + 1
                             
                     
                     else:
@@ -1737,7 +1738,7 @@ def decision_select(request):
     request.session['num_inst'] = num_inst
     request.session['status'] = status
         
-    context = {"objetos_final": objetos_final}
+    context = {"objetos_final": objetos_final, "problemas_em_aberto": problemas_em_aberto, "problemas_resolvidos": problemas_resolvidos}
     return render(request, 'seleciona_decisao.html', context)
 
 
