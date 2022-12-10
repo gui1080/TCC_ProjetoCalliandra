@@ -349,6 +349,7 @@ def main():
         kiposcrum["definicao_materia_destaque_de_setembro" + id_unico].ontoscrum__contains.append(kiposcrum["lancamento_final_de_setembro" + id_unico])
         kiposcrum["definicao_materia_destaque_de_setembro" + id_unico].EstimatedBusinessValue.append( 13 )
         kiposcrum["definicao_materia_destaque_de_setembro" + id_unico].StatusItemResolvido.append( 0 )
+        kiposcrum["definicao_materia_destaque_de_setembro" + id_unico].TaskDescription.append( "Gestão de Conteúdo" )
 
 
         kiposcrum["backlog_de_desenvolvimento_redacao_jornalista_2021" + id_unico].ontoscrum__contains.append(kiposcrum["escolha_de_BD_a_ser_usado" + id_unico])
@@ -356,6 +357,7 @@ def main():
         kiposcrum["escolha_de_BD_a_ser_usado" + id_unico].ontoscrum__contains.append(kiposcrum["ao_final_de_setembro" + id_unico])
         kiposcrum["escolha_de_BD_a_ser_usado" + id_unico].EstimatedBusinessValue.append( 5 )
         kiposcrum["escolha_de_BD_a_ser_usado" + id_unico].StatusItemResolvido.append( 1 )
+        kiposcrum["escolha_de_BD_a_ser_usado" + id_unico].TaskDescription.append( "Logística" )
 
 
         kiposcrum["backlog_de_desenvolvimento_redacao_jornalista_2021" + id_unico].ontoscrum__contains.append(kiposcrum["executar_obra_departamento_de_ti" + id_unico])
@@ -363,6 +365,7 @@ def main():
         kiposcrum["executar_obra_departamento_de_ti" + id_unico].ontoscrum__contains.append(kiposcrum["antes_de_decidir_qual_BD_sera_usado" + id_unico])
         kiposcrum["executar_obra_departamento_de_ti" + id_unico].EstimatedBusinessValue.append( 2 )
         kiposcrum["executar_obra_departamento_de_ti" + id_unico].StatusItemResolvido.append( 1 )
+        kiposcrum["executar_obra_departamento_de_ti" + id_unico].TaskDescription.append( "Logística" )
 
 
         kiposcrum["backlog_de_desenvolvimento_redacao_jornalista_2021" + id_unico].ontoscrum__contains.append(kiposcrum["definir_contrato_de_patrocinio_com_nova_empresa" + id_unico])
@@ -370,6 +373,7 @@ def main():
         kiposcrum["definir_contrato_de_patrocinio_com_nova_empresa" + id_unico].ontoscrum__contains.append(kiposcrum["executar_ou_abandonar_contrato_ate_final_2021" + id_unico])
         kiposcrum["definir_contrato_de_patrocinio_com_nova_empresa" + id_unico].EstimatedBusinessValue.append( 8 )
         kiposcrum["definir_contrato_de_patrocinio_com_nova_empresa" + id_unico].StatusItemResolvido.append( 1 )
+        kiposcrum["definir_contrato_de_patrocinio_com_nova_empresa" + id_unico].TaskDescription.append( "Financeiro" )
 
         # -------------------------------
 

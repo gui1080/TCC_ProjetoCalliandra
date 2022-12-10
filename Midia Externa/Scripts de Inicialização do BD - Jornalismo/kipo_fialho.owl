@@ -783,6 +783,9 @@
     <Declaration>
         <DataProperty IRI="#StatusProblemaResolvido"/>
     </Declaration>
+    <Declaration>
+        <DataProperty IRI="#TaskDescription"/>
+    </Declaration>
     <EquivalentClasses>
         <Class IRI="#BPO__Association"/>
         <ObjectIntersectionOf>
@@ -2989,6 +2992,14 @@
         <DataProperty IRI="#StatusProblemaResolvido"/>
         <Class IRI="#DO__Decision"/>
     </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#TaskDescription"/>
+        <Class IRI="#Product_Backlog_Item"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+        <Class IRI="#Product_Backlog_Item"/>
+    </DataPropertyDomain>
     <DataPropertyRange>
         <DataProperty IRI="#EstimatedBusinessValue"/>
         <Datatype abbreviatedIRI="xsd:unsignedInt"/>
@@ -3008,6 +3019,10 @@
     <DataPropertyRange>
         <DataProperty IRI="#StatusProblemaResolvido"/>
         <Datatype abbreviatedIRI="xsd:boolean"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#TaskDescription"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
     </DataPropertyRange>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="rdfs:comment"/>

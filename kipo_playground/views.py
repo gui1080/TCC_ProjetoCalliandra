@@ -8,6 +8,14 @@ Essas views são geridas com endereços por meio do arquivo 'urls.py'.
 
 """
 
+'''
+Product_Backlog_Item -> nova propriedade 
+
+"TaskDescription"
+
+'''
+
+
 # fazer tela de alocar pessoas para tarefas
 
 # posso alocar a pessoa com:
@@ -1376,10 +1384,20 @@ def ver_backlog_produto(request):
             print("Contains" + str(contains))
             num_inst = num_inst + len(contains)
             
-            print("--------")
-            print("business value")
-            #print(str(kiposcrum['tela_login9142'].EstimatedBusinessValue))
-            print("--------")
+
+            # informações para dashboard de conteudo da tarefa
+            tipo_de_conteudo = [["Tipo de Tarefa", "Quantidade"],
+                                ["Financeiro", 0],
+                                ["Logística", 0],
+                                ["Gestão de Conteúdo", 0]]
+
+            for i in range(len(contains)):
+                descricao_tag = str(contains[i].TaskDescription.pop(0))
+                
+                for j in range(len(tipo_de_conteudo)):
+                    if descricao_tag == str(tipo_de_conteudo[j][0]):
+                        tipo_de_conteudo[j][1] = tipo_de_conteudo[j][1] + 1
+            
             
             # objeto_originator = transforma_objeto(originator)
             objeto_ismanagedby = transforma_objeto(ismanagedby)
@@ -1398,6 +1416,10 @@ def ver_backlog_produto(request):
         num_inst = "?"
         instancia_backlog = "Erro!"
         instancia = "Erro!" 
+        tipo_de_conteudo = [["Tipo de Tarefa", "Quantidade"],
+                                ["Financeiro", 0],
+                                ["Logística", 0],
+                                ["Gestão de Conteúdo", 0]]
         
         print("Falha de acesso!")
         
@@ -1409,7 +1431,7 @@ def ver_backlog_produto(request):
     request.session['num_prop_correlatas'] = num_prop_correlatas
     request.session['num_inst'] = str(num_inst)
     
-    context = {"instancia_backlog": instancia_backlog, "objeto_ismanagedby": objeto_ismanagedby, "objeto_contains": objeto_contains}
+    context = {"instancia_backlog": instancia_backlog, "objeto_ismanagedby": objeto_ismanagedby, "objeto_contains": objeto_contains, "tipo_de_conteudo": tipo_de_conteudo}
     
     return render(request, 'backlog_produto.html', context)
 
