@@ -30,6 +30,9 @@ ALLOWED_HOSTS = []
 
 CKEDITOR_BASEPATH = "/my_static/ckeditor/ckeditor/"
 
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+CKEDITOR_FILENAME_GENERATOR = 'utils.get_filename'
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,6 +45,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'kipo_playground', 
     'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -125,6 +129,11 @@ STATIC_ROOT = 'staticfiles'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'kipo_playground/static')
 ]
+
+MEDIA_URL = '/media/' 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'kipo_playground/media')
+
+STATIC_URL = os.path.join(BASE_DIR, 'kipo_playground/static/') 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

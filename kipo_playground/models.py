@@ -31,7 +31,7 @@ class MateriaJornalistica(models.Model):
     id = models.CharField(max_length=255, null=False, primary_key=True)
     titulo = models.CharField(max_length=255, null=False)
     #
-    texto = RichTextField(blank=True, null=True)
+    texto = RichTextField()
     
     #texto = models.CharField(max_length=255)
 
