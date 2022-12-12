@@ -58,6 +58,8 @@ urlpatterns = [
     path('alocar_pessoa/<str:instancia_pessoa>', views.alocar_pessoa),
     path('add_relacionamento/<str:instancia1>/<str:relacao>/<str:instancia2>', views.add_relacionamento),
     
-    path('add_materia/', views.add_materia), 
+    # matérias jornalisticas (funcionalidades particulares ao caso de estudo)
+    path('add_materia/', views.add_materia),
+    path('ver_materia/', views.ver_materias), 
 
 ]

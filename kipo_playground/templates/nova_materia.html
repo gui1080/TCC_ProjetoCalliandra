@@ -1,12 +1,16 @@
-{% load static %}
+{% extends 'welcome.html' %}
 
-<head>
-    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
-    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
-</head>
-<body>
+{% block content %}
+
+{% load crispy_forms_tags %} 
+
+<div>
+    
+    </br>
+
     <form action="" method="POST">
 
+        {% csrf_token %}
         {{ form.media }}
         {{ form.as_p }}
         
@@ -19,9 +23,10 @@
 
     </form>
 
+</div>
+
 </br>
 </br>
-</body>
 
 <a class="btn btn-primary" href="/kipo_playground/welcome">Voltar</a>
-
+{% endblock %}

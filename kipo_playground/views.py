@@ -38,10 +38,12 @@ from django.http import HttpResponse
 from django.template import Template, Context
 
 from .forms import novo_instancias_tipoForm, inserir_instancias_tipoForm, inserir_instancias_dada_classeForm, definir_status_backlogitem_Form, definir_obs_backlogitem_Form, definir_esforco_backlogitem_Form, MateriaJornalistica_Form
+from .models import MateriaJornalistica
 from owlready2 import *         # https://pypi.org/project/Owlready2/
 from os.path import exists
 import json 
 import sys 
+from random import randint
 
 # Comandos básicos
 # source venv/bin/activate
@@ -2277,8 +2279,23 @@ def add_materia(request):
         #seed = str(time.time())
         #id_unico = faz_id(seed)
         
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.id = randint(100000, 999999)
+            instance.save()
+            return redirect('/kipo_playground/welcome/')
         
 
         return redirect('/kipo_playground/welcome/')
         
     return render(request, 'nova_materia.html', context)
+
+def ver_materias(request):
+    
+    materias_jornalisticas = MateriaJornalistica.objects.all()
+
+    context = {"materias_jornalisticas": materias_jornalisticas}
+
+    print(materias_jornalisticas)
+
+    return render(request, 'ver_materia.html', context)
