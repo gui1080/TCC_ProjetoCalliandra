@@ -28,10 +28,16 @@ class MateriaJornalistica(models.Model):
         ('Notícia Regional', 'Notícia Regional')
     )
 
+    CKEDITOR_CONFIGS = {
+        'awesome_ckeditor': {
+            'toolbar': 'Basic',
+        },
+    }
+
     id = models.CharField(max_length=255, null=False, primary_key=True)
     titulo = models.CharField(max_length=255, null=False)
     #
-    texto = RichTextField()
+    texto = RichTextField(config_name='awesome_ckeditor')
     
     #texto = models.CharField(max_length=255)
 

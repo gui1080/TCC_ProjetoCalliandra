@@ -1,24 +1,27 @@
 {% load static %}
 
-<div style="padding:20px;">
+<head>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+</head>
+<body>
     <form action="" method="POST">
 
-        {% csrf_token %}
         {{ form.media }}
         {{ form.as_p }}
         
 
         </br>
 
-        <input class="btn btn-primary" type="submit"></input>
+        <input type="submit"></input>
 
         </br>
 
     </form>
-</div>
 
 </br>
 </br>
+</body>
 
 <a class="btn btn-primary" href="/kipo_playground/welcome">Voltar</a>
 

@@ -28,9 +28,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-CKEDITOR_BASEPATH = "/my_static/ckeditor/ckeditor/"
+CKEDITOR_BASEPATH = "/staticfiles/ckeditor/ckeditor/"
 
-CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_UPLOAD_PATH = "/kipo_playground/uploads/"
 
 CKEDITOR_FILENAME_GENERATOR = 'utils.get_filename'
 # Application definition
@@ -131,7 +131,7 @@ STATICFILES_DIRS = [
 ]
 
 MEDIA_URL = '/media/' 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'kipo_playground/media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'kipo_playground/media/')
 
 STATIC_URL = os.path.join(BASE_DIR, 'kipo_playground/static/') 
 
