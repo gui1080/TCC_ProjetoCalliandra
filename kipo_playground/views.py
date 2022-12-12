@@ -2281,7 +2281,7 @@ def add_materia(request):
         
         if form.is_valid():
             instance = form.save(commit=False)
-            instance.id = randint(100000, 999999)
+            #instance.id = randint(100000, 999999)
             instance.save()
             return redirect('/kipo_playground/welcome/')
         

@@ -12,6 +12,12 @@ Para criar ambiente virtual de Python3, execute:
 
 > python3 -m venv venv
 
+## Super user para admin
+
+guilherme_teste
+teste@gmail.com
+12345
+
 ## Dependências
 
 O script *./dependencias.sh* baixa dependências e executa o programa. 
