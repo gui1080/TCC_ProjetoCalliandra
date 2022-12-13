@@ -61,5 +61,6 @@ urlpatterns = [
     # matérias jornalisticas (funcionalidades particulares ao caso de estudo)
     path('add_materia/', views.add_materia),
     path('ver_materia/', views.ver_materias), 
+    path('ler_materia/<str:id_materia>', views.ler_materia), 
 
 ]

@@ -2273,17 +2273,22 @@ def add_materia(request):
     
     if request.method == 'POST':
         
-        if 'input_dado' in request.session:
-            del request.session['input_dado']
-        
-        #seed = str(time.time())
-        #id_unico = faz_id(seed)
-        
+        form = MateriaJornalistica_Form(request.POST)
+        # If data is valid, proceeds to create a new post
         if form.is_valid():
-            instance = form.save(commit=False)
-            #instance.id = randint(100000, 999999)
-            instance.save()
-            return redirect('/kipo_playground/welcome/')
+            post = form.save(commit=False)
+            #post.author = request.user
+            post.save()
+
+            response = {
+                'id': post.id,
+                'texto': post.texto,
+            }
+            print(response)
+            print(post.texto)
+
+
+        return redirect('/kipo_playground/welcome/')
         
 
         return redirect('/kipo_playground/welcome/')
@@ -2294,8 +2299,17 @@ def ver_materias(request):
     
     materias_jornalisticas = MateriaJornalistica.objects.all()
 
+    quantidade_materias = str(len(materias_jornalisticas))
+
     context = {"materias_jornalisticas": materias_jornalisticas}
 
     print(materias_jornalisticas)
 
+    request.session['quantidade_materias'] = quantidade_materias
     return render(request, 'ver_materia.html', context)
+
+def ler_materia(request):
+    
+
+    return render(request, 'ler_materia.html')
+
