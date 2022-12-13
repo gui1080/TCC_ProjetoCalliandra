@@ -33,7 +33,7 @@ Product_Backlog_Item -> nova propriedade
 
 from multiprocessing import context
 from typing import final
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.template import Template, Context
 
@@ -2308,8 +2308,14 @@ def ver_materias(request):
     request.session['quantidade_materias'] = quantidade_materias
     return render(request, 'ver_materia.html', context)
 
-def ler_materia(request):
-    
+def ler_materia(request, id_materia):
+
+    objeto_recuperado = get_object_or_404(MateriaJornalistica, id=id_materia)
+
+    print(objeto_recuperado.texto)
+
+    context = {"texto": str(objeto_recuperado.texto), "titulo": str(objeto_recuperado.titulo)}
 
     return render(request, 'ler_materia.html')
 
+# ------------------------------------------------------------

@@ -6,9 +6,12 @@ Foi feito um modelo para uma nova instância de Sprint (campos 'nome' e 'observa
 
 
 """
-
 from django.db import models
 from ckeditor.fields import RichTextField
+import random
+
+def random_string():
+    return str(random.randint(1000000, 99999999))
 
 # Create your models here.
 
@@ -34,7 +37,7 @@ class MateriaJornalistica(models.Model):
         },
     }
 
-    id = models.CharField(max_length=255, null=False, primary_key=True)
+    id = models.CharField(max_length=255, primary_key=True, default=random_string())
     titulo = models.CharField(max_length=255, null=False)
     #
     texto = RichTextField(config_name='awesome_ckeditor')
