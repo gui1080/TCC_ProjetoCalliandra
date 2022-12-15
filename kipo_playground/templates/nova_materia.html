@@ -4,7 +4,6 @@
 
 {% load crispy_forms_tags %} 
 
-<div>
     
     </br>
 
@@ -12,7 +11,7 @@
 
         {% csrf_token %}
         {{ form.media }}
-        {{ form.titulo.as_p }}
+        {{ form.as_p }}
         
 
         </br>
@@ -23,7 +22,6 @@
 
     </form>
 
-</div>
 
 </br>
 </br>
