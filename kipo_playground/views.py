@@ -1214,7 +1214,7 @@ def ver_sprint_backlog(request, instancia_sprint):
             
         
         sync_reasoner()
-     
+
         num_inst = 0
     
         
@@ -1226,6 +1226,13 @@ def ver_sprint_backlog(request, instancia_sprint):
             
             instancia_backlog_sprint = str(kiposcrum[instancia].ontoscrum__has_input.pop(0))
             
+            if not instancia_backlog_sprint:
+
+                # criando um backlog para essa sprint
+                kiposcrum["Sprint_Backlog"]("backlog_para_" + instancia)
+                kiposcrum["backlog_para_" + instancia].Nome.append("backlog_para_" + instancia)
+                kiposcrum["backlog_para_" + instancia].Observacao.append("Gerado automaticamente ao se averiguar que n existia instancia previa!")
+
             backlog_sprint = instancia_backlog_sprint[5:]
             
             print(backlog_sprint)
