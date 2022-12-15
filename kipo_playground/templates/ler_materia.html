@@ -3,13 +3,26 @@
 {% block content %}
 
 </br>
+
+<h3 class="mt-4 text-light">{{ objeto_recuperado.titulo|safe }}</h3>
+
 </br>
 
-{{ titulo|safe }}
+<h6 class="mt-4 text-light">{{ objeto_recuperado.texto|safe }}</h6>
 
 </br>
 
-{{ texto|safe }}
+<h6 class="mt-4 text-light">Sutien: {{ objeto_recuperado.sutien|safe }}</h6>
 
-<a class="btn btn-primary" href="/kipo_playground/welcome">Voltar</a>
+</br>
+
+<h6 class="mt-4 text-light">Editores: {{ objeto_recuperado.editores|safe }}</h6>
+
+</br>
+
+<h6 class="mt-4 text-light">Autores: {{ objeto_recuperado.autores|safe }}</h6>
+
+</br>
+
+<a class="btn btn-primary" href="/kipo_playground/ver_materia/">Voltar</a>
 {% endblock %}

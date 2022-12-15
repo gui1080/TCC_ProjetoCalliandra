@@ -2317,11 +2317,11 @@ def ler_materia(request, id_materia):
 
     objeto_recuperado = get_object_or_404(MateriaJornalistica, id=id_materia)
 
-    print(objeto_recuperado.texto)
+    print(objeto_recuperado)
 
-    context = {"texto": str(objeto_recuperado.texto), "titulo": str(objeto_recuperado.titulo)}
+    context = {"objeto_recuperado": objeto_recuperado}
 
-    return render(request, 'ler_materia.html')
+    return render(request, 'ler_materia.html', context)
 
 def editar_materia(request, id_materia):
 
