@@ -62,5 +62,6 @@ urlpatterns = [
     path('add_materia/', views.add_materia),
     path('ver_materia/', views.ver_materias), 
     path('ler_materia/<str:id_materia>', views.ler_materia), 
+    path('editar_materia/<str:id_materia>', views.editar_materia), 
 
 ]

@@ -2286,10 +2286,8 @@ def add_materia(request):
             }
             print(response)
             print(post.texto)
-
-
-        return redirect('/kipo_playground/welcome/')
-        
+            return redirect('/kipo_playground/welcome/')
+        print("Erro, formulario inválido!")
 
         return redirect('/kipo_playground/welcome/')
         
@@ -2317,5 +2315,31 @@ def ler_materia(request, id_materia):
     context = {"texto": str(objeto_recuperado.texto), "titulo": str(objeto_recuperado.titulo)}
 
     return render(request, 'ler_materia.html')
+
+def editar_materia(request, id_materia):
+
+    instance = get_object_or_404(MateriaJornalistica, id=id_materia)
+
+    form = MateriaJornalistica_Form(request.POST or None, instance=instance)
+
+    context = {'form':form}
+    
+    if form.is_valid():
+        post = form.save(commit=False)
+        #post.author = request.user
+        post.save()
+
+        response = {
+            'id': post.id,
+            'texto': post.texto,
+        }
+        print(response)
+        print(post.texto)
+        return redirect('/kipo_playground/welcome/')
+    #print("Erro, formulario inválido!")
+
+        
+    return render(request, 'nova_materia.html', context)
+
 
 # ------------------------------------------------------------
