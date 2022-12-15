@@ -664,6 +664,15 @@ progress {
   margin-left: auto;
 }
 
+.div_fadein{
+  animation: fadeIn 1s;
+} 
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 @media (min-width: 576px) {
   .container-sm, .container {
     max-width: 540px;
