@@ -1753,6 +1753,58 @@ def adicionar_relacionamento_insts_antigas(request, instancia_A, relacionamento,
 
     return render(request, 'escolher_instancia_previa.html', context)
 
+
+def executar_relacionamento_insts_antigas(request, instancia_A, relacionamento, instancia_B):
+    
+    if "kipo." in instancia_A:
+        instancia_A = str(instancia_A)[5:]
+
+    if "kipo." in instancia_B:
+        instancia_B = str(instancia_B)[5:]
+
+    try:
+            
+        myworld = World(filename='backup.db', exclusive=False)
+            
+        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+        kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
+            
+        
+        sync_reasoner()
+        
+        
+        with kiposcrum:
+
+            if relacionamento == "ontoscrum__is_managed_by":
+                kiposcrum[instancia_A].ontoscrum__is_managed_by.append(kiposcrum[instancia_B])
+                status = "OK!"
+                
+            else:
+            
+                status = "Erro!"
+
+    except:
+
+        status = "Erro!"
+
+        print("---------------------------")
+        print("Falha de acesso!")
+        print(sys.exc_info()[0])
+        print(sys.exc_info()[1])
+        print(sys.exc_info()[2])
+        
+        print("---------------------------")
+    
+    finally:
+
+        myworld.close() # só fecha o bd, deixa as instâncias no bd
+
+    context = {"instancia_A": instancia_A, "relacionamento": relacionamento, "instancia_B": instancia_B}
+
+    request.session['status'] = status 
+    return render(request, 'instancia_previa_tela_ok.html', context)
+
+
 # !SELECIONA DECISAO
 # !------------------------------------------------------------
 

@@ -49,32 +49,36 @@
 <div class="recent-grid">
     <div class="projects">
         <div class="card">
+
             <div class="card-header">
                 <h2 class="text-light">Instâncias</h2>
             </div>
 
             <div class="card-body">
+
                 <table width="100%">
                     <thead>
                         <tr>
-                            <td>Instâncias/td>
+                            <td>Instâncias</td>
                             <td>Nomes</td>
                             <td>Observações</td>
                             <td>Criar relacionamento</td>
                         </tr>
                     </thead>
                     <tbody> 
-                        {% for obj in objetos_sprints %}
+                        {% for obj in objeto_final %}
                         <tr>
                             <td>{{ obj.instancia }}</td>
                             <td>{{ obj.nome }}</td>
                             <td>{{ obj.obs }}</td>
-                            <td>  <a class="btn-warning" href="/kipo_playground/welcome/">placeholder</a>  </td>
+                            <td> <a class="btn-warning" href="/kipo_playground/executar_relacionamento_insts_antigas/{{ request.session.instancia }}/{{ request.session.relacionamento }}/{{ obj.instancia }}">Alocar!</a> </td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
+
             </div>
+
         </div>
     </div>
 </div>
