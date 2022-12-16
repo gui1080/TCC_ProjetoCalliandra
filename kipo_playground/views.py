@@ -314,6 +314,10 @@ def sobre(request):
     
     return render(request, 'sobre.html')
 
+def tutorial(request):
+    
+    return render(request, 'tutorial.html')
+
 # !TESTE DE ACESSO AO BANCO DE DADOS
 # !------------------------------------------------------------
 
