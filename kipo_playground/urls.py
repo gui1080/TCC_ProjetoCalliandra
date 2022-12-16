@@ -46,6 +46,9 @@ urlpatterns = [
     path('inserir_obs_tela_ok/', views.inserir_obs_tela_ok),
     path('mudar_status/<str:item>', views.mudar_status), 
     path('mudar_esforco/<str:item>', views.mudar_esforco),
+
+    # Add instancia pre existente
+    path('adicionar_relacionamento_insts_antigas/<str:instancia_A>/<str:relacionamento>/<str:classe_da_nova_inst>', views.adicionar_relacionamento_insts_antigas),
     
     # visualização da decisão
     path('decision_select/', views.decision_select),

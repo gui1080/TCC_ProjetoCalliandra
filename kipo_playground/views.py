@@ -1666,6 +1666,93 @@ def mudar_esforco(request, item):
     
     return render(request, 'item_inserir_esforco.html', context)
 
+# !ADD INSTANCIA PRE-EXISTENTE
+# !------------------------------------------------------------
+
+
+def adicionar_relacionamento_insts_antigas(request, instancia_A, relacionamento, classe_da_nova_inst):
+
+    # essa funçao pega uma instancia_A, relacionamento e uma classe (3 argumentos)
+    # para entao fazer 
+    # instancia_A -> relacionamento -> instancia_B
+    # instancia_B deve ser selecionada entre opcoes de "classe_nova_inst"
+    # Na visualizacao o usuario marca qual vai ser a instancia_B e chama nova funcao
+
+    # Nova funcao faz o relacionamento e redireciona o usuario para uma tela de "ok"
+    # tela de ok confirma o nome das instancias e o relacionamento!
+
+    if 'num_inst' in request.session:
+        del request.session['num_inst']
+            
+    if 'status' in request.session:
+        del request.session['status']
+
+    if 'instancia' in request.session:
+        del request.session['instancia']
+    if 'classe' in request.session:
+        del request.session['classe']
+    if 'relacionamento' in request.session:
+        del request.session['relacionamento']
+
+
+
+    if "kipo." in str(instancia_A):
+        instancia_A = str(instancia_A)[5:]
+
+    try:
+            
+        myworld = World(filename='backup.db', exclusive=False)
+            
+        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+        kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
+            
+        
+        sync_reasoner()
+        
+        
+        with kiposcrum:
+
+            lista_instancias = kiposcrum[str(classe_da_nova_inst)].instances()
+            num_inst = len(lista_instancias)
+
+            print("\n\n\n\n")
+            print("Classe")
+            print(str(classe_da_nova_inst))
+            print("Quantidade de instancias")
+            print(str(len(lista_instancias)))
+            print("\n\n\n\n")
+
+            objeto_instancias = transforma_objeto(lista_instancias)
+            status = "OK!"
+
+    except:
+
+        status = "Erro!"
+        num_inst = "0"
+
+        print("---------------------------")
+        print("Falha de acesso!")
+        print(sys.exc_info()[0])
+        print(sys.exc_info()[1])
+        print(sys.exc_info()[2])
+        
+        print("---------------------------")
+    
+    finally:
+
+        myworld.close() # só fecha o bd, deixa as instâncias no bd
+
+    context = {"objeto_final":objeto_instancias}
+
+    request.session['status'] = status   # "OK!" ou "Erro!"
+    request.session['num_inst'] = num_inst   # String de numero
+
+    request.session['instancia'] = str(instancia_A)   
+    request.session['classe'] = str(classe_da_nova_inst)   
+    request.session['relacionamento'] = str(relacionamento)   
+
+    return render(request, 'escolher_instancia_previa.html', context)
+
 # !SELECIONA DECISAO
 # !------------------------------------------------------------
 
