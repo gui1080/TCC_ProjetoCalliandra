@@ -1782,7 +1782,8 @@ def executar_relacionamento_insts_antigas(request, instancia_A, relacionamento, 
             else:
             
                 status = "Erro!"
-
+            myworld.save()
+            
     except:
 
         status = "Erro!"
