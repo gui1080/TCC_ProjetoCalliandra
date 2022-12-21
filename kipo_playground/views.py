@@ -1771,6 +1771,24 @@ def executar_relacionamento_insts_antigas(request, instancia_A, relacionamento, 
             
         
         sync_reasoner()
+
+        '''
+
+        ontoscrum__is_managed_by
+        ontoscrum__during
+        ontoscrum__has_input
+        ontoscrum__has_output
+        ontoscrum__is_executed_by
+        ontoscrum__simultaneously
+        ontoscrum__performs
+        INV_ontoscrum__during
+        INV_influences
+        INV_composes
+        INV_threatens
+        considers
+        ontoscrum__contains
+        
+        '''
         
         
         with kiposcrum:
@@ -1778,10 +1796,59 @@ def executar_relacionamento_insts_antigas(request, instancia_A, relacionamento, 
             if relacionamento == "ontoscrum__is_managed_by":
                 kiposcrum[instancia_A].ontoscrum__is_managed_by.append(kiposcrum[instancia_B])
                 status = "OK!"
-                
+            
+            elif relacionamento == "ontoscrum__during":
+                kiposcrum[instancia_A].ontoscrum__during.append(kiposcrum[instancia_B])
+                status = "OK!"
+
+            elif relacionamento == "ontoscrum__has_input":
+                kiposcrum[instancia_A].ontoscrum__has_input.append(kiposcrum[instancia_B])
+                status = "OK!"
+            
+            elif relacionamento == "ontoscrum__has_output":
+                kiposcrum[instancia_A].ontoscrum__has_output.append(kiposcrum[instancia_B])
+                status = "OK!"
+            
+            elif relacionamento == "ontoscrum__is_executed_by":
+                kiposcrum[instancia_A].ontoscrum__is_executed_by.append(kiposcrum[instancia_B])
+                status = "OK!"
+            
+            elif relacionamento == "ontoscrum__simultaneously":
+                kiposcrum[instancia_A].ontoscrum__simultaneously.append(kiposcrum[instancia_B])
+                status = "OK!"
+            
+            elif relacionamento == "ontoscrum__performs":
+                kiposcrum[instancia_A].ontoscrum__performs.append(kiposcrum[instancia_B])
+                status = "OK!"
+            
+            elif relacionamento == "INV_ontoscrum__during":
+                kiposcrum[instancia_A].INV_ontoscrum__during.append(kiposcrum[instancia_B])
+                status = "OK!"
+            
+            elif relacionamento == "INV_influences":
+                kiposcrum[instancia_A].INV_influences.append(kiposcrum[instancia_B])
+                status = "OK!"
+            
+            elif relacionamento == "INV_composes":
+                kiposcrum[instancia_A].INV_composes.append(kiposcrum[instancia_B])
+                status = "OK!"
+            
+            elif relacionamento == "INV_threatens":
+                kiposcrum[instancia_A].INV_threatens.append(kiposcrum[instancia_B])
+                status = "OK!"
+            
+            elif relacionamento == "considers":
+                kiposcrum[instancia_A].considers.append(kiposcrum[instancia_B])
+                status = "OK!"
+            
+            elif relacionamento == "ontoscrum__contains":
+                kiposcrum[instancia_A].ontoscrum__contains.append(kiposcrum[instancia_B])
+                status = "OK!"
+            
             else:
             
                 status = "Erro!"
+            
             myworld.save()
             
     except:
