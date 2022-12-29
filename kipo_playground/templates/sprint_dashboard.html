@@ -109,6 +109,43 @@
     <div class="projects">
         <div class="card">
             <div class="card-header">
+                <h2 class="text-light">O que termina o TCC</h2>
+            </div>
+
+            <div class="card-body">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <td>Classes</td>
+                            <td>Instâncias</td>
+                            <td>Nomes</td>
+                            <td>Observações</td>
+                            <td>Deletar</td>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        {% for obj in objeto_finishes %}
+                        <tr>
+                            <td>{{ obj.classe_inst }}</td>
+                            <td>{{ obj.instancia }}</td>
+                            <td>{{ obj.nome }}</td>
+                            <td>{{ obj.obs }}</td>
+                            <td>  <a class="btn-warning" href="/kipo_playground/retirar_instancia/{{obj.instancia}}/{{obj.classe_inst}}">Deletar!</a>  </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</br>
+
+<div class="recent-grid">
+    <div class="projects">
+        <div class="card">
+            <div class="card-header">
                 <h2 class="text-light">Inputs</h2>
             </div>
 
@@ -276,6 +313,9 @@
 </br>
 </br>
 <a class="btn btn-primary" href="/kipo_playground/adicionar_relacionamento_insts_antigas/{{ instancia_sprint }}/ontoscrum__simultaneously/scrum_Daily">Alocar Trabalho Diário existente</a>
+</br>
+</br>
+<a class="btn btn-primary" href="/kipo_playground/adicionar_relacionamento_insts_antigas/{{ instancia_sprint }}/INV_ontoscrum__finishes/scrum_Sprint_Review_Meeting">Alocar Sprint Review existente</a>
 
 </br>
 </br>

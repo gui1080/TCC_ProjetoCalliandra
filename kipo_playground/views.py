@@ -799,12 +799,20 @@ def sprint_dashboard(request, instancia_sprint):
             print("Simultaneo " + str(INV_simultaneo))
             num_inst = num_inst + len(INV_simultaneo)
             
+            invfinishes = kiposcrum[instancia].INV_ontoscrum__finishes
+            print("Simultaneo " + str(invfinishes))
+            num_inst = num_inst + len(invfinishes)
+            
+
+            # lista de items que terminam a sprint
+
             objeto_during = transforma_objeto(during)
             objeto_has_input = transforma_objeto(has_input)
             objeto_has_output = transforma_objeto(has_output)
             objeto_has_isexecutedby = transforma_objeto(has_isexecutedby)
             objeto_INV_simultaneo = transforma_objeto(INV_simultaneo)
-            
+            objeto_finishes = transforma_objeto(invfinishes)
+
             status = "OK!" 
         
     except:
@@ -828,7 +836,7 @@ def sprint_dashboard(request, instancia_sprint):
     request.session['num_inst'] = str(num_inst)
     
     context = {"instancia_sprint":instancia_sprint , "objetos_during":objeto_during, "objetos_has_input":objeto_has_input, "objetos_has_output":objeto_has_output,
-                "objetos_has_isexecutedby":objeto_has_isexecutedby, "objetos_INV_simultaneo":objeto_INV_simultaneo}
+                "objetos_has_isexecutedby":objeto_has_isexecutedby, "objetos_INV_simultaneo":objeto_INV_simultaneo, "objeto_finishes": objeto_finishes}
     
     return render(request, 'sprint_dashboard.html', context)
     
@@ -2207,6 +2215,65 @@ def gestao_artefatos(request):
     #return render(request, 'artefatos_dashboard.html')
 
     return render(request, 'artefatos_dashboard.html', context)
+
+def detalhar_artefato(request, instancia_artefato, classe_artefato):
+
+    if 'status' in request.session:
+        del request.session['status']
+        
+    if 'num_inst' in request.session:
+        del request.session['num_inst']
+    
+    if "kipo." in instancia_artefato:
+        instancia_artefato = str(instancia_artefato)[5:]
+    if "kipo." in classe_artefato:
+        classe_artefato = str(classe_artefato)[5:]
+
+    # OWLREADY2
+    try:
+            
+        myworld = World(filename='backup.db', exclusive=False)
+            
+        # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
+        kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
+            
+        
+        sync_reasoner()
+    
+    
+        with kiposcrum:
+
+            status = "OK!"
+
+            if str(kiposcrum[instancia_artefato].Observacao)[0] == '[':
+                observacao =  str(kiposcrum[instancia_artefato].Observacao)[2:-2]
+            else:
+                observacao =  str(kiposcrum[instancia_artefato].Observacao)
+            
+            if not observacao:
+                print("N existe observacao nessa instancia!")
+                observacao = "Observação indefinida!"
+
+            print("----------------------------")
+            print(observacao)
+
+    except:
+            
+        status = "Erro!" 
+        observacao = "Desconhecido"
+        
+        print("Falha de acesso!")
+        
+    
+    finally:
+        
+        myworld.close() 
+    
+    request.session['status'] = status   # "OK!" ou "Erro!"
+    request.session['comentario_artefato'] = observacao
+    request.session['instancia'] = str(instancia_artefato)
+
+    return render(request, 'comentario_artefato.html')
 
 def alocar_para_tarefa(request, instancia_artefato):
     

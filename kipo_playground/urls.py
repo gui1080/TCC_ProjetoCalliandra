@@ -57,6 +57,7 @@ urlpatterns = [
     path('mudar_decisao_status/<str:instancia_decisao>', views.mudar_decisao_status),
     
     path('gestao_artefatos/', views.gestao_artefatos),
+    path('detalhar_artefato/<str:instancia_artefato>/<str:classe_artefato>', views.detalhar_artefato),
     path('alocar_para_tarefa/<str:instancia_artefato>', views.alocar_para_tarefa),
     
     path('gestao_pessoas/', views.gestao_pessoas),
