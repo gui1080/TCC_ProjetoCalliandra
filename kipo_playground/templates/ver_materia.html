@@ -36,6 +36,7 @@
                             <td>ID</td>
                             <td>Título</td>
                             <td>Categoria</td>
+                            <td>Status</td>
                             <td>Ler</td>
                             <td>Editar</td>
                         </tr>
@@ -46,6 +47,7 @@
                             <td>{{ materia.id|safe }}</td>
                             <td>{{ materia.titulo|safe }}</td>
                             <td>{{ materia.main_keyword|safe }}</td>
+                            <td>{{ materia.status|safe }}</td>
                             <td>  <a class="btn-warning" href="/kipo_playground/ler_materia/{{materia.id}}">Ler!</a>  </td>
                             <td>  <a class="btn-warning" href="/kipo_playground/editar_materia/{{materia.id}}">Editar!</a>  </td>
                         </tr>

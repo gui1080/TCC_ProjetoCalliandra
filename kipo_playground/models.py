@@ -9,6 +9,7 @@ Foi feito um modelo para uma nova instância de Sprint (campos 'nome' e 'observa
 from django.db import models
 from ckeditor.fields import RichTextField
 import random
+from datetime import date
 
 def random_string():
     return str(random.randint(1000000, 99999999))
@@ -31,6 +32,13 @@ class MateriaJornalistica(models.Model):
         ('Notícia Regional', 'Notícia Regional')
     )
 
+    OPCOES_STATUS = (
+        ('Publicado', 'Publicado'),
+        ('Publicar em breve', 'Publicar em breve'),
+        ('Guardado', 'Guardado'),
+        ('Indefinido', 'Indefinido'),
+    )
+
     CKEDITOR_CONFIGS = {
         'awesome_ckeditor': {
             'toolbar': 'Basic',
@@ -48,6 +56,9 @@ class MateriaJornalistica(models.Model):
     editores = models.CharField(max_length=255)
     autores = models.CharField(max_length=255, null=False)
     main_keyword = models.CharField(max_length=255, null=False, choices=OPCOES)
+    status = models.CharField(max_length=255, null=False, choices=OPCOES_STATUS, default="Indefinido")
+
+    data_atualizacao = models.DateField(default=date.today)
 
     def _str_(self):
         return self.id

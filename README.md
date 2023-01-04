@@ -36,6 +36,21 @@ Para rodar, execute:
 > source venv/bin/activate
 > ./dependencias.sh
 
+Para atualizar models/forms:
+
+> python3 manage.py makemigrations
+> python3 manage.py migrate
+
+Para gerar arquivos de requisitos:
+
+> pip3 freeze > requirements.txt 
+
+Para instalar o que veio no arquivo de requisitos:
+
+> pip3 install -r requirements.txt
+
+## Requisitos
+
 - Python (v3.9.10)
 - Django
 - [OwlReady2][readthedocs]

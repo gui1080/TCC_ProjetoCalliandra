@@ -14,7 +14,7 @@ class MateriaJornalistica_Form(ModelForm):
     
     class Meta:
         model = MateriaJornalistica
-        fields = ['id', 'titulo', 'texto', 'sutien', 'editores', 'autores', 'main_keyword']
+        fields = ['id', 'titulo', 'texto', 'sutien', 'editores', 'autores', 'main_keyword', 'status', 'data_atualizacao']
 
 
 class definir_esforco_backlogitem_Form(ModelForm):

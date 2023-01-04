@@ -1340,7 +1340,6 @@ def ver_backlog_produto(request):
     # DataProperty!
     # EstimatedBusinessValue
     
-    
     if 'num_inst' in request.session:
         del request.session['num_inst']
             
@@ -1447,7 +1446,11 @@ def ver_backlog_produto(request):
     finally:
         
         myworld.close() 
-    
+
+    print("--------------")
+    print(tipo_de_conteudo)
+    print("--------------")
+
     request.session['status'] = status   # "OK!" ou "Erro!"
     request.session['num_prop_correlatas'] = num_prop_correlatas
     request.session['num_inst'] = str(num_inst)
@@ -1538,6 +1541,9 @@ def mudar_obs(request, item):
     form = definir_obs_backlogitem_Form()
 
     context = {'form':form}
+
+    if "kipo." in item:
+        item = item[5:]
     
     if request.method == 'POST':
         
@@ -2273,7 +2279,7 @@ def detalhar_artefato(request, instancia_artefato, classe_artefato):
     request.session['comentario_artefato'] = observacao
     request.session['instancia'] = str(instancia_artefato)
 
-    return render(request, 'comentario_artefato.html')
+    return render(request, 'comentario_artefato.html') 
 
 def alocar_para_tarefa(request, instancia_artefato):
     
