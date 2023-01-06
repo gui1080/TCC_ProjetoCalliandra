@@ -41,6 +41,8 @@ from .forms import novo_instancias_tipoForm, inserir_instancias_tipoForm, inseri
 from .models import MateriaJornalistica
 from owlready2 import *         # https://pypi.org/project/Owlready2/
 from os.path import exists
+import os
+import shutil
 import json 
 import sys 
 from random import randint
@@ -317,6 +319,19 @@ def sobre(request):
 def tutorial(request):
     
     return render(request, 'tutorial.html')
+
+def reiniciar(request):
+
+    diretorio_raiz_projeto = os.getcwd()
+    print("\n\n\n\n\n\n\n")
+    print(diretorio_raiz_projeto)
+    print("\n\n\n\n\n\n\n")
+
+    bd_backup = str(diretorio_raiz_projeto) + "/BackupBD/backup.db"
+
+    shutil.move(bd_backup, diretorio_raiz_projeto)
+
+    return redirect('/kipo_playground/welcome/')
 
 # !TESTE DE ACESSO AO BANCO DE DADOS
 # !------------------------------------------------------------

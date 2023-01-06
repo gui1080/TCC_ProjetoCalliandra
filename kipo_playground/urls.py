@@ -15,6 +15,7 @@ urlpatterns = [
     # Sobre
     path('sobre/', views.sobre),
     path('tutorial/', views.tutorial), 
+    path('reiniciar/', views.reiniciar), 
     
     # Teste para ver instâncias
     path('instancias_teste/', views.instancias_teste),
