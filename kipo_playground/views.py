@@ -329,7 +329,7 @@ def reiniciar(request):
 
     bd_backup = str(diretorio_raiz_projeto) + "/BackupBD/backup.db"
 
-    shutil.move(bd_backup, diretorio_raiz_projeto)
+    shutil.copy(bd_backup, diretorio_raiz_projeto)
 
     return redirect('/kipo_playground/welcome/')
 
