@@ -8,13 +8,6 @@ Essas views são geridas com endereços por meio do arquivo 'urls.py'.
 
 """
 
-'''
-Product_Backlog_Item -> nova propriedade 
-
-"TaskDescription"
-
-'''
-
 
 # fazer tela de alocar pessoas para tarefas
 
@@ -81,7 +74,7 @@ def faz_id(input_str):
 def transforma_objeto(lista_instancias):
     """ Pega um objeto da Ontologia e transforma em um dicionário, no formato que o DJango bota no template corretamente.
         
-        :param input_str: Lista de instâncias que viram objeto. 
+        :param lista_instancias: Lista de instâncias que viram objeto. 
     
         :return: Dicionário com campos 'classe', 'instância', 'nome' e 'observação'. 
     """
@@ -313,14 +306,35 @@ def welcome(request):
         return render(request, 'welcome_graficos.html', context)
 
 def sobre(request):
+    """ Exibe tela de "Sobre".
+        
+        :param request: HTTP Request. 
+    
+        :return: Objeto de render de 'sobre.html'. 
+    """
     
     return render(request, 'sobre.html')
 
 def tutorial(request):
+    """ Exibe tela de "Tutorial".
+        
+        :param request: HTTP Request. 
+    
+        :return: Objeto de render de 'tutorial.html'. 
+    """
+    
     
     return render(request, 'tutorial.html')
 
 def reiniciar(request):
+    """ Reinicia o Banco de Dados, dando copy e paste de um backup para a pasta principal.
+    Serve para reiniciar as instâncias, para ficar igual caso de estudo inicial.
+        
+        :param request: HTTP Request. 
+    
+        :return: Redireciona para /kipo_playground/welcome/. 
+    """
+    
 
     diretorio_raiz_projeto = os.getcwd()
     print("\n\n\n\n\n\n\n")
@@ -599,6 +613,14 @@ def inserir_instancia(request):
 
 
 def retirar_instancia(request, instancia, classe):
+    """ Deleta instância do Banco de Dados da ontologia.
+        
+        :param request: HTTP Request. 
+        :param instancia: Instância a ser retirada (string). 
+        :param classe: Classe em string para ser retirada. 
+    
+        :return: Objeto de render de 'inserir_instancia_tela_ok.html'. 
+    """
     
     '''
     form = inserir_instancias_tipoForm()
@@ -945,6 +967,15 @@ def add_classe(request, classe_inst):
     return render(request, 'instancias_tipo_select.html', context)
 
 def add_classe_com_relacionamento(request, classe_inst, relacinamento_inst, referencia_inst):
+    """ Adiçao de uma nova instancia, dada uma classe, já em relacionamento com outra classe.
+    
+        :param request: HTTP Request. 
+        :param classe_inst: Classe da instância. 
+        :param relacinamento_inst: Relacionamento a ser criado. 
+        :param referencia_inst: Instância que será relacionada, já existente. 
+    
+        :return: Objeto de render de 'instancias_tipo_select.html' ou redirect para view de 'inserir_instancia_tela_ok'. 
+    """
 
     form = inserir_instancias_dada_classeForm()
 
@@ -1067,6 +1098,14 @@ def add_classe_com_relacionamento(request, classe_inst, relacinamento_inst, refe
     return render(request, 'instancias_tipo_select.html', context)
 
 def sprint_options(request, instancia_sprint):
+    """ Adiçao de uma nova instancia, dada uma classe, já em relacionamento com outra classe.
+    
+        :param request: HTTP Request. 
+        :param instancia_sprint: Instância da Sprint.  
+        :param referencia_inst: Instância que será relacionada, já existente. 
+    
+        :return: Objeto de render de 'sprint_options.html'. 
+    """
     
     instancia = instancia_sprint[5:]
     
@@ -1195,20 +1234,6 @@ def daily_dashboard(request, instancia_daily):
     
     return render(request, 'daily_dashboard.html', context)
     
-
-# ------------------------------------------------------------
-
-
-# ------------------------------------------------------------
-
-'''
-
-    
-def daily_add(request):
-    
-
-'''
-
     
 # !BACKLOGS
 #!-----------------------------------------------------
@@ -1344,8 +1369,8 @@ def ver_sprint_backlog(request, instancia_sprint):
 
 
 def ver_backlog_produto(request):
-    """ View de visualizaçao de Backlog do Produto. No caso de estudo, só tem 1 Backlog de Produto, logo não existe seleção para Backlog de Produto.
-    
+    """ View de visualizaçao de Backlog do Produto. 
+
         :param request: HTTP Request. 
     
         :return: Objeto de render de 'backlog_produto.html'. 
@@ -1479,6 +1504,13 @@ def ver_backlog_produto(request):
     return render(request, 'backlog_produto.html', context)
 
 def ver_item_backlog(request, instancia_item):
+    """ View de visualizaçao de Item do Backlog do Produto. 
+
+        :param request: HTTP Request. 
+    
+        :return: Objeto de render de 'backlog_item_status.html'. 
+    """
+
     
     if 'num_inst' in request.session:
         del request.session['num_inst']
@@ -1556,7 +1588,15 @@ def ver_item_backlog(request, instancia_item):
 
 
 def mudar_obs(request, item):
+    """ View de mudança de observação de Item do Backlog do Produto. 
+
+        :param request: HTTP Request. 
+        :param item: Item do backlog (string).
     
+        :return: Objeto de render de 'item_inserir_obs.html' ou redirect para "kipo_playground/inserir_obs_tela_ok". 
+    """
+
+
     form = definir_obs_backlogitem_Form()
 
     context = {'form':form}
@@ -1601,11 +1641,24 @@ def mudar_obs(request, item):
     return render(request, 'item_inserir_obs.html', context)
 
 def inserir_obs_tela_ok(request):
-    
+    """ View de mudança de observação de Item do Backlog do Produto ("tela de ok"). 
+
+        :param request: HTTP Request. 
+        
+        :return: Redirect para "kipo_playground/inserir_obs_tela_ok". 
+    """
+
     return render(request, 'inserir_obs_tela_ok.html')
 
 
 def mudar_status(request, item):
+    """ View de mudança de Status de Item do Backlog do Produto. 
+
+        :param request: HTTP Request. 
+        :param item: Item do backlog (string).
+        
+        :return: Objeto de render de 'item_inserir_obs.html' ou redirect para "kipo_playground/inserir_obs_tela_ok". 
+    """
 
     form = definir_status_backlogitem_Form()
 
@@ -1656,6 +1709,13 @@ def mudar_status(request, item):
     return render(request, 'item_inserir_obs.html', context)
 
 def mudar_esforco(request, item):
+    """ View de mudança de Esforço de Item do Backlog do Produto. 
+
+        :param request: HTTP Request. 
+        :param item: Item do backlog (string).
+        
+        :return: Objeto de render de 'item_inserir_esforco.html' ou redirect para "kipo_playground/inserir_obs_tela_ok". 
+    """
     
     form = definir_esforco_backlogitem_Form()
 
@@ -1704,7 +1764,15 @@ def mudar_esforco(request, item):
 
 
 def adicionar_relacionamento_insts_antigas(request, instancia_A, relacionamento, classe_da_nova_inst):
+    """ Tela de seleção para realizar: "instancia_A -> relacionamento -> instancia_B"
 
+        :param request: HTTP Request. 
+        :param instancia_A: Instância que já existia (string).
+        :param relacionamento: Relacionamento (string).
+        :param classe_da_nova_inst: Classe da nova instância (string).
+        
+        :return: Objeto de render de 'escolher_instancia_previa.html'. 
+    """
     # essa funçao pega uma instancia_A, relacionamento e uma classe (3 argumentos)
     # para entao fazer 
     # instancia_A -> relacionamento -> instancia_B
@@ -1788,7 +1856,16 @@ def adicionar_relacionamento_insts_antigas(request, instancia_A, relacionamento,
 
 
 def executar_relacionamento_insts_antigas(request, instancia_A, relacionamento, instancia_B):
-    
+    """ Executar: "instancia_A -> relacionamento -> instancia_B"
+
+        :param request: HTTP Request. 
+        :param instancia_A: Instância que já existia (string).
+        :param relacionamento: Relacionamento (string).
+        :param instancia_B: Instância nova para relacionamento (string).
+        
+        :return: Objeto de render de 'instancia_previa_tela_ok.html'. 
+    """
+
     if "kipo." in instancia_A:
         instancia_A = str(instancia_A)[5:]
 
