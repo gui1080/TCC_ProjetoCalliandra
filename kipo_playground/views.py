@@ -2507,6 +2507,10 @@ def alocar_pessoa(request, instancia_pessoa):
         
         status = "Erro!"
         num_inst = "0"
+    
+    finally:
+        
+        myworld.close() 
         
     
     # ai aloca tarefa fazendo a relaçao
@@ -2560,6 +2564,10 @@ def add_relacionamento(request, instancia1, relacao, instancia2):
     except:
         
         status = "Erro!"
+    
+    finally:
+        
+        myworld.close() 
         
     request.session['relacionamento'] = relacao
     request.session['instancia1'] = instancia1
