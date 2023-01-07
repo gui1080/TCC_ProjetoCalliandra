@@ -2215,6 +2215,13 @@ def decision_dashboard(request, instancia_decisao):
     
 
 def mudar_decisao_status(request, instancia_decisao):
+    """ View de mudança de status da Decisão. 
+    
+        :param request: HTTP Request. 
+        :param instancia_decisao: String com a Instância da Decisão. 
+        
+        :return: Redirecionamento para "/kipo_playground/decision_select/". 
+    """
 
     print("!!!!!!!!!!!!!!!!!!!!")
     print(instancia_decisao)
@@ -2259,9 +2266,12 @@ def mudar_decisao_status(request, instancia_decisao):
 # ------------------------------------------------------------
 
 def gestao_artefatos(request):
+    """ View de listagem de Artefatos. 
     
-    # ai eu tenho que descobrir quais os objetos que vou listar
-    # criar um botao que faz input e output de cada artefato
+        :param request: HTTP Request. 
+        
+        :return: Render de 'artefatos_dashboard.html'. 
+    """
     
     if 'status' in request.session:
         del request.session['status']
@@ -2319,6 +2329,14 @@ def gestao_artefatos(request):
     return render(request, 'artefatos_dashboard.html', context)
 
 def detalhar_artefato(request, instancia_artefato, classe_artefato):
+    """ View de detalhes de um Artefato. 
+    
+        :param request: HTTP Request. 
+        :param instancia_artefato: Instância do Artefato. 
+        :param classe_artefato: Classe do artefato. 
+        
+        :return: Render de 'comentario_artefato.html'. 
+    """
 
     if 'status' in request.session:
         del request.session['status']
@@ -2378,7 +2396,14 @@ def detalhar_artefato(request, instancia_artefato, classe_artefato):
     return render(request, 'comentario_artefato.html') 
 
 def alocar_para_tarefa(request, instancia_artefato):
+    """ View de instâncias para alocar um Artefato como input ou output. 
     
+        :param request: HTTP Request. 
+        :param instancia_artefato: Instância do Artefato. 
+        
+        :return: Render de 'artefatos_alocar_dashboard.html'. 
+    """
+
     num_inst = 0
     
     if 'status' in request.session:
@@ -2465,10 +2490,13 @@ def alocar_para_tarefa(request, instancia_artefato):
 # ------------------------------------------------------------
 
 def gestao_pessoas(request):
+    """ View de listagem de Agentes. 
     
-    # ai tenho que botar um bot~ao que aloca trabalho para cada pessoa
-    # botao que adiciona novas pessoas
-    
+        :param request: HTTP Request. 
+        
+        :return: Render de 'gestao_pessoas.html'. 
+    """
+
     if 'status' in request.session:
         del request.session['status']
         
@@ -2535,9 +2563,13 @@ def gestao_pessoas(request):
     return render(request, 'gestao_pessoas.html', context)
 
 def alocar_pessoa(request, instancia_pessoa):
+    """ View de listagem de itens que um Agente pode executar. 
     
-    # listar tarefas onde esse agente pode trabalhar
-    # ai botar um botão que cria o relacionamento
+        :param request: HTTP Request. 
+        :param instancia_pessoa: Instância do Agente sendo relacionado (string). 
+        
+        :return: Render de 'alocar_pessoas.html'. 
+    """
     
     instancia = instancia_pessoa[5:] 
     
@@ -2606,8 +2638,17 @@ def alocar_pessoa(request, instancia_pessoa):
 
 
 def add_relacionamento(request, instancia1, relacao, instancia2):
+    """ Cria relacionamento: "instancia1 -> relacao -> instancia2". 
     
-    # instancia1 -> relacao -> instancia1
+        :param request: HTTP Request. 
+        :param instancia1: Primeira Instância (string). 
+        :param relacao: Relacionamento (string). 
+        :param instancia2: Segunda instância (string). 
+        
+        :return: Render de 'inserir_relacao_tela_ok.html'. 
+    """
+
+    # instancia1 -> relacao -> instancia2
     
     if "kipo." in instancia1:
         instancia1 = instancia1.replace("kipo.", "")
@@ -2666,6 +2707,12 @@ def add_relacionamento(request, instancia1, relacao, instancia2):
 # ------------------------------------------------------------
 
 def add_materia(request):
+    """ Gestão de matérias. Adição de matéria jornalística nova. 
+    
+        :param request: HTTP Request. 
+        
+        :return: Render de 'nova_materia.html'. 
+    """
     
     form = MateriaJornalistica_Form()
 
@@ -2694,6 +2741,12 @@ def add_materia(request):
     return render(request, 'nova_materia.html', context)
 
 def ver_materias(request):
+    """ Gestão de matérias. Visualização de matérias jornalísticas. 
+    
+        :param request: HTTP Request. 
+        
+        :return: Render de 'ver_materia.html'. 
+    """
     
     materias_jornalisticas = MateriaJornalistica.objects.all()
 
@@ -2707,6 +2760,12 @@ def ver_materias(request):
     return render(request, 'ver_materia.html', context)
 
 def ler_materia(request, id_materia):
+    """ Gestão de matérias. Ler matéria jornalística. 
+    
+        :param request: HTTP Request. 
+        
+        :return: Render de 'ler_materia.html'. 
+    """
 
     objeto_recuperado = get_object_or_404(MateriaJornalistica, id=id_materia)
 
@@ -2717,6 +2776,12 @@ def ler_materia(request, id_materia):
     return render(request, 'ler_materia.html', context)
 
 def editar_materia(request, id_materia):
+    """ Gestão de matérias. Edição de matéria jornalística. 
+    
+        :param request: HTTP Request. 
+        
+        :return: Render de 'nova_materia.html'. 
+    """
 
     instance = get_object_or_404(MateriaJornalistica, id=id_materia)
 

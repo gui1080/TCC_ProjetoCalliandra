@@ -12,7 +12,7 @@ urlpatterns = [
     # Tela de início
     path('welcome/', views.welcome),
     
-    # Sobre
+    # Extras (menu do canto superior direito)
     path('sobre/', views.sobre),
     path('tutorial/', views.tutorial), 
     path('reiniciar/', views.reiniciar), 
@@ -57,10 +57,12 @@ urlpatterns = [
     path('decision_dashboard/<str:instancia_decisao>', views.decision_dashboard),
     path('mudar_decisao_status/<str:instancia_decisao>', views.mudar_decisao_status),
     
+    # gestão de artefatos
     path('gestao_artefatos/', views.gestao_artefatos),
     path('detalhar_artefato/<str:instancia_artefato>/<str:classe_artefato>', views.detalhar_artefato),
     path('alocar_para_tarefa/<str:instancia_artefato>', views.alocar_para_tarefa),
     
+    # gestão de pessoas
     path('gestao_pessoas/', views.gestao_pessoas),
     path('alocar_pessoa/<str:instancia_pessoa>', views.alocar_pessoa),
     path('add_relacionamento/<str:instancia1>/<str:relacao>/<str:instancia2>', views.add_relacionamento),

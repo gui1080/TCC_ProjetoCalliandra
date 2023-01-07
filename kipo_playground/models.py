@@ -16,6 +16,7 @@ def random_string():
 
 # Create your models here.
 
+#! Matéria Jornalística.
 class MateriaJornalistica(models.Model):
     
     OPCOES = (
@@ -63,6 +64,7 @@ class MateriaJornalistica(models.Model):
     def _str_(self):
         return self.id
 
+#! Esforço de Item do Backlog.
 class definir_esforco_backlogitem(models.Model):
     
     OPCOES = (
@@ -81,6 +83,7 @@ class definir_esforco_backlogitem(models.Model):
     def __str__(self):
         return self.esforco
 
+#! Status de Item de backlog.
 class definir_status_backlogitem(models.Model):
     
     OPCOES = (
@@ -93,6 +96,7 @@ class definir_status_backlogitem(models.Model):
     def __str__(self):
         return self.classe
 
+#! Observação de Item de backlog.
 class definir_obs_backlogitem(models.Model):
     
     
@@ -101,6 +105,7 @@ class definir_obs_backlogitem(models.Model):
     def __str__(self):
         return self.observacao
 
+#! Inserção de instância dada uma classe.
 class inserir_instancias_dada_classe(models.Model):
     
     
@@ -109,7 +114,8 @@ class inserir_instancias_dada_classe(models.Model):
     
     def __str__(self):
         return self.nome
-    
+
+#! Inserir instância com classe.
 class inserir_instancias_tipo(models.Model):
     
     CLASSES = (
@@ -215,6 +221,7 @@ class inserir_instancias_tipo(models.Model):
     def __str__(self):
         return self.nome
 
+#! Busca de instância.
 class novo_instancias_tipo(models.Model):
     
     CLASSES = (

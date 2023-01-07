@@ -9,20 +9,21 @@ from django import forms
 
 from .models import MateriaJornalistica, novo_instancias_tipo, inserir_instancias_tipo, inserir_instancias_dada_classe, definir_obs_backlogitem, definir_status_backlogitem, definir_esforco_backlogitem
 
-
+#! Form de Matéria Jornalística
 class MateriaJornalistica_Form(ModelForm):
     
     class Meta:
         model = MateriaJornalistica
         fields = ['id', 'titulo', 'texto', 'sutien', 'editores', 'autores', 'main_keyword', 'status', 'data_atualizacao']
 
-
+#! Form de Esforço de Backlog Item
 class definir_esforco_backlogitem_Form(ModelForm):
     
     class Meta:
         model = definir_esforco_backlogitem
         fields = ['esforco']
 
+#! Form de nova instância, dada uma classe.
 class inserir_instancias_dada_classeForm(ModelForm):
     
     class Meta:
@@ -30,6 +31,7 @@ class inserir_instancias_dada_classeForm(ModelForm):
         fields = ['nome', 'observacao']
         
 
+#! Form de nova instância.
 class inserir_instancias_tipoForm(ModelForm):
     
     class Meta:
@@ -37,6 +39,7 @@ class inserir_instancias_tipoForm(ModelForm):
         fields = ['nome', 'classe', 'observacao']
         
 
+#! Form de busca de instâncias.
 class novo_instancias_tipoForm(ModelForm):
     
     class Meta:
@@ -44,6 +47,7 @@ class novo_instancias_tipoForm(ModelForm):
         fields = ['busca']
         
 
+#! Form de definição de status de Item de Backlog
 class definir_status_backlogitem_Form(ModelForm):
 
     class Meta:
@@ -51,6 +55,7 @@ class definir_status_backlogitem_Form(ModelForm):
         fields = ['classe']
         
 
+#! Form de adição de comentário em Item de Backlog
 class definir_obs_backlogitem_Form(ModelForm):
     
     class Meta:
