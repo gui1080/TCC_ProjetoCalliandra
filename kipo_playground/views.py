@@ -781,8 +781,12 @@ def sprint_dashboard(request, instancia_sprint):
             # kiposcrum.KIPCO__Agent("desenvolvedornovo")
             
             # a query sai com prefixo "kipo."
-            instancia = instancia_sprint[5:]
-            print(instancia)
+
+            if "kipo" in instancia_sprint:
+                instancia = instancia_sprint[5:]
+                print(instancia)
+            else:
+                instancia = instancia_sprint
             
             # propriedades
             propriedades = kiposcrum[instancia].get_properties()
@@ -2543,7 +2547,10 @@ def add_relacionamento(request, instancia1, relacao, instancia2):
         kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
         
         sync_reasoner()
-        
+
+        print("\n\n\n\n")
+        print(relacao)
+        print("\n\n\n\n")
         
         with kiposcrum:
             
@@ -2560,6 +2567,8 @@ def add_relacionamento(request, instancia1, relacao, instancia2):
                 kiposcrum[instancia1].ontoscrum__has_output.append(kiposcrum[instancia2])
             
             status = "OK!"
+
+            myworld.save() # persiste na ontologia
             
     except:
         
