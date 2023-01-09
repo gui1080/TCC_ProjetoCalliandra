@@ -2239,10 +2239,6 @@ def mudar_decisao_status(request, instancia_decisao):
         
         with kiposcrum:
             
-            #kiposcrum[instancia_decisao].StatusProblemaResolvido.append("1")
-            print("cu\n\n\n")
-            #print(str(kiposcrum[instancia_decisao].StatusProblemaResolvido.pop(0)))
-
             if str(kiposcrum[instancia_decisao].StatusProblemaResolvido.pop(0)) == "0":
                 print("aqui1")
                 kiposcrum[instancia_decisao].StatusProblemaResolvido.append("1")
