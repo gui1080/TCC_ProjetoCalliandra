@@ -282,10 +282,10 @@ def welcome(request):
 
                     
                     if "0" in status:
-                        decisao_pendente = "Não"
-                    else:
                         decisao_pendente = "Sim"
                         break
+                    else:
+                        decisao_pendente = "Não"
 
 
                 # ---------------------
