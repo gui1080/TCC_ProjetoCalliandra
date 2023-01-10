@@ -51,9 +51,60 @@ Para instalar o que veio no arquivo de requisitos:
 
 ## Alterações para rodar no Servidor
 
+Rodando com comando:
+
+> python3 manage.py runserver 0.0.0.0:8081
+
 ### Mudar os hrefs
 
 Os hrefs foram de href="/kipo_playground/" para href="app1/kipo_playground/". 
+
+### settings.py
+
+````
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'kipo_playground/staticfiles')
+]
+
+````
+
+### views.py
+
+````
+
+  # No final do documento
+  #-----------------------------------------------
+
+  def show_styles_css(request):
+      with open('staticfiles/css/styles.css', 'r') as f:
+          data = f.read()
+
+      response = HttpResponse(data, content_type='text/css') 
+      response['Content-Disposition'] = 'attachment; filename=styles.css'
+      return response
+
+  def show_scripts_js(request):
+      with open('staticfiles/js/scripts.js', 'r') as f:
+          data = f.read()
+
+      response = HttpResponse(data, content_type='text/javascript')
+      response['Content-Disposition'] = 'attachment; filename=scripts.js'
+      return response
+
+  #-----------------------------------------------
+
+````
+
+### urls.py
+
+````
+
+  path('static/css/styles.css', views.show_styles_css),
+  path('static/js/scripts.js', views.show_scripts_js),
+
+
+````
 
 ## Visualização da Árvore de Arquivos
 
