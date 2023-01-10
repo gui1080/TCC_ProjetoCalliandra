@@ -49,12 +49,11 @@ Para instalar o que veio no arquivo de requisitos:
 
 > pip3 install -r requirements.txt
 
-## Django
+## Alterações para rodar no Servidor
 
-> docker compose up --build
+### Mudar os hrefs
 
-> docker build --tag python-django .
-> docker run --publish 8000:8000 python-django
+Os hrefs foram de href="/kipo_playground/" para href="app1/kipo_playground/". 
 
 ## Visualização da Árvore de Arquivos
 
