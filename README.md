@@ -92,6 +92,42 @@ STATICFILES_DIRS = [
       response['Content-Disposition'] = 'attachment; filename=scripts.js'
       return response
 
+  def show_ckeditor_int(request):
+       with open('staticfiles/ckeditor/ckeditor-init.js', 'r') as f:
+          data = f.read()
+
+       response = HttpResponse(data, content_type='text/javascript')
+       response['Content-Disposition'] = 'attachment; filename=ckeditor-init.js'
+       return response
+
+  def show_ckeditor(request):
+       with open('staticfiles/ckeditor/ckeditor/ckeditor.js', 'r') as f:
+          data = f.read()
+
+       response = HttpResponse(data, content_type='text/javascript')
+       response['Content-Disposition'] = 'attachment; filename=ckeditor.js'
+       return response
+
+    # Imagens
+
+  def show_scrum_img(request):
+       img = open('staticfiles/assets/scrum_img.png', 'rb')
+
+       response = FileResponse(img)
+       return response
+
+  def show_img0132(request):
+       img = open('staticfiles/assets/!IMG_0132.jpg', 'rb')
+
+       response = FileResponse(img)
+       return response
+
+  def show_img0140(request):
+       img = open('staticfiles/assets/IMG_0140.jpg', 'rb')
+
+       response = FileResponse(img)
+       return response
+      
   #-----------------------------------------------
 
 ````
@@ -100,8 +136,15 @@ STATICFILES_DIRS = [
 
 ````
 
+  # para rodar no servidor (alguns assets)
   path('static/css/styles.css', views.show_styles_css),
   path('static/js/scripts.js', views.show_scripts_js),
+  #path('static/ckeditor/ckeditor/ckeditor.js', views.show_ckeditor),
+  #path('static/ckeditor/ckeditor-init.js', views.show_ckeditor_init),
+
+  path('static/assets/scrum_img.png', views.show_scrum_img),
+  path('static/assets/!IMG_0132.jpg', views.show_img0132),
+  path('static/assets/IMG_0140.jpg', views.show_img0140),
 
 
 ````
