@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-+3r1c&7gv-^f=50onda+y4ziv2fi+ad8=1!7-hq8lm%1bjn(ai
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 CKEDITOR_BASEPATH = "/staticfiles/ckeditor/ckeditor/"
 
