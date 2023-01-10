@@ -49,12 +49,12 @@ Para instalar o que veio no arquivo de requisitos:
 
 > pip3 install -r requirements.txt
 
-## Requisitos
+## Django
 
-- Python (v3.9.10)
-- Django
-- [OwlReady2][readthedocs]
-- django-crispy-form
+> docker compose up --build
+
+> docker build --tag python-django .
+> docker run --publish 8000:8000 python-django
 
 ## Visualização da Árvore de Arquivos
 
