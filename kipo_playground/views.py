@@ -8,22 +8,6 @@ Essas views são geridas com endereços por meio do arquivo 'urls.py'.
 
 """
 
-
-# fazer tela de alocar pessoas para tarefas
-
-# posso alocar a pessoa com:
-# KIPCO__Knowledge_Intensive_Process -> Sprint
-# KIPCO__Knowledge_Intesive_Activity -> trabalho diário na sprint
-# -> sprint backlog
-
-
-# fazer tela para adicionar inputs e outputs para tarefas
-
-# posso alocar o artefato com:
-# KIPCO__Knowledge_Intensive_Process -> Sprint
-# KIPCO__Knowledge_Intesive_Activity -> trabalho diário na sprint
-# -> sprint backlog
-
 from multiprocessing import context
 from typing import final
 from django.shortcuts import render, redirect, get_object_or_404
@@ -987,16 +971,22 @@ def add_classe_com_relacionamento(request, classe_inst, relacinamento_inst, refe
             del request.session['nome']
         if 'observacao' in request.session:
             del request.session['observacao']
+        if 'input_status' in request.session:
+            del request.session['input_status']
             
         input_nome = str(request.POST.get('nome'))
         input_observacao = str(request.POST.get('observacao'))
         
         seed = str(time.time())
         id_unico = faz_id(seed)
+
+        status = "Erro!"
         
-        if ".kipo" in referencia_inst:
-            referencia_inst = referencia_inst[5:]
-        
+        if "kipo" in referencia_inst:
+            inst = referencia_inst[5:]
+        else:
+            inst = referencia_inst
+
         # OWLREADY2
         try:
             
@@ -1005,16 +995,19 @@ def add_classe_com_relacionamento(request, classe_inst, relacinamento_inst, refe
             # aqui a KIPO e a Ontologia do Scrum tiveram um Merge!
             kiposcrum = myworld.get_ontology("http://www.semanticweb.org/fialho/kipo").load()
             
-            sync_reasoner()
+            #sync_reasoner()
         
             print(classe_inst)
             
+            status = "OK!"
+            
+
             with kiposcrum:
                 
                 print("input_nome " + str(input_nome))
                 print("classe_inst " + str(classe_inst))
                 print("relacinamento_inst " + str(relacinamento_inst))
-                print("referencia_inst " + str(referencia_inst))
+                print("referencia_inst " + str(inst))
                 
                 # input_nome = nome da nova instância
                 # classe_inst = classe da nova instância
@@ -1034,45 +1027,43 @@ def add_classe_com_relacionamento(request, classe_inst, relacinamento_inst, refe
                 
                 if relacinamento_inst == "INV_influences":
                     
-                    kiposcrum[referencia_inst].INV_influences.append(kiposcrum[input_nome + id_unico])
+                    kiposcrum[inst].INV_influences.append(kiposcrum[input_nome + id_unico])
                 
                 if relacinamento_inst == "INV_composes":
                     
-                    kiposcrum[referencia_inst].INV_composes.append(kiposcrum[input_nome + id_unico])
+                    kiposcrum[inst].INV_composes.append(kiposcrum[input_nome + id_unico])
                 
                 if relacinamento_inst == "INV_threatens":
                     
-                    kiposcrum[referencia_inst].INV_threatens.append(kiposcrum[input_nome + id_unico])
+                    kiposcrum[inst].INV_threatens.append(kiposcrum[input_nome + id_unico])
                 
                 if relacinamento_inst == "considers":
                     
-                    kiposcrum[referencia_inst].considers.append(kiposcrum[input_nome + id_unico])
+                    kiposcrum[inst].considers.append(kiposcrum[input_nome + id_unico])
                 
                 if relacinamento_inst == "ontoscrum__is_executed_by":
                     
-                    kiposcrum[referencia_inst].ontoscrum__is_executed_by.append(kiposcrum[input_nome + id_unico])
+                    kiposcrum[inst].ontoscrum__is_executed_by.append(kiposcrum[input_nome + id_unico])
                 
                 if relacinamento_inst == "ontoscrum__simultaneously":
                     
-                    kiposcrum[referencia_inst].ontoscrum__simultaneously.append(kiposcrum[input_nome + id_unico])
+                    kiposcrum[inst].ontoscrum__simultaneously.append(kiposcrum[input_nome + id_unico])
                 
                 if relacinamento_inst == "ontoscrum__contains":
                     
-                    kiposcrum[referencia_inst].ontoscrum__contains.append(kiposcrum[input_nome + id_unico])
+                    kiposcrum[inst].ontoscrum__contains.append(kiposcrum[input_nome + id_unico])
                 
                 if relacinamento_inst == "ontoscrum__during":
                     
-                    kiposcrum[referencia_inst].ontoscrum__during.append(kiposcrum[input_nome + id_unico])
+                    kiposcrum[inst].ontoscrum__during.append(kiposcrum[input_nome + id_unico])
                 
                 if relacinamento_inst == "ontoscrum__performs":
                     
-                    kiposcrum[referencia_inst].ontoscrum__performs.append(kiposcrum[input_nome + id_unico])
+                    kiposcrum[inst].ontoscrum__performs.append(kiposcrum[input_nome + id_unico])
                 
                 # --------------------------
                 
                 sync_reasoner()
-                
-                status = "OK!"
                 
                 myworld.save() # persiste na ontologia
                 
@@ -1082,7 +1073,7 @@ def add_classe_com_relacionamento(request, classe_inst, relacinamento_inst, refe
             print("Falha de acesso!")
             input_nome = "Não foi recuperado"
             input_classe = "Não foi recuperado"
-            status = "Erro!"
+            
         
         finally:
             
@@ -1091,7 +1082,7 @@ def add_classe_com_relacionamento(request, classe_inst, relacinamento_inst, refe
         # faz query e bota resultado na sessão, um redirect vai botar o resultado
         request.session['input_nome'] = input_nome + id_unico
         request.session['input_classe'] = classe_inst
-        request.session['ontologia_status'] = status
+        request.session['input_status'] = status
         
         return redirect('/kipo_playground/inserir_instancia_tela_ok/')
         
@@ -1414,11 +1405,6 @@ def ver_backlog_produto(request):
             # kipo.ontoscrum__contains, kipo.contains}
             
             print("Criando Visualização de Product Backlog!")
-            
-            
-            # kiposcrum.KIPCO__Agent("desenvolvedornovo")
-            
-            # add kipo.backlog_sistema_venda_livros9221 contains do_decision na main de testes
             
             instancia_backlog = str(kiposcrum["Product_Backlog"].instances().pop(0))
             
