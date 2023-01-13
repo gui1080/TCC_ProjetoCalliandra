@@ -73,4 +73,11 @@ urlpatterns = [
     path('ler_materia/<str:id_materia>', views.ler_materia), 
     path('editar_materia/<str:id_materia>', views.editar_materia), 
 
+    # usuarios
+    path('logout_user', views.logout_user), 
+    path('login_page', views.login_page), 
+    path('register', views.register), 
+
+
+
 ]

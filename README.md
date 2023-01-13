@@ -18,6 +18,11 @@ guilherme_teste
 teste@gmail.com
 12345
 
+## Usuário de teste
+
+mcgil
+musgo123
+
 ## Dependências
 
 O script *./dependencias.sh* baixa dependências e executa o programa. 

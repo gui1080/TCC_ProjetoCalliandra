@@ -22,7 +22,7 @@ from kipo_playground import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.welcome, name="welcome"),
+    path('', views.register, name="register"),
     path('kipo_playground/', include('kipo_playground.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

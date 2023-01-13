@@ -6,8 +6,17 @@ Em base de modelos estabelecidos, contém formulários para inserir uma nova ins
 
 from django.forms import ModelForm
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 from .models import MateriaJornalistica, novo_instancias_tipo, inserir_instancias_tipo, inserir_instancias_dada_classe, definir_obs_backlogitem, definir_status_backlogitem, definir_esforco_backlogitem
+
+# criação de usuário default!
+class CreateUser(UserCreationForm):
+    
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
 
 #! Form de Matéria Jornalística
 class MateriaJornalistica_Form(ModelForm):

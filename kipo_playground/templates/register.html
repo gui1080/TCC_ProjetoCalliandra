@@ -1,0 +1,20 @@
+<h3>Register</h3>
+
+<form method="POST" action="">
+    {% csrf_token %}
+    {{form.as_p}}
+
+    <input type="submit" name="Create User">
+
+    {{form.errors}}
+
+
+</form>
+
+</br>
+</br>
+
+<a class="btn btn-primary" href="/kipo_playground/login_page">Login</a>
+
+</br>
+</br>

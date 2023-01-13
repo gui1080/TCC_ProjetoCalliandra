@@ -14,7 +14,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.template import Template, Context
 
-from .forms import novo_instancias_tipoForm, inserir_instancias_tipoForm, inserir_instancias_dada_classeForm, definir_status_backlogitem_Form, definir_obs_backlogitem_Form, definir_esforco_backlogitem_Form, MateriaJornalistica_Form
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+from .forms import CreateUser, novo_instancias_tipoForm, inserir_instancias_tipoForm, inserir_instancias_dada_classeForm, definir_status_backlogitem_Form, definir_obs_backlogitem_Form, definir_esforco_backlogitem_Form, MateriaJornalistica_Form
 from .models import MateriaJornalistica
 from owlready2 import *         # https://pypi.org/project/Owlready2/
 from os.path import exists
@@ -2788,5 +2790,46 @@ def editar_materia(request, id_materia):
         
     return render(request, 'nova_materia.html', context)
 
+
+# ------------------------------------------------------------
+
+def logout_user(request):
+    
+    logout(request)
+    return redirect('register')
+
+def login_page(request):
+    
+    if request.method == 'POST':
+
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            # messages.sucess(request, 'Welcome!')
+            return redirect('/kipo_playground/welcome/')
+        else:
+            messages.info(request, 'bad login!')
+
+    context = {}
+    return render(request, 'login.html', context)
+
+def register(request):
+    form = CreateUser()
+
+    if request.method == 'POST':
+        form = CreateUser(request.POST)
+        if form.is_valid():
+            form.save()
+
+            # messages.sucess(request, 'Acccount created!')
+
+            return redirect('/kipo_playground/welcome/')
+
+    context = {'form':form}
+    return render(request, 'register.html', context)
 
 # ------------------------------------------------------------
