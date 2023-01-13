@@ -13,6 +13,7 @@ from typing import final
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.template import Template, Context
+from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -109,6 +110,7 @@ def transforma_objeto(lista_instancias):
 
 # !------------------------------------------------------------
 
+login_required(login_url='login_page')
 def welcome(request):
     """ View de tela de início do sistema.
         
@@ -301,6 +303,7 @@ def sobre(request):
     
     return render(request, 'sobre.html')
 
+login_required(login_url='login')
 def tutorial(request):
     """ Exibe tela de "Tutorial".
         
@@ -312,6 +315,7 @@ def tutorial(request):
     
     return render(request, 'tutorial.html')
 
+login_required(login_url='login')
 def reiniciar(request):
     """ Reinicia o Banco de Dados, dando copy e paste de um backup para a pasta principal.
     Serve para reiniciar as instâncias, para ficar igual caso de estudo inicial.
@@ -336,6 +340,7 @@ def reiniciar(request):
 # !TESTE DE ACESSO AO BANCO DE DADOS
 # !------------------------------------------------------------
 
+login_required(login_url='login')
 def instancias_teste(request):
     """ View de tela de testes de acesso ao Banco de Dados. Visualização de Agentes.
         
