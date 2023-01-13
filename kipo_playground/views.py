@@ -2793,6 +2793,8 @@ def editar_materia(request, id_materia):
 
 # ------------------------------------------------------------
 
+
+
 def logout_user(request):
     
     logout(request)
