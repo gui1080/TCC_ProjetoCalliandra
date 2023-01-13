@@ -57,7 +57,7 @@ def faz_id(input_str):
     
     return resultado_id
 
-    
+login_required(login_url='/app1/kipo_playground/login_page')
 def transforma_objeto(lista_instancias):
     """ Pega um objeto da Ontologia e transforma em um dicionário, no formato que o DJango bota no template corretamente.
         
@@ -110,7 +110,7 @@ def transforma_objeto(lista_instancias):
 
 # !------------------------------------------------------------
 
-login_required(login_url='login_page')
+login_required(login_url='/app1/kipo_playground/login_page')
 def welcome(request):
     """ View de tela de início do sistema.
         
@@ -303,7 +303,7 @@ def sobre(request):
     
     return render(request, 'sobre.html')
 
-login_required(login_url='login')
+login_required(login_url='/app1/kipo_playground/login_page')
 def tutorial(request):
     """ Exibe tela de "Tutorial".
         
@@ -315,7 +315,7 @@ def tutorial(request):
     
     return render(request, 'tutorial.html')
 
-login_required(login_url='login')
+login_required(login_url='/app1/kipo_playground/login_page')
 def reiniciar(request):
     """ Reinicia o Banco de Dados, dando copy e paste de um backup para a pasta principal.
     Serve para reiniciar as instâncias, para ficar igual caso de estudo inicial.
@@ -340,7 +340,7 @@ def reiniciar(request):
 # !TESTE DE ACESSO AO BANCO DE DADOS
 # !------------------------------------------------------------
 
-login_required(login_url='login')
+login_required(login_url='/app1/kipo_playground/login_page')
 def instancias_teste(request):
     """ View de tela de testes de acesso ao Banco de Dados. Visualização de Agentes.
         
@@ -416,6 +416,8 @@ def instancias_teste(request):
 # instancias_tipo -> instancias_tipo_show
 
 # mostra o input de todas as instâncias de dada classe
+
+login_required(login_url='/app1/kipo_playground/login_page')
 def instancias_tipo_show(request):
     """ View de visualização de instâncias de uma dada classe no Banco de Dados. 
         
@@ -745,8 +747,8 @@ def sprint_select(request):
     context = {"objetos_sprints": objetos_sprints}
     return render(request, 'seleciona_sprint.html', context)
 
-
 # VER DADOS DA SPRINT
+login_required(login_url='/app1/kipo_playground/login_page')
 def sprint_dashboard(request, instancia_sprint):
     """ View de seleção de Sprints para sua visualização.
     
@@ -1114,6 +1116,7 @@ def sprint_options(request, instancia_sprint):
 # !VISUALIZAÇÃO DE TRABALHO DIÁRIO DENTRO DE UMA SPRINT
 # !------------------------------------------------------------
 
+login_required(login_url='/app1/kipo_playground/login_page')
 def daily_dashboard(request, instancia_daily):
     """ View de visualizaçao de Trabalho Diário de uma Sprint.
     
@@ -2088,6 +2091,7 @@ def decision_select(request):
 
 
 # VER DADOS DA DECISAO
+login_required(login_url='/app1/kipo_playground/login_page')
 def decision_dashboard(request, instancia_decisao):
     """ View de Visualização de dados da Decisão, com o objetivo de auxiliar na tomada de Decisão. 
     
@@ -2254,6 +2258,7 @@ def mudar_decisao_status(request, instancia_decisao):
 
 # ------------------------------------------------------------
 
+login_required(login_url='/app1/kipo_playground/login_page')
 def gestao_artefatos(request):
     """ View de listagem de Artefatos. 
     
@@ -2478,6 +2483,7 @@ def alocar_para_tarefa(request, instancia_artefato):
 
 # ------------------------------------------------------------
 
+login_required(login_url='/app1/kipo_playground/login_page')
 def gestao_pessoas(request):
     """ View de listagem de Agentes. 
     
@@ -2695,6 +2701,7 @@ def add_relacionamento(request, instancia1, relacao, instancia2):
 
 # ------------------------------------------------------------
 
+login_required(login_url='/app1/kipo_playground/login_page')
 def add_materia(request):
     """ Gestão de matérias. Adição de matéria jornalística nova. 
     
@@ -2729,6 +2736,7 @@ def add_materia(request):
         
     return render(request, 'nova_materia.html', context)
 
+login_required(login_url='/app1/kipo_playground/login_page')
 def ver_materias(request):
     """ Gestão de matérias. Visualização de matérias jornalísticas. 
     
