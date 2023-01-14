@@ -119,6 +119,13 @@ def welcome(request):
         :return: Objeto de render de 'welcome_graficos.html'. 
     """
     
+    if request.user.is_authenticated:
+        print("--------------Logged in--------------")
+    else:
+        print("--------------Not logged in--------------")
+        return redirect('/kipo_playground/login_page/')
+
+
     # https://developers.google.com/chart/interactive/docs/gallery/barchart
 
     if 'status' in request.session:
