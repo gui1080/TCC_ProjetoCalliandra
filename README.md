@@ -4,9 +4,9 @@ Módulo de workflow com anotação semântica em Django. Implementação da [Kno
 
 Feito como parte de Projeto de Conclusão de Curso por Guilherme Braga Pinto. 
 
-[Minha apresentação.][apresentacao_tcc]
+[Minha apresentação.](https://youtu.be/bHcpC9uw4fE)
 
-[Demo.][demo]
+[Demo.](https://youtu.be/rF9q-QBYfUI)
 
 Para rodar localmente o sistema, execute:
 
@@ -168,8 +168,4 @@ A Calliandra (*Calliandra dysantha Benth*) é típicamente conhecida como a flor
 [SCRUM]: "https://www.researchgate.net/publication/260480541_Integration_of_classical_and_agile_project_management_methodologies_based_on_ontological_models"
 
 [readthedocs]: "https://owlready2.readthedocs.io/en/v0.37/#"
-
-[demo]: "https://youtu.be/rF9q-QBYfUI"
-
-[apresentacao_tcc]: "https://youtu.be/bHcpC9uw4fE"
 
