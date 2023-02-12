@@ -1,6 +1,6 @@
 # Sistema Calliandra
 
-Módulo de workflow com anotação semântica em Django. Implementação da [Knowledge Intensive Ontology][KIPO] com [Ontologia de Scrum][SCRUM] em caso de estudo.
+Módulo de workflow com anotação semântica em Django. Implementação da [Knowledge Intensive Ontology](https://www.researchgate.net/publication/282939286_KIPO_the_knowledge-intensive_process_ontology) com [Ontologia de Scrum](https://www.researchgate.net/publication/260480541_Integration_of_classical_and_agile_project_management_methodologies_based_on_ontological_models) em caso de estudo. Usando [owl2ready](https://owlready2.readthedocs.io/en/v0.37/#).
 
 Feito como parte de Projeto de Conclusão de Curso por Guilherme Braga Pinto. 
 
@@ -161,11 +161,4 @@ STATICFILES_DIRS = [
 ## Sobre
 
 A Calliandra (*Calliandra dysantha Benth*) é típicamente conhecida como a flor símbolo do Cerrado, de flores vermelhas e delicadas. Ela tem uso medicinal popular, é uma planta amplamente usada para paisagismo. O Cerrado é reconhecido como a savana com maior biodiversidade do mundo, apesar de muitas espécies estarem ameaçadas de extinção.
-
-
-[KIPO]: "https://www.researchgate.net/publication/282939286_KIPO_the_knowledge-intensive_process_ontology"
-
-[SCRUM]: "https://www.researchgate.net/publication/260480541_Integration_of_classical_and_agile_project_management_methodologies_based_on_ontological_models"
-
-[readthedocs]: "https://owlready2.readthedocs.io/en/v0.37/#"
 
