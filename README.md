@@ -154,8 +154,6 @@ STATICFILES_DIRS = [
 
 ## Content Mapping do Sistema Calliandra
 
-(último update: 24/07/2022)
-
 ![Img](https://github.com/gui1080/TCC_ProjetoCalliandra/blob/master/Midia%20Externa/content_mapping.png)
 
 ## Sobre
