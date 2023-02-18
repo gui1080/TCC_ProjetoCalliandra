@@ -4,9 +4,11 @@ Módulo de workflow com anotação semântica em Django. Implementação da [Kno
 
 Feito como parte de Projeto de Conclusão de Curso por Guilherme Braga Pinto. 
 
-[Minha apresentação.](https://youtu.be/bHcpC9uw4fE)
+[Minha apresentação.](https://www.youtube.com/watch?v=bHcpC9uw4fE)
 
 [Demo.](https://youtu.be/rF9q-QBYfUI)
+
+[Mostra de como usar o sistema.](https://youtu.be/z_WLy9MxVFA)
 
 Para rodar localmente o sistema, execute:
 
