@@ -599,9 +599,6 @@ def inserir_instancia(request):
         finally:
             myworld.close()
             
-
-        
-        
         # faz query e bota resultado na sessão, um redirect vai botar o resultado
         request.session['input_nome'] = input_nome
         request.session['input_classe'] = input_classe
@@ -621,12 +618,6 @@ def retirar_instancia(request, instancia, classe):
     
         :return: Objeto de render de 'inserir_instancia_tela_ok.html'. 
     """
-    
-    '''
-    form = inserir_instancias_tipoForm()
-
-    context = {'form':form}
-    '''
     
     # tirando prefixo "kipo."
     input_nome = instancia[5:]
@@ -717,11 +708,9 @@ def sprint_select(request):
             
             status = "OK!"
             
+            # poderia ser instâncias de "kipo.KIPCO__Knowledge_Intensive_Process"
+            # objetos_sprints = transforma_objeto(lista_instancias)
             
-            # era pra ser "kipo.KIPCO__Knowledge_Intensive_Process"
-            #objetos_sprints = transforma_objeto(lista_instancias)
-            
-            # debugar!! No 1 dá ruim quando adiciona algo novo.
             print(str(lista_instancias[0].Nome[0]))
             print(str(lista_instancias[0].is_a.pop(0)))
             print(str(lista_instancias[0].Observacao))
@@ -765,9 +754,7 @@ def sprint_dashboard(request, instancia_sprint):
         :return: Objeto de render de 'sprint_dashboard.html'. 
     """
     
-    
     # instancia_sprint é a sprint a ser usada
-    
     
     if 'num_inst' in request.session:
         del request.session['num_inst']
@@ -1886,7 +1873,7 @@ def executar_relacionamento_insts_antigas(request, instancia_A, relacionamento, 
         sync_reasoner()
 
         '''
-
+        classes sendo tratadas!
         ontoscrum__is_managed_by
         ontoscrum__during
         ontoscrum__has_input
@@ -1900,9 +1887,7 @@ def executar_relacionamento_insts_antigas(request, instancia_A, relacionamento, 
         INV_threatens
         considers
         ontoscrum__contains
-        
         '''
-        
         
         with kiposcrum:
 
@@ -2020,7 +2005,7 @@ def decision_select(request):
         
         
         with kiposcrum:
-                
+            
             lista_instancias = kiposcrum["DO__Decision"].instances()
             
             num_inst = len(lista_instancias)
@@ -2031,7 +2016,7 @@ def decision_select(request):
             print(str(lista_instancias[1].is_a))
             print(lista_instancias[0].Nome[0])
             print("\n\n\n\n")
-                
+            
             status = "OK!"
             
             print(str(len(lista_instancias)))
@@ -2226,9 +2211,6 @@ def mudar_decisao_status(request, instancia_decisao):
         
         :return: Redirecionamento para "/kipo_playground/decision_select/". 
     """
-
-    print("!!!!!!!!!!!!!!!!!!!!")
-    print(instancia_decisao)
 
     # OWLREADY2
     try:
@@ -2810,17 +2792,26 @@ def editar_materia(request, id_materia):
         
     return render(request, 'nova_materia.html', context)
 
-
 # ------------------------------------------------------------
 
-
-
 def logout_user(request):
+    """ Faz logout e redireciona para página de registro.
+        
+        :param request: HTTP Request. 
+    
+        :return: Redirect. 
+    """
     
     logout(request)
     return redirect('register')
 
 def login_page(request):
+    """ Página de login.
+        
+        :param request: HTTP Request. 
+    
+        :return: Redirect ou mensagem de erro no login se usuário e senha não existem ou não batem. 
+    """
     
     if request.method == 'POST':
 
@@ -2840,6 +2831,13 @@ def login_page(request):
     return render(request, 'login.html', context)
 
 def register(request):
+    """ Página de registro de usuário.
+        
+        :param request: HTTP Request. 
+    
+        :return: Redirect para início do sistema se registro foi criaod com sucesso ou mostra de página de registro. 
+    """
+
     form = CreateUser()
 
     if request.method == 'POST':
